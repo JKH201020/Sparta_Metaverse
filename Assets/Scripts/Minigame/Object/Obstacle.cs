@@ -28,9 +28,9 @@ public class Obstacle : MonoBehaviour
     {
         Player player = other.GetComponent<Player>(); // 충돌한 객체가 플레이어인지 확인
 
-        if (player != null) // 플레이어가 맞다면
+        if (player != null && !Player.isDead) // 플레이어가 맞다면
         {
-            gameManager.AddScore(1); // 게임 매니저를 통해 점수 1 증가
+            gameManager.UpdateScore(1); // 게임 매니저를 통해 점수 1 증가
         }
     }
 

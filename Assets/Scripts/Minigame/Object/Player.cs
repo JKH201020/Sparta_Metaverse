@@ -8,9 +8,9 @@ public class Player : MonoBehaviour
     Rigidbody2D _rigidbody = null; // 플레이어의 리지드바디 (물리 엔진 적용)
     GameManager gameManager = null;
 
-    public float flapForce = 6f; // 점프 강도 (플랩)
-    public float forwardSpeed = 3f; // 앞으로 나가는 속도 (수평 이동)
-    public bool isDead = false; // 플레이어가 죽었는지 확인하는 변수
+    float flapForce = 6f; // 점프 강도 (플랩)
+    float forwardSpeed = 3f; // 앞으로 나가는 속도 (수평 이동)
+    public static bool isDead = false; // 플레이어가 죽었는지 확인하는 변수
     float deathCooldown = 0f; // 사망 후 재시작을 위한 대기 시간
 
     bool isFlap = false; // 점프(플랩) 여부 확인하는 변수
