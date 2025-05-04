@@ -52,7 +52,7 @@ public class BaseController : MonoBehaviour
 
     }
 
-    private void Movement(Vector2 direction) // 이동
+    void Movement(Vector2 direction) // 이동
     {
         direction = direction * 5; // 이동 속도
 
@@ -60,7 +60,7 @@ public class BaseController : MonoBehaviour
         animationHandler.Move(direction); // 이동 애니메이션 처리
     }
 
-    private void Flip() // 캐릭터 이미지 좌우반전
+    void Flip() // 캐릭터 이미지 좌우반전
     {
         // Rigidbody2D 컴포넌트가 존재한다면 속도 기반으로 좌우 반전을 결정
         if (_rigidbody.velocity.x > 0.1f)
@@ -75,7 +75,7 @@ public class BaseController : MonoBehaviour
         }
     }
 
-    private void Jump() // 점프
+    void Jump() // 점프
     {
         animationHandler.Jump();
     }

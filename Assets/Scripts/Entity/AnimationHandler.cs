@@ -24,9 +24,9 @@ public class AnimationHandler : MonoBehaviour
 
     public void Jump() // 점프
     {
-        if (Input.GetKey(KeyCode.Space))
+        if (Input.GetKey(KeyCode.Space)) // 스페이스 바를 누를 때
         {
-            animator.SetBool(IsJump, true);
+            animator.SetBool(IsJump, true); // 점프
         }
         else
         {
