@@ -11,7 +11,6 @@ public class SkeletController : MonoBehaviour
     public GameObject textCanvas; // 문구 UI 오브젝트 (Inspector에서 할당)
     public string sceneName; // 이동할 씬의 이름 (Inspector 창에서 설정)
 
-
     private bool Interact = false; // 상호작용 가능한지
 
     void OnTriggerEnter2D(Collider2D other) // 플레이어가 트리거에 들어왔을 때 실행되는 함수
@@ -31,7 +30,7 @@ public class SkeletController : MonoBehaviour
     }
 
     void OnTriggerExit2D(Collider2D other)
-    {
+    { 
         if (textCanvas != null)
         {
             textCanvas.SetActive(false); // 상호작용 텍스트 미출력
@@ -42,14 +41,9 @@ public class SkeletController : MonoBehaviour
 
     void Update()
     {
-        GameObject player = GameObject.FindGameObjectWithTag("Player");
-
         // 플레이어가 트리거 영역 안에 있는 동안 설정된 상호작용 키 (F)를 누르면
         if (Interact && Input.GetKeyDown(KeyCode.F))
         {
-            PlayerPositionManager.Instance.SetLastPositionAndScene(
-                player.transform.position, SceneManager.GetActiveScene().name); // 현재 위치와 씬 이름 저장
-
             SceneManager.LoadScene(sceneName); // 상호작용(미니게임으로 이동)
         }
     }
