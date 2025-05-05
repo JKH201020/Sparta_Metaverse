@@ -5,7 +5,7 @@ using TMPro;
 
 public class GameUI : BaseUI
 {
-    public TextMeshProUGUI scoreText;
+    public TextMeshProUGUI currentscoreText;
     public TextMeshProUGUI bestscoreText;
 
     protected override UIState GetUIState()
@@ -18,7 +18,7 @@ public class GameUI : BaseUI
         base.Init(uiManager);
 
         // 자식 오브젝트에서 각 컴포넌트 연결
-        scoreText = transform.Find("ScoreText").GetComponent<TextMeshProUGUI>();
+        currentscoreText = transform.Find("CurrentScoreText").GetComponent<TextMeshProUGUI>();
         bestscoreText = transform.Find("BestScoreText").GetComponent<TextMeshProUGUI>();
     }
 
@@ -30,7 +30,7 @@ public class GameUI : BaseUI
         int bestScore = GameManager.Instance.BestScore;
 
         // 인게임에 점수 출력
-        scoreText.text = currentScore.ToString();
+        currentscoreText.text = currentScore.ToString();
         bestscoreText.text = bestScore.ToString();
     }
 }
