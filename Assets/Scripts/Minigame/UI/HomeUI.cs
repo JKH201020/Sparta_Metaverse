@@ -30,11 +30,17 @@ public class HomeUI : BaseUI
     void OnClickStartButton() // Start 버튼 클릭 시 게임 시작 요청
     {
         uiManager.OnClickStart();
-        Time.timeScale =1.0f; // 게임 작동
+        Ready();
+        Time.timeScale = 1.0f; // 게임 작동
     }
 
     void OnClickExitButton() // Exit 버튼 클릭 시 게임 종료 요청
     {
         uiManager.OnClickExit();
+    }
+
+    void Ready()
+    {
+
     }
 }

@@ -14,11 +14,6 @@ public class BaseController : MonoBehaviour
     protected Vector2 lookDirection = Vector2.zero; // 현재 바라보는 방향
     public Vector2 LookDirection { get { return lookDirection; } }
 
-    //protected Vector2 jumping =Vector2.zero;
-    //public Vector2 Jumping { get { return jumping; } } 
-
-    //bool isFlap = false; // 점프 여부 확인하는 변수
-
     // 게임 오브젝트나 컴포넌트 간의 참조를 설정하거나 초기 상태를 설정하는 등의 초기화 작업을 수행하는 데 적합
     protected virtual void Awake() // 이 스크립트의 게임오브젝트가 로드될 때 자동으로 딱 한 번 호출
     {
@@ -32,7 +27,7 @@ public class BaseController : MonoBehaviour
 
     protected virtual void Start()
     {
-
+        Time.timeScale = 1.0f; // Scene 전환 후 멈춰있는 상황 방지ㅁㅁ
     }
 
     protected virtual void Update()
