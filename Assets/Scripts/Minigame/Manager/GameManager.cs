@@ -20,7 +20,16 @@ public class GameManager : MonoBehaviour
 
     void Awake()
     {
-        gameManager = this; // GameManager 인스턴스를 gameManager에 할당 (싱글톤 초기화)
+        //if(gameManager == null)
+        //{
+        //    gameManager = this;
+        //    DontDestroyOnLoad(gameObject); // 씬 전환 시 파괴되지 않도록 설정
+        //}
+        //else if (gameManager != this)
+        //{
+        //    Destroy(gameObject); // 씬에 이미 GameManager가 있다면 중복 생성을 방지하기 위해 파괴
+        //}
+            gameManager = this; // GameManager 인스턴스를 gameManager에 할당 (싱글톤 초기화)
     }
 
     public void Start()
