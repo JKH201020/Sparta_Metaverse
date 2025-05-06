@@ -64,7 +64,18 @@ public class SkeletController : MonoBehaviour
                 player.transform.position, SceneManager.GetActiveScene().name); // 현재 위치와 씬 이름 저장
 
             dm.ShowDialogue();
-            //SceneManager.LoadScene(sceneName); // 상호작용(미니게임으로 이동)
+        }
+
+        StartCoroutine(NextScene());
+    }
+
+    IEnumerator NextScene()
+    {
+        yield return new WaitForSeconds(2f);
+
+        if (Interact && Input.GetKeyDown(KeyCode.F))
+        {
+            SceneManager.LoadScene(sceneName); // 상호작용(미니게임으로 이동)
         }
     }
 }
