@@ -7,12 +7,9 @@ public class Player : MonoBehaviour
     Animator animator = null; // 애니메이터와 리지드바디 변수 선언
     Rigidbody2D _rigidbody = null; // 플레이어의 리지드바디 (물리 엔진 적용)
 
-    GameManager gameManager = null;
-
     float flapForce = 6f; // 점프 강도 (플랩)
     float forwardSpeed = 3f; // 앞으로 나가는 속도 (수평 이동)
     public static bool isDead = false; // 플레이어가 죽었는지 확인하는 변수
-    float deathCooldown = 0f; // 사망 후 재시작을 위한 대기 시간
     bool isFlap = false; // 점프(플랩) 여부 확인하는 변수
 
     // Start is called before the first frame update
@@ -21,26 +18,12 @@ public class Player : MonoBehaviour
         // 애니메이터와 리지드바디를 컴포넌트에서 찾기
         animator = transform.GetComponentInChildren<Animator>();
         _rigidbody = transform.GetComponent<Rigidbody2D>();
-
-        gameManager = GameManager.Instance;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (isDead) // 사망
-        {
-            // 죽었을 때 대기 시간(`deathCooldown`)이 끝나면 재시작을 위한 입력 받기
-            //if (deathCooldown <= 0)
-            //{
-            //    gameManager.RestartGame(); // 게임 재시작
-            //}
-            //else
-            //{
-            //    deathCooldown -= Time.deltaTime; // 대기 시간 감소
-            //}
-        }
-        else // 생존
+        if (!isDead) // 생존
         {
             // 점프 (플랩) 입력 처리
             if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0))
@@ -79,7 +62,6 @@ public class Player : MonoBehaviour
         // 죽음 애니메이션 실행
         animator.SetInteger("IsDie", 1);
         isDead = true; // 죽음 상태로 변경
-        deathCooldown = 1f; // 재시작 대기 시간 1초 설정
         UIManager.Instance.GameOver();
     }
 }

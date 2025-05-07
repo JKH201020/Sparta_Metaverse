@@ -7,19 +7,21 @@ using UnityEngine.SceneManagement;
 public class SkeletController : MonoBehaviour
 {
     public GameObject textCanvas; // 문구 UI 오브젝트 (Inspector에서 할당)
-    //DialogueManager dm;
+    public DialogueManager dm; // DialogueManager를 Inspector에서 할당
 
     public string sceneName; // 이동할 씬의 이름 (Inspector 창에서 설정)
     bool Interact = false; // 상호작용 가능한지
+    bool isDialogueActive = false; // 대화가 활성화되었는지
 
     void Start()
     {
-        //dm = FindObjectOfType<DialogueManager>();
+        dm.OnDialogueEnd += AfterTalking; // DialogueManager의 대화 종료 이벤트에 콜백 함수 등록
     }
 
     void Update()
     {
-        if (Interact && Input.GetKeyDown(KeyCode.F))
+        // 플레이어가 트리거 영역 안에 있는 동안 설정된 상호작용 키 (F)를 누르면
+        if (Interact && !isDialogueActive && Input.GetKeyDown(KeyCode.F))
         {
             Interactive();
         }
@@ -44,38 +46,38 @@ public class SkeletController : MonoBehaviour
             textCanvas.SetActive(false); // 상호작용 텍스트 미출력
             Interact = false; // 상호작용 불가
 
-            //dm.SettingUI(Interact);
+            // 대화 초기화
+            dm.SettingUI(false);
+            dm.currentTextIndex = 0;
+            dm.isWaitingInput = false;
+            isDialogueActive = false;
         }
     }
 
-    void Interactive()
+    void Interactive() // 상호작용
     {
         Interact = true;
+        isDialogueActive = true; // 대화가 시작되었음을 표시
 
         GameObject player = GameObject.FindGameObjectWithTag("Player");
 
-        if (player != null && player.CompareTag("Player")) // 트리거에 들어온 오브젝트가 "Player" 태그를 가지고 있는지 확인
+        if (player.CompareTag("Player")) // 트리거에 들어온 오브젝트가 "Player" 태그를 가지고 있는지 확인
         {
-            // 플레이어가 트리거 영역 안에 있는 동안 설정된 상호작용 키 (F)를 누르면
+            dm.ShowDialogue(); // 대화 시작
 
             PlayerPositionManager.Instance.SetLastPositionAndScene(
                 player.transform.position, SceneManager.GetActiveScene().name); // 현재 위치와 씬 이름 저장
-
-            SceneManager.LoadScene(sceneName); // 상호작용(미니게임으로 이동)
-
-            //dm.ShowDialogue();
         }
-
-        //StartCoroutine(NextScene());
     }
 
-    //IEnumerator NextScene()
-    //{
-    //    yield return new WaitForSeconds(2f);
+    void AfterTalking()
+    {
+        isDialogueActive = false; // 대화가 끝났음을 표시
+        dm.gameObject.SetActive(false); // 씬 로드 전에 DialogueManager 오브젝트를 비활성화
 
-    //    if (Interact && Input.GetKeyDown(KeyCode.F))
-    //    {
-    //        SceneManager.LoadScene(sceneName); // 상호작용(미니게임으로 이동)
-    //    }
-    //}
+        if (Interact && !isDialogueActive && Input.GetKeyDown(KeyCode.F))
+        {
+            SceneManager.LoadScene(sceneName); // 상호작용(미니게임으로 이동)
+        }
+    }
 }

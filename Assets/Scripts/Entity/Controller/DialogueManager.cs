@@ -1,70 +1,64 @@
-//using System.Collections;
-//using System.Collections.Generic;
-//using TMPro;
-//using UnityEngine;
-//using UnityEngine.SceneManagement;
+using System.Collections;
+using System.Collections.Generic;
+using TMPro;
+using UnityEngine;
+using UnityEngine.SceneManagement;
 
-//public class DialogueManager : MonoBehaviour
-//{
-//    [SerializeField] GameObject go_dialogueBar;
-//    [SerializeField] GameObject go_NameBar;
+public class DialogueManager : MonoBehaviour
+{
+    [SerializeField] GameObject go_dialogueBar;
+    [SerializeField] GameObject go_NameBar;
 
-//    [SerializeField] TMP_Text txt_dialogue;
-//    [SerializeField] TMP_Text txt_name;
+    [SerializeField] TMP_Text txt_dialogue;
+    [SerializeField] TMP_Text txt_name;
 
-//    TextMeshProUGUI currentScoreText;
-//    TextMeshProUGUI bestScoreText;
+    TextMeshProUGUI currentScoreText;
+    TextMeshProUGUI bestScoreText;
 
-//    string[] dialogueSentences = { "오우오우\nFlappy Plane은 스페이스바와 마우스 클릭으로\n장애물들을 피하는 게임이야" ,
-//    "시작하고 싶으면 [F]를 눌러줘"};
-//    int currentTextIndex = 0;
-//    bool isWaitingInput = false;
+    string[] dialogueSentences = 
+        { "오우오우\nFlappy Plane은 스페이스바와 마우스 클릭으로\n장애물들을 피하는 게임이야" ,
+          "시작하고 싶으면 [F]를 눌러줘"};
 
-//    public void ShowDialogue()
-//    {
-//        //txt_dialogue.text = "오우오우\nFlappy Plane은 스페이스바와 마우스 클릭으로\n장애물들을 피하는 게임이야";
-//        //txt_dialogue.text = "시작하고 싶으면 [F]를 눌러줘";
-//        txt_name.text = "ㄱ스트";
-//        currentTextIndex = 0;
-//        ShowCurrentText();
-//        SettingUI(true);
-//    }
+    public int currentTextIndex = 0;
+    public bool isWaitingInput = false; // 대화 중인지 확인
+    public System.Action OnDialogueEnd; // 대화 종료 시 호출될 콜백 함수
 
-//    private void Start()
-//    {
-//        Transform scoreTextTransform = transform.Find("ScoreBoard");
+    public void ShowDialogue()
+    {
+        txt_name.text = "ㄱ스트"; // 오타 아님
+        currentTextIndex = 0;
+        ShowCurrentText();
+        SettingUI(true);
+    }
 
-//        currentScoreText = scoreTextTransform.Find("CurrentScoreText").GetComponent<TextMeshProUGUI>();
-//        bestScoreText = scoreTextTransform.Find("BestScoreText").GetComponent<TextMeshProUGUI>();
-//    }
+    void Update()
+    {
+        if (isWaitingInput && Input.GetKeyDown(KeyCode.F))
+        {
+            if (currentTextIndex < dialogueSentences.Length)
+            {
+                ShowCurrentText();
+                currentTextIndex++; // 다음 인덱스로 넘어가 다음 대화를 호출
+            }
+            else
+            {
+                SettingUI(false);
+                isWaitingInput = false;
 
-//    void Update()
-//    {
-//        if (isWaitingInput && Input.GetKeyDown(KeyCode.F))
-//        {
-//            currentTextIndex++;
+                OnDialogueEnd?.Invoke();// 대화가 모두 끝났음을 알림
+            }
+        }
+    }
 
-//            if (currentTextIndex < dialogueSentences.Length)
-//            {
-//                ShowCurrentText();
-//            }
-//            else
-//            {
-//                SettingUI(false);
-//                isWaitingInput = false;
-//            }
-//        }
-//    }
+    void ShowCurrentText()
+    {
+        isWaitingInput = true;
+        txt_dialogue.text = dialogueSentences[currentTextIndex];
+    }
 
-//    void ShowCurrentText()
-//    {
-//        txt_dialogue.text = dialogueSentences[currentTextIndex];
-//        isWaitingInput = true;
-//    }
-
-//    public void SettingUI(bool p_flag)
-//    {
-//        go_dialogueBar.SetActive(p_flag);
-//        go_NameBar.SetActive(p_flag);
-//    }
-//}
+    public void SettingUI(bool OnOff)
+    {
+        go_dialogueBar.SetActive(OnOff);
+        go_NameBar.SetActive(OnOff);
+    }
+}
