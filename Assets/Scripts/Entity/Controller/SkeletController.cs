@@ -10,7 +10,7 @@ public class SkeletController : MonoBehaviour
     public DialogueManager dm; // DialogueManager를 Inspector에서 할당
 
     public string sceneName; // 이동할 씬의 이름 (Inspector 창에서 설정)
-    bool Interact = false; // 상호작용 가능한지
+    bool isInteract = false; // 상호작용 가능한지
     bool isDialogueActive = false; // 대화가 활성화되었는지
 
     void Start()
@@ -21,21 +21,21 @@ public class SkeletController : MonoBehaviour
     void Update()
     {
         // 플레이어가 트리거 영역 안에 있는 동안 설정된 상호작용 키 (F)를 누르면
-        if (Interact && !isDialogueActive && Input.GetKeyDown(KeyCode.F))
+        if (isInteract && !isDialogueActive && Input.GetKeyDown(KeyCode.F))
         {
             Interactive();
         }
+
     }
 
     void OnTriggerEnter2D(Collider2D other) // 플레이어가 트리거에 들어왔을 때 실행되는 함수
     {
         if (other.CompareTag("Player")) // 트리거에 들어온 오브젝트가 "Player" 태그를 가지고 있는지 확인
         {
-            // 원하는 이벤트 실행 (예: 미니게임 시작, 대화 창 띄우기 등)
             TextMeshProUGUI tmpText = textCanvas.GetComponent<TextMeshProUGUI>();
 
             textCanvas.SetActive(true); // 상호작용 텍스트 출력
-            Interact = true; // 상호작용 가능
+            isInteract = true; // 상호작용 가능
         }
     }
 
@@ -44,7 +44,7 @@ public class SkeletController : MonoBehaviour
         if (other.CompareTag("Player")) // 트리거에 들어온 오브젝트가 "Player" 태그를 가지고 있는지 확인
         {
             textCanvas.SetActive(false); // 상호작용 텍스트 미출력
-            Interact = false; // 상호작용 불가
+            isInteract = false; // 상호작용 불가
 
             // 대화 초기화
             dm.SettingUI(false);
@@ -56,7 +56,7 @@ public class SkeletController : MonoBehaviour
 
     void Interactive() // 상호작용
     {
-        Interact = true;
+        isInteract = true;
         isDialogueActive = true; // 대화가 시작되었음을 표시
 
         GameObject player = GameObject.FindGameObjectWithTag("Player");
@@ -75,7 +75,7 @@ public class SkeletController : MonoBehaviour
         isDialogueActive = false; // 대화가 끝났음을 표시
         dm.gameObject.SetActive(false); // 씬 로드 전에 DialogueManager 오브젝트를 비활성화
 
-        if (Interact && !isDialogueActive && Input.GetKeyDown(KeyCode.F))
+        if (isInteract && !isDialogueActive && Input.GetKeyDown(KeyCode.F))
         {
             SceneManager.LoadScene(sceneName); // 상호작용(미니게임으로 이동)
         }

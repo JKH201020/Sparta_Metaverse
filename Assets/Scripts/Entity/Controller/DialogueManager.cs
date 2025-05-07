@@ -35,8 +35,13 @@ public class DialogueManager : MonoBehaviour
     {
         if (isWaitingInput && Input.GetKeyDown(KeyCode.F))
         {
+            //currentTextIndex++; // 다음 인덱스로 넘어가 다음 대화를 호출
+            Debug.Log('b');
+            Debug.Log(currentTextIndex);
             if (currentTextIndex < dialogueSentences.Length)
             {
+                Debug.Log('c');
+                Debug.Log(currentTextIndex);
                 ShowCurrentText();
                 currentTextIndex++; // 다음 인덱스로 넘어가 다음 대화를 호출
             }
@@ -54,6 +59,8 @@ public class DialogueManager : MonoBehaviour
     {
         isWaitingInput = true;
         txt_dialogue.text = dialogueSentences[currentTextIndex];
+        Debug.Log('a');
+        Debug.Log(txt_dialogue.text);
     }
 
     public void SettingUI(bool OnOff)
