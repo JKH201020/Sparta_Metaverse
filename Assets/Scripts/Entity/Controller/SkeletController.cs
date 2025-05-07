@@ -23,7 +23,7 @@ public class SkeletController : MonoBehaviour
         // 플레이어가 트리거 영역 안에 있는 동안 설정된 상호작용 키 (F)를 누르면
         if (isInteract && !isDialogueActive && Input.GetKeyDown(KeyCode.F))
         {
-            Interactive();
+            Interactive(); // 상호작용
         }
 
     }
@@ -39,7 +39,7 @@ public class SkeletController : MonoBehaviour
         }
     }
 
-    void OnTriggerExit2D(Collider2D other)
+    void OnTriggerExit2D(Collider2D other) // 플레이어가 트리거를 나갔을 때 실행되는 함수
     {
         if (other.CompareTag("Player")) // 트리거에 들어온 오브젝트가 "Player" 태그를 가지고 있는지 확인
         {
@@ -70,7 +70,7 @@ public class SkeletController : MonoBehaviour
         }
     }
 
-    void AfterTalking()
+    void AfterTalking() // 대화 이후
     {
         isDialogueActive = false; // 대화가 끝났음을 표시
         dm.gameObject.SetActive(false); // 씬 로드 전에 DialogueManager 오브젝트를 비활성화
