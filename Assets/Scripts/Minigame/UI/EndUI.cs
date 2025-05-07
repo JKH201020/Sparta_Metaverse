@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class EndUI : BaseUI
@@ -38,22 +39,20 @@ public class EndUI : BaseUI
     // UI에 점수 정보 표시
     void Update()
     {
-        // GameManager를 싱글톤으로 만들면 어디서든 쉽게 GameManager 인스턴스에 접근하여
-        // 점수 데이터를 가져올 수 있다.
-        int currentScore = GameManager.Instance.CurrentScore;
-        int bestScore = GameManager.Instance.BestScore;
-
         // 인게임에 점수 출력
-        currentScoreText.text = currentScore.ToString();
-        bestScoreText.text = bestScore.ToString();
+        if (GameManager.Instance != null)
+        {
+            currentScoreText.text = GameManager.Instance.CurrentScore.ToString();
+            bestScoreText.text = GameManager.Instance.BestScore.ToString();
+        }
     }
 
-    void OnClickRestartButton()
+    public void OnClickRestartButton()
     {
-        uiManager.OnClickStart();
+        SceneManager.LoadScene("MiniGameScene"); // 게임을 재시작하는 함수
     }
 
-    void OnClickExitButton()
+    public void OnClickExitButton()
     {
         uiManager.OnClickExit();
     }

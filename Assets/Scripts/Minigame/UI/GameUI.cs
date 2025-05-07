@@ -21,6 +21,10 @@ public class GameUI : BaseUI
         currentscoreText = transform.Find("CurrentScoreText").GetComponent<TextMeshProUGUI>();
         bestscoreText = transform.Find("BestScoreText").GetComponent<TextMeshProUGUI>();
     }
+    private void Start()
+    {
+        Time.timeScale = 1.0f;
+    }
 
     void Update()
     {

@@ -14,7 +14,8 @@ public class ScoreUI : MonoBehaviour
 
         if (GameManager.Instance != null && bestScoreText != null)
         {
-            bestScoreText.text = GameManager.Instance.BestScore.ToString(); 
+            currentScoreText.text = GameManager.Instance.BestScore.ToString();
+            bestScoreText.text = GameManager.Instance.BestScore.ToString();
         }
     }
 

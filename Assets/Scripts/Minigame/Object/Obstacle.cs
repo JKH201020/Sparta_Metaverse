@@ -11,8 +11,8 @@ public class Obstacle : MonoBehaviour
     public float highPosY = 1f; // 장애물이 배치될 수 있는 Y축 상한선
     public float lowPosY = -1f; // 장애물이 배치될 수 있는 Y축 하한선
 
-    public float holeSizeMin = 1f; // 구멍의 최소 크기
-    public float holeSizeMax = 3f; // 구멍의 최대 크기
+    public float holeSizeMin = 1.2f; // 구멍의 최소 크기
+    public float holeSizeMax = 2.5f; // 구멍의 최대 크기
 
     public Transform topObject; // 장애물 상단 오브젝트 (이 객체를 위로 배치)
     public Transform bottomObject; // 장애물 하단 오브젝트 (이 객체를 아래로 배치)

@@ -31,19 +31,14 @@ public class Player : MonoBehaviour
         if (isDead) // 사망
         {
             // 죽었을 때 대기 시간(`deathCooldown`)이 끝나면 재시작을 위한 입력 받기
-            if (deathCooldown <= 0)
-            {
-                if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0))
-                {
-                    
-                    gameManager.RestartGame(); // 게임 재시작
-                
-                }
-            }
-            else
-            {
-                deathCooldown -= Time.deltaTime; // 대기 시간 감소
-            }
+            //if (deathCooldown <= 0)
+            //{
+            //    gameManager.RestartGame(); // 게임 재시작
+            //}
+            //else
+            //{
+            //    deathCooldown -= Time.deltaTime; // 대기 시간 감소
+            //}
         }
         else // 생존
         {
@@ -72,7 +67,6 @@ public class Player : MonoBehaviour
 
         // 점프 시 각도 조정 (위아래로 기울기)
         float angle = Mathf.Clamp((_rigidbody.velocity.y * 10f), -90, 90); // y축: -90 ~ 90
-        // 특정 각도이하로 내려가면 빙글 돌음
         float lerpAngle = Mathf.Lerp(transform.rotation.eulerAngles.z, angle, Time.fixedDeltaTime * 5f);
 
         transform.rotation = Quaternion.Euler(0, 0, lerpAngle);
