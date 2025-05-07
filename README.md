@@ -13,6 +13,7 @@
 ![NPC 대화 1](https://github.com/user-attachments/assets/5f9133b8-84c3-4a52-b445-13e73802720b)
 
 F키를 누르면 Npc의 대화창이 뜹니다. F를 누르시면 다음으로 진행됩니다.
+상호작용은 오브젝트의 Collider범위를 벗어나면 꺼집니다.
 (*첫 시작 후 말을 걸고 F를 2번 눌러야 다음으로 넘어가는 현상은 현재 수정 중입니다.*)
 
 ![NPC 대화 2](https://github.com/user-attachments/assets/7c0368f9-1374-4b8a-a824-e15c67b89ca1)
