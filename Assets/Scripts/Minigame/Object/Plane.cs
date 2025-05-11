@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour
+public class Plane : MonoBehaviour
 {
     Animator animator = null; // 애니메이터와 리지드바디 변수 선언
     Rigidbody2D _rigidbody = null; // 플레이어의 리지드바디 (물리 엔진 적용)
@@ -26,7 +26,7 @@ public class Player : MonoBehaviour
         if (!isDead) // 생존
         {
             // 점프 (플랩) 입력 처리
-            if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0))
+            if (Input.GetKeyDown(KeyCode.Space))
             {
                 isFlap = true; // 점프 시작
             }
@@ -62,6 +62,6 @@ public class Player : MonoBehaviour
         // 죽음 애니메이션 실행
         animator.SetInteger("IsDie", 1);
         isDead = true; // 죽음 상태로 변경
-        UIManager.Instance.GameOver();
+        MiniGameUIManager.Instance.GameOver();
     }
 }

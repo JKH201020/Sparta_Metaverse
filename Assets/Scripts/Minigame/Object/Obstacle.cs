@@ -6,7 +6,7 @@ using Random = UnityEngine.Random;
 
 public class Obstacle : MonoBehaviour
 {
-    GameManager gameManager; // GameManager 인스턴스를 저장할 변수
+    MiniGameManager gameManager; // GameManager 인스턴스를 저장할 변수
 
     public float highPosY = 1f; // 장애물이 배치될 수 있는 Y축 상한선
     public float lowPosY = -1f; // 장애물이 배치될 수 있는 Y축 하한선
@@ -21,14 +21,14 @@ public class Obstacle : MonoBehaviour
 
     public void Start()
     {
-        gameManager = GameManager.Instance; // 게임 시작 시 GameManager의 인스턴스를 가져와서 사용
+        gameManager = MiniGameManager.Instance; // 게임 시작 시 GameManager의 인스턴스를 가져와서 사용
     }
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        Player player = other.GetComponent<Player>(); // 충돌한 객체가 플레이어인지 확인
+        Plane plane = other.GetComponent<Plane>(); // 충돌한 객체가 플레이어인지 확인
 
-        if (player != null && !Player.isDead) // 플레이어가 맞다면
+        if (plane != null && !Plane.isDead) // 플레이어가 맞다면
         {
             gameManager.UpdateScore(1); // 게임 매니저를 통해 점수 1 증가
         }

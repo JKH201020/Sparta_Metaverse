@@ -13,12 +13,12 @@ public enum UIState
     End
 }
 
-public class UIManager : MonoBehaviour
+public class MiniGameUIManager : MonoBehaviour
 {
     public string sceneName; // 이동할 씬의 이름 (Inspector 창에서 설정)
 
-    static UIManager instance;
-    public static UIManager Instance { get { return instance; } }
+    static MiniGameUIManager instance;
+    public static MiniGameUIManager Instance { get { return instance; } }
 
     UIState currentState = UIState.Home;
 
