@@ -5,12 +5,12 @@ using UnityEngine;
 // 모든 UI의 기본 동작을 정의하는 추상 클래스
 public abstract class BaseUI : MonoBehaviour
 {
-    protected UIManager uiManager;
+    protected MiniGameUIManager uiManager;
 
     // 현재 UI 상태(UIState) 정의 (자식 클래스에서 구현해야 함)
     protected abstract UIState GetUIState();
 
-    public virtual void Init(UIManager uiManager)
+    public virtual void Init(MiniGameUIManager uiManager)
     {
         this.uiManager = uiManager;
     }

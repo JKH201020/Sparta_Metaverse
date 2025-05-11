@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class ScoreUI : MonoBehaviour
+public class ScoreBoardUI : MonoBehaviour
 {
+    [Header("Score")]
     TextMeshProUGUI currentScoreText;
     TextMeshProUGUI bestScoreText;
 
@@ -12,10 +13,10 @@ public class ScoreUI : MonoBehaviour
     {
         Init();
 
-        if (GameManager.Instance != null && bestScoreText != null)
+        if (MiniGameManager.Instance != null && bestScoreText != null)
         {
-            currentScoreText.text = GameManager.Instance.BestScore.ToString();
-            bestScoreText.text = GameManager.Instance.BestScore.ToString();
+            currentScoreText.text = MiniGameManager.Instance.BestScore.ToString();
+            bestScoreText.text = MiniGameManager.Instance.BestScore.ToString();
         }
     }
 
@@ -28,10 +29,10 @@ public class ScoreUI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (GameManager.Instance != null && currentScoreText != null && bestScoreText != null)
+        if (MiniGameManager.Instance != null && currentScoreText != null && bestScoreText != null)
         {
-            int currentScore = GameManager.Instance.CurrentScore;
-            int bestScore = GameManager.Instance.BestScore;
+            int currentScore = MiniGameManager.Instance.CurrentScore;
+            int bestScore = MiniGameManager.Instance.BestScore;
 
             currentScoreText.text = currentScore.ToString();
             bestScoreText.text = bestScore.ToString();

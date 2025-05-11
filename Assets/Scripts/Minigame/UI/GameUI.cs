@@ -13,7 +13,7 @@ public class GameUI : BaseUI
         return UIState.Game;
     }
 
-    public override void Init(UIManager uiManager)
+    public override void Init(MiniGameUIManager uiManager)
     {
         base.Init(uiManager);
 
@@ -30,8 +30,8 @@ public class GameUI : BaseUI
     {
         // GameManager를 싱글톤으로 만들면 어디서든 쉽게 GameManager 인스턴스에 접근하여
         // 점수 데이터를 가져올 수 있다.
-        int currentScore = GameManager.Instance.CurrentScore;
-        int bestScore = GameManager.Instance.BestScore;
+        int currentScore = MiniGameManager.Instance.CurrentScore;
+        int bestScore = MiniGameManager.Instance.BestScore;
 
         // 인게임에 점수 출력
         currentscoreText.text = currentScore.ToString();

@@ -18,7 +18,7 @@ public class EndUI : BaseUI
         return UIState.End;
     }
 
-    public override void Init(UIManager uiManager)
+    public override void Init(MiniGameUIManager uiManager)
     {
         base.Init(uiManager);
 
@@ -40,10 +40,10 @@ public class EndUI : BaseUI
     void Update()
     {
         // 인게임에 점수 출력
-        if (GameManager.Instance != null)
+        if (MiniGameManager.Instance != null)
         {
-            currentScoreText.text = GameManager.Instance.CurrentScore.ToString();
-            bestScoreText.text = GameManager.Instance.BestScore.ToString();
+            currentScoreText.text = MiniGameManager.Instance.CurrentScore.ToString();
+            bestScoreText.text = MiniGameManager.Instance.BestScore.ToString();
         }
     }
 

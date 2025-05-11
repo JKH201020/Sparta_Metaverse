@@ -19,13 +19,13 @@ public class AnimationHandler : MonoBehaviour
         // 애니메이터 컴포넌트를 가져옴
         animator = GetComponent<Animator>();
 
-        // 초기 애니메이션 클립 정보 가져오기 (스크립트 시작 시)
-        AnimationClip[] clips = animator.runtimeAnimatorController.animationClips;
+        //// 초기 애니메이션 클립 정보 가져오기 (스크립트 시작 시)
+        //AnimationClip[] clips = animator.runtimeAnimatorController.animationClips;
 
-        foreach (AnimationClip clip in clips )
-        {
-            jumpAnimationLength = clip.length;
-        }
+        //foreach (AnimationClip clip in clips )
+        //{
+        //    jumpAnimationLength = clip.length;
+        //}
     }
 
     public void Move(Vector2 obj) // 이동

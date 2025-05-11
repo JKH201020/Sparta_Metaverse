@@ -3,12 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class GameManager : MonoBehaviour
+public class MiniGameManager : MonoBehaviour
 {
-    static GameManager gameManager; // 싱글톤 패턴을 위한 변수. 게임 내에서 유일한 인스턴스를 사용
+    // 싱글톤 패턴을 위한 변수. 게임 내에서 유일한 인스턴스를 사용
+    public static MiniGameManager gameManager;
 
     // 싱글톤 접근용 프로퍼티 (외부에서 GameManager.Instance로 호출 가능)
-    public static GameManager Instance { get { return gameManager; } }
+    public static MiniGameManager Instance { get { return gameManager; } }
+    [SerializeField] private GameObject _player;
+    [SerializeField] private MiniFollowCamera _followCamera;
 
     int currentScore = 0; // 현재 점수를 저장하는 변수
     public int CurrentScore { get => currentScore; }
@@ -16,7 +19,7 @@ public class GameManager : MonoBehaviour
     int bestScore = 0; // 최고 점수 저장 변수
     public int BestScore { get => bestScore; }
 
-    const string BestScoreKey = "BestScore"; // PlayerPrefs 저장 키
+    public const string BestScoreKey = "BestScore"; // PlayerPrefs 저장 키
 
     void Awake()
     {
@@ -26,10 +29,10 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        Player.isDead = false; // 생존 중
+        Plane.isDead = false; // 생존 중
         currentScore = 0; // 게임 시작 시 점수를 0으로 초기화하여 UI에 표시
         bestScore = PlayerPrefs.GetInt(BestScoreKey, 0); // 저장된 최고 점수 불러오기 (없으면 기본값 0)
-
+        Spawn();
         Time.timeScale = 0; // 시작 전 정지 상태
     }
 
@@ -52,7 +55,14 @@ public class GameManager : MonoBehaviour
             bestScore = currentScore; // 최고 점수 갱신
 
             // PlayerPrefs에 저장 → 앱을 껐다 켜도 유지됨
-            PlayerPrefs.SetInt(BestScoreKey, currentScore);
+            PlayerPrefs.SetFloat(BestScoreKey, currentScore);
+            PlayerPrefs.Save();
         }
+    }
+
+    public void Spawn() // 프리팹폴더에 있는 비행기 소환
+    {
+        GameObject go = Instantiate(_player, Vector2.zero, Quaternion.identity);
+        _followCamera.SetTarget(go.transform);
     }
 }
