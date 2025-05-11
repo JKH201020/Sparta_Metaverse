@@ -1958,7 +1958,7 @@ GameObject:
   - component: {fileID: 590386967}
   - component: {fileID: 590386966}
   m_Layer: 5
-  m_Name: CurrentScore
+  m_Name: CurrentScoreText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2167,7 +2167,7 @@ GameObject:
   - component: {fileID: 744545082}
   - component: {fileID: 744545081}
   m_Layer: 5
-  m_Name: BestScore
+  m_Name: BestScoreText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2880,7 +2880,7 @@ GameObject:
   - component: {fileID: 1165751124}
   - component: {fileID: 1165751123}
   m_Layer: 5
-  m_Name: BestScoreText
+  m_Name: BSText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4551,7 +4551,7 @@ GameObject:
   - component: {fileID: 1604242973}
   - component: {fileID: 1604242972}
   m_Layer: 5
-  m_Name: CurrentScoreText
+  m_Name: CSText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
