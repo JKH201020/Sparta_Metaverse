@@ -19,7 +19,11 @@ public class GameManager : Singleton<GameManager>
 
     #region LoadSceneManager
 
-    public void LoadScene(string sceneName) // 씬을 불러옴
+    /// <summary>
+    /// 씬을 불러옴
+    /// </summary>
+    /// <param name="sceneName">이동할 씬 이름</param>
+    public void LoadScene(string sceneName)
     {
         _sceneManager.LoadScene(sceneName); //LoadSceneManager에서 LoadScene을 불러옴
     }

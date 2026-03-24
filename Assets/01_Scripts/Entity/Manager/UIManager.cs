@@ -1,12 +1,38 @@
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UIManager : Singleton<UIManager>
 {
+    [Header("로비 버튼 UI")]
+    [SerializeField] private Button _startButton;
+    [SerializeField] private Button _loadButton;
+    [SerializeField] private Button _SoundButton;
+
     [Header("Notice")]
     public TextMeshProUGUI NoticeText;
     private Coroutine _noticeTimerCoroutine;
+
+    private void Start()
+    {
+        _startButton.onClick.AddListener(OnStartButtonClicked);
+    }
+
+    private void OnStartButtonClicked()
+    {
+        GameManager.Instance.LoadScene(SceneNames.MainScene);
+    }
+
+    private void OnLoadButtonClicked()
+    {
+
+    }
+
+    private void OnSoundButtonClicked()
+    {
+
+    }
 
     #region NoticeText
 
@@ -15,7 +41,7 @@ public class UIManager : Singleton<UIManager>
         NoticeText.text = text; // 화면 상단에 뜨는 빨간 텍스트
         StartNoticeTimer(NoticeText.gameObject); // 텍스트 타이머 작동
     }
-    
+
     private void StartNoticeTimer(GameObject activeObject) // 텍스트 타이머 작동
     {
         // 1.5초 안에 상호작용 범위를 나갔을 경우 - 아직 코루틴이 돌고 있음

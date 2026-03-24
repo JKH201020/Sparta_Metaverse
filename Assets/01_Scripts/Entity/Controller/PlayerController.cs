@@ -1,29 +1,27 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerController : BaseController
 {
-    private Camera camera;
+    private Camera cam;
 
     protected override void Start()
     {
         base.Start();
-        camera = Camera.main;
+        cam = Camera.main;
     }
 
     protected override void HandleAction()
     {
-        // Å°º¸µå ÀÔ·ÂÀ» ÅëÇØ ÀÌµ¿ ¹æÇâ °è»ê (ÁÂ/¿ì/»ó/ÇÏ)
-        float horizontal = Input.GetAxisRaw("Horizontal"); // A/D ¶Ç´Â ¡ç/¡æ
-        float vertical = Input.GetAxisRaw("Vertical"); // W/S ¶Ç´Â ¡è/¡é
+        // í‚¤ë³´ë“œ ìž…ë ¥ì„ í†µí•´ ì´ë™ ë°©í–¥ ê³„ì‚° (ì¢Œ/ìš°/ìƒ/í•˜)
+        float horizontal = Input.GetAxisRaw("Horizontal"); // A/D ë˜ëŠ” â†/â†’
+        float vertical = Input.GetAxisRaw("Vertical"); // W/S ë˜ëŠ” â†‘/â†“
 
-        // ¹æÇâ º¤ÅÍ Á¤±ÔÈ­ (´ë°¢¼±ÀÏ ¶§ ¼Óµµ º¸Á¤)
-        movementDirection = new Vector2(horizontal, vertical).normalized; // normalized: º¤ÅÍ Å©±â¸¦ 1·Î ¸¸µê
+        // ë°©í–¥ ë²¡í„° ì •ê·œí™” (ëŒ€ê°ì„ ì¼ ë•Œ ì†ë„ ë³´ì •)
+        movementDirection = new Vector2(horizontal, vertical).normalized; // normalized: ë²¡í„° í¬ê¸°ë¥¼ 1ë¡œ ë§Œë“¦
 
-        if (Mathf.Abs(horizontal) > 0.01f) // ¼öÆòÀÇ Àý´ë°ªÀÌ 0.01º¸´Ù Å«°¡? ¾ó¸¶³ª ¼¼°Ô ´­·¶³ª
+        if (Mathf.Abs(horizontal) > 0.01f) // ìˆ˜í‰ì˜ ì ˆëŒ€ê°’ì´ 0.01ë³´ë‹¤ í°ê°€? ì–¼ë§ˆë‚˜ ì„¸ê²Œ ëˆŒë €ë‚˜
         {
-            // ÁÂ¿ì ¹æÇâ¿¡ µû¶ó lookDirection °ªÀ» ¼³Á¤ÇØÁØ´Ù.
+            // ì¢Œìš° ë°©í–¥ì— ë”°ë¼ lookDirection ê°’ì„ ì„¤ì •í•´ì¤€ë‹¤.
             lookDirection = new Vector2(horizontal, 0).normalized;
         }
     }

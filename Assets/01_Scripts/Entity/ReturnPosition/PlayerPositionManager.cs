@@ -1,22 +1,18 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Security.Cryptography;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class PlayerPositionManager : MonoBehaviour
 {
-    public static PlayerPositionManager Instance { get; private set; } // ½Ì±ÛÅæ
+    public static PlayerPositionManager Instance { get; private set; } // ì‹±ê¸€í†¤
 
-    Vector3 lastPosition; // ¸ŞÀÎ ¾À¿¡¼­ÀÇ ÇöÀç À§Ä¡
-    string lastSceneName; // ¸ŞÀÎ ¾À
+    Vector3 lastPosition; // ë©”ì¸ ì”¬ì—ì„œì˜ í˜„ì¬ ìœ„ì¹˜
+    string lastSceneName; // ë©”ì¸ ì”¬
 
     void Awake()
     {
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject); // ¾À ÀÌµ¿ ½Ã ÆÄ±«µÇÁö ¾Êµµ·Ï ¼³Á¤
+            DontDestroyOnLoad(gameObject); // ì”¬ ì´ë™ ì‹œ íŒŒê´´ë˜ì§€ ì•Šë„ë¡ ì„¤ì •
         }
         else
         {
@@ -24,14 +20,14 @@ public class PlayerPositionManager : MonoBehaviour
         }
     }
 
-    // ÇöÀç À§Ä¡¿Í ¾À ÀúÀå
+    // í˜„ì¬ ìœ„ì¹˜ì™€ ì”¬ ì €ì¥
     public void SetLastPositionAndScene(Vector3 position, string sceneName)
     {
-        lastPosition = position; // ÇÃ·¹ÀÌ¾î°¡ ¸¶Áö¸·À¸·Î À§Ä¡Çß´ø ÁÂÇ¥¸¦ ÀúÀå
-        lastSceneName = sceneName; // ÇÃ·¹ÀÌ¾î°¡ ¸¶Áö¸·À¸·Î ÀÖ¾ú´ø ¾ÀÀÇ ÀÌ¸§À» ÀúÀå
+        lastPosition = position; // í”Œë ˆì´ì–´ê°€ ë§ˆì§€ë§‰ìœ¼ë¡œ ìœ„ì¹˜í–ˆë˜ ì¢Œí‘œë¥¼ ì €ì¥
+        lastSceneName = sceneName; // í”Œë ˆì´ì–´ê°€ ë§ˆì§€ë§‰ìœ¼ë¡œ ìˆì—ˆë˜ ì”¬ì˜ ì´ë¦„ì„ ì €ì¥
     }
 
-    //ÀúÀåµÈ À§Ä¡¿Í ¾À ÀÌ¸§À» ¹İÈ¯
+    //ì €ì¥ëœ ìœ„ì¹˜ì™€ ì”¬ ì´ë¦„ì„ ë°˜í™˜
     public Vector3 GetLastPosition()
     {
         return lastPosition;
