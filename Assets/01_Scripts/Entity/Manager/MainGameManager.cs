@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 // 싱글톤 static
@@ -8,16 +6,21 @@ using UnityEngine;
 public class MainGameManager : MonoBehaviour
 {
     // 기능 및 관리 (싱글톤 - 어디서든 불러와서 사용할 수 있다.)
-    public static MainGameManager Instance;
+    public static MainGameManager Instance { get; private set; }
+
     [SerializeField] private LoadSceneManager _sceneManager;
     [SerializeField] private MainUIManager _uiManager;
 
     private void Awake()
     {
-        if(Instance == null)
+        if (Instance == null && Instance != this)
         {
-            Instance = this; // 자기 자신을 할당해서 null이 되지 않도록 함
+            Destroy(this);
+            return;
         }
+
+        Instance = this; // 자기 자신을 할당해서 null이 되지 않도록 함
+        DontDestroyOnLoad(this);
     }
 
     #region MainUIManager

@@ -1,9 +1,6 @@
-using JetBrains.Annotations;
 using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class MainUIManager : MonoBehaviour
 {
@@ -18,9 +15,8 @@ public class MainUIManager : MonoBehaviour
         NoticeText.text = text; // 화면 상단에 뜨는 빨간 텍스트
         StartNoticeTimer(NoticeText.gameObject); // 텍스트 타이머 작동
     }
-
-    // 텍스트 타이머 작동
-    private void StartNoticeTimer(GameObject activeObject)
+    
+    private void StartNoticeTimer(GameObject activeObject) // 텍스트 타이머 작동
     {
         // 1.5초 안에 상호작용 범위를 나갔을 경우 - 아직 코루틴이 돌고 있음
         if (_noticeTimerCoroutine != null)
