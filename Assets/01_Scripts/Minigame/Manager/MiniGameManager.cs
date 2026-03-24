@@ -5,62 +5,62 @@ using UnityEngine.SceneManagement;
 
 public class MiniGameManager : MonoBehaviour
 {
-    // ½Ì±ÛÅæ ÆĞÅÏÀ» À§ÇÑ º¯¼ö. °ÔÀÓ ³»¿¡¼­ À¯ÀÏÇÑ ÀÎ½ºÅÏ½º¸¦ »ç¿ë
+    // ì‹±ê¸€í†¤ íŒ¨í„´ì„ ìœ„í•œ ë³€ìˆ˜. ê²Œì„ ë‚´ì—ì„œ ìœ ì¼í•œ ì¸ìŠ¤í„´ìŠ¤ë¥¼ ì‚¬ìš©
     public static MiniGameManager gameManager;
 
-    // ½Ì±ÛÅæ Á¢±Ù¿ë ÇÁ·ÎÆÛÆ¼ (¿ÜºÎ¿¡¼­ GameManager.Instance·Î È£Ãâ °¡´É)
+    // ì‹±ê¸€í†¤ ì ‘ê·¼ìš© í”„ë¡œí¼í‹° (ì™¸ë¶€ì—ì„œ GameManager.Instanceë¡œ í˜¸ì¶œ ê°€ëŠ¥)
     public static MiniGameManager Instance { get { return gameManager; } }
     [SerializeField] private GameObject _player;
     [SerializeField] private MiniFollowCamera _followCamera;
 
-    int currentScore = 0; // ÇöÀç Á¡¼ö¸¦ ÀúÀåÇÏ´Â º¯¼ö
+    int currentScore = 0; // í˜„ì¬ ì ìˆ˜ë¥¼ ì €ì¥í•˜ëŠ” ë³€ìˆ˜
     public int CurrentScore { get => currentScore; }
 
-    int bestScore = 0; // ÃÖ°í Á¡¼ö ÀúÀå º¯¼ö
+    int bestScore = 0; // ìµœê³  ì ìˆ˜ ì €ì¥ ë³€ìˆ˜
     public int BestScore { get => bestScore; }
 
-    public const string BestScoreKey = "BestScore"; // PlayerPrefs ÀúÀå Å°
+    public const string BestScoreKey = "BestScore"; // PlayerPrefs ì €ì¥ í‚¤
 
     void Awake()
     {
-        gameManager = this; // GameManager ÀÎ½ºÅÏ½º¸¦ gameManager¿¡ ÇÒ´ç (½Ì±ÛÅæ ÃÊ±âÈ­)
-        DontDestroyOnLoad(gameObject); // ¾À ÀüÈ¯ ½Ã ÆÄ±«µÇÁö ¾Êµµ·Ï ¼³Á¤
+        gameManager = this; // GameManager ì¸ìŠ¤í„´ìŠ¤ë¥¼ gameManagerì— í• ë‹¹ (ì‹±ê¸€í†¤ ì´ˆê¸°í™”)
+        DontDestroyOnLoad(gameObject); // ì”¬ ì „í™˜ ì‹œ íŒŒê´´ë˜ì§€ ì•Šë„ë¡ ì„¤ì •
     }
 
     void Start()
     {
-        Plane.isDead = false; // »ıÁ¸ Áß
-        currentScore = 0; // °ÔÀÓ ½ÃÀÛ ½Ã Á¡¼ö¸¦ 0À¸·Î ÃÊ±âÈ­ÇÏ¿© UI¿¡ Ç¥½Ã
-        bestScore = PlayerPrefs.GetInt(BestScoreKey, 0); // ÀúÀåµÈ ÃÖ°í Á¡¼ö ºÒ·¯¿À±â (¾øÀ¸¸é ±âº»°ª 0)
+        Plane.isDead = false; // ìƒì¡´ ì¤‘
+        currentScore = 0; // ê²Œì„ ì‹œì‘ ì‹œ ì ìˆ˜ë¥¼ 0ìœ¼ë¡œ ì´ˆê¸°í™”í•˜ì—¬ UIì— í‘œì‹œ
+        bestScore = PlayerPrefs.GetInt(BestScoreKey, 0); // ì €ì¥ëœ ìµœê³  ì ìˆ˜ ë¶ˆëŸ¬ì˜¤ê¸° (ì—†ìœ¼ë©´ ê¸°ë³¸ê°’ 0)
         Spawn();
-        Time.timeScale = 0; // ½ÃÀÛ Àü Á¤Áö »óÅÂ
+        Time.timeScale = 0; // ì‹œì‘ ì „ ì •ì§€ ìƒíƒœ
     }
 
-    public void GameOver() // °ÔÀÓ ¿À¹ö ½Ã È£ÃâµÇ´Â ÇÔ¼ö
+    public void GameOver() // ê²Œì„ ì˜¤ë²„ ì‹œ í˜¸ì¶œë˜ëŠ” í•¨ìˆ˜
     {
 
     }
 
-    public void RestartGame() // °ÔÀÓÀ» Àç½ÃÀÛÇÏ´Â ÇÔ¼ö
+    public void RestartGame() // ê²Œì„ì„ ì¬ì‹œì‘í•˜ëŠ” í•¨ìˆ˜
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name); // °ÔÀÓÀ» Àç½ÃÀÛÇÏ´Â ÇÔ¼ö
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name); // ê²Œì„ì„ ì¬ì‹œì‘í•˜ëŠ” í•¨ìˆ˜
     }
 
-    public void UpdateScore(int score) // Á¡¼ö¸¦ Ãß°¡ÇÏ´Â ÇÔ¼ö
+    public void UpdateScore(int score) // ì ìˆ˜ë¥¼ ì¶”ê°€í•˜ëŠ” í•¨ìˆ˜
     {
-        currentScore += score; // ÁÖ¾îÁø score¸¦ currentScore¿¡ ´õÇÔ
+        currentScore += score; // ì£¼ì–´ì§„ scoreë¥¼ currentScoreì— ë”í•¨
 
         if (currentScore >= bestScore)
         {
-            bestScore = currentScore; // ÃÖ°í Á¡¼ö °»½Å
+            bestScore = currentScore; // ìµœê³  ì ìˆ˜ ê°±ì‹ 
 
-            // PlayerPrefs¿¡ ÀúÀå ¡æ ¾ÛÀ» ²°´Ù ÄÑµµ À¯ÁöµÊ
+            // PlayerPrefsì— ì €ì¥ â†’ ì•±ì„ ê»ë‹¤ ì¼œë„ ìœ ì§€ë¨
             PlayerPrefs.SetFloat(BestScoreKey, currentScore);
             PlayerPrefs.Save();
         }
     }
 
-    public void Spawn() // ÇÁ¸®ÆÕÆú´õ¿¡ ÀÖ´Â ºñÇà±â ¼ÒÈ¯
+    public void Spawn() // í”„ë¦¬íŒ¹í´ë”ì— ìˆëŠ” ë¹„í–‰ê¸° ì†Œí™˜
     {
         GameObject go = Instantiate(_player, Vector2.zero, Quaternion.identity);
         _followCamera.SetTarget(go.transform);

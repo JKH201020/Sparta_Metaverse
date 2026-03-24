@@ -22,24 +22,24 @@ public class EndUI : BaseUI
     {
         base.Init(uiManager);
 
-        // "ScoreImage" ¿ÀºêÁ§Æ® Ã£±â
+        // "ScoreImage" ì˜¤ë¸Œì íŠ¸ ì°¾ê¸°
         Transform scoreImageTransform = transform.Find("ScoreImage");
 
-        // ÀÚ½Ä ¿ÀºêÁ§Æ®¿¡¼­ °¢ ÄÄÆ÷³ÍÆ® ¿¬°á
+        // ìì‹ ì˜¤ë¸Œì íŠ¸ì—ì„œ ê° ì»´í¬ë„ŒíŠ¸ ì—°ê²°
         currentScoreText = scoreImageTransform.Find("CurrentScoreText").GetComponent<TextMeshProUGUI>();
         bestScoreText = scoreImageTransform.Find("BestScoreText").GetComponent<TextMeshProUGUI>();
         restartButton = transform.Find("ReStartButton").GetComponent<Button>();
         exitButton = transform.Find("ExitButton").GetComponent<Button>();
 
-        // ¹öÆ° Å¬¸¯ ½Ã ÀÌº¥Æ® ¿¬°á
+        // ë²„íŠ¼ í´ë¦­ ì‹œ ì´ë²¤íŠ¸ ì—°ê²°
         restartButton.onClick.AddListener(OnClickRestartButton);
         exitButton.onClick.AddListener(OnClickExitButton);
     }
 
-    // UI¿¡ Á¡¼ö Á¤º¸ Ç¥½Ã
+    // UIì— ì ìˆ˜ ì •ë³´ í‘œì‹œ
     void Update()
     {
-        // ÀÎ°ÔÀÓ¿¡ Á¡¼ö Ãâ·Â
+        // ì¸ê²Œì„ì— ì ìˆ˜ ì¶œë ¥
         if (MiniGameManager.Instance != null)
         {
             currentScoreText.text = MiniGameManager.Instance.CurrentScore.ToString();
@@ -49,7 +49,7 @@ public class EndUI : BaseUI
 
     public void OnClickRestartButton()
     {
-        SceneManager.LoadScene("MiniGameScene"); // °ÔÀÓÀ» Àç½ÃÀÛÇÏ´Â ÇÔ¼ö
+        SceneManager.LoadScene("MiniGameScene"); // ê²Œì„ì„ ì¬ì‹œì‘í•˜ëŠ” í•¨ìˆ˜
     }
 
     public void OnClickExitButton()

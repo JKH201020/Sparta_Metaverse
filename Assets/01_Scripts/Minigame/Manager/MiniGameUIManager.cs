@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.XR;
 
-// °ÔÀÓÀÇ UI »óÅÂ¸¦ Á¤ÀÇÇÏ´Â ¿­°ÅÇü
+// ê²Œì„ì˜ UI ìƒíƒœë¥¼ ì •ì˜í•˜ëŠ” ì—´ê±°í˜•
 public enum UIState
 {
     Home,
@@ -15,7 +15,7 @@ public enum UIState
 
 public class MiniGameUIManager : MonoBehaviour
 {
-    public string sceneName; // ÀÌµ¿ÇÒ ¾ÀÀÇ ÀÌ¸§ (Inspector Ã¢¿¡¼­ ¼³Á¤)
+    public string sceneName; // ì´ë™í•  ì”¬ì˜ ì´ë¦„ (Inspector ì°½ì—ì„œ ì„¤ì •)
 
     static MiniGameUIManager instance;
     public static MiniGameUIManager Instance { get { return instance; } }
@@ -30,7 +30,7 @@ public class MiniGameUIManager : MonoBehaviour
     {
         instance = this;
 
-        // ÀÚ½Ä ¿ÀºêÁ§Æ®¿¡¼­ °¢°¢ÀÇ UI¸¦ Ã£¾Æ ÃÊ±âÈ­
+        // ìì‹ ì˜¤ë¸Œì íŠ¸ì—ì„œ ê°ê°ì˜ UIë¥¼ ì°¾ì•„ ì´ˆê¸°í™”
         homeUI = GetComponentInChildren<HomeUI>(true);
         homeUI?.Init(this);
         gameUI = GetComponentInChildren<GameUI>(true);
@@ -38,11 +38,11 @@ public class MiniGameUIManager : MonoBehaviour
         endUI = GetComponentInChildren<EndUI>(true);
         endUI?.Init(this);
 
-        // ÃÊ±â »óÅÂ¸¦ È¨ È­¸éÀ¸·Î ¼³Á¤
+        // ì´ˆê¸° ìƒíƒœë¥¼ í™ˆ í™”ë©´ìœ¼ë¡œ ì„¤ì •
         ChangeState(UIState.Home);
     }
 
-    public void ChangeState(UIState state) // UI ÀüÈ¯
+    public void ChangeState(UIState state) // UI ì „í™˜
     {
         currentState = state;
         homeUI?.SetActive(currentState);
@@ -52,16 +52,16 @@ public class MiniGameUIManager : MonoBehaviour
 
     public void OnClickStart()
     {
-        ChangeState(UIState.Game); // UI¸¦ °ÔÀÓ È­¸éÀ¸·Î ÀüÈ¯
+        ChangeState(UIState.Game); // UIë¥¼ ê²Œì„ í™”ë©´ìœ¼ë¡œ ì „í™˜
     }
 
     public void OnClickExit()
     {
-        SceneManager.LoadScene(sceneName); // ¸ŞÀÎ ¾ÀÀ¸·Î º¹±Í
+        SceneManager.LoadScene(sceneName); // ë©”ì¸ ì”¬ìœ¼ë¡œ ë³µê·€
     }
 
     public void GameOver()
     {
-        ChangeState(UIState.End); // UI¸¦ °ÔÀÓ ¿À¹öÈ­¸éÀ¸·Î ÀüÈ¯
+        ChangeState(UIState.End); // UIë¥¼ ê²Œì„ ì˜¤ë²„í™”ë©´ìœ¼ë¡œ ì „í™˜
     }
 }

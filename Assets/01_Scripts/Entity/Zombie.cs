@@ -14,14 +14,12 @@ public class Zombie : MonoBehaviour
     {
         // TODO : 충돌체가 내 플레이어 영역에 들어왔을 때
         RandomDialogue(); // 랜덤 문구가 출력
-        GameManager.Instance.UpdateNoticeText("상호작용 범위 입니다.");
     }
 
     private void OnTriggerExit2D(Collider2D other)
     {
         // TODO : 충돌체가 내 플레이어 영역에 벗어냈을 때
         _dialogueText.gameObject.SetActive(false); // 텍스트 화면 미출력
-        GameManager.Instance.UpdateNoticeText("상호작용 범위를 벗어났습니다.");
     }
 
     private void RandomDialogue()
