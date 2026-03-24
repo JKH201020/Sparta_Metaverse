@@ -1,27 +1,23 @@
-using System.Collections;
-using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class SkeletController : MonoBehaviour
 {
-    #region ±âÁ¸ ÄÚµå
+    #region ê¸°ì¡´ ì½”ë“œ
 
-    //public GameObject textCanvas; // ¹®±¸ UI ¿ÀºêÁ§Æ® (Inspector¿¡¼­ ÇÒ´ç)
-    //public DialogueManager dm; // DialogueManager¸¦ Inspector¿¡¼­ ÇÒ´ç
+    //public GameObject textCanvas; // ë¬¸êµ¬ UI ì˜¤ë¸Œì íŠ¸ (Inspectorì—ì„œ í• ë‹¹)
+    //public DialogueManager dm; // DialogueManagerë¥¼ Inspectorì—ì„œ í• ë‹¹
 
-    //bool isInteract = false; // »óÈ£ÀÛ¿ë °¡´ÉÇÑÁö
-    //bool isDialogueActive = false; // ´ëÈ­°¡ È°¼ºÈ­µÇ¾ú´ÂÁö
+    //bool isInteract = false; // ìƒí˜¸ì‘ìš© ê°€ëŠ¥í•œì§€
+    //bool isDialogueActive = false; // ëŒ€í™”ê°€ í™œì„±í™”ë˜ì—ˆëŠ”ì§€
 
     //void Start()
     //{
-    //    // dm.OnDialogueEnd += AfterTalking; // DialogueManagerÀÇ ´ëÈ­ Á¾·á ÀÌº¥Æ®¿¡ Äİ¹é ÇÔ¼ö µî·Ï
+    //    // dm.OnDialogueEnd += AfterTalking; // DialogueManagerì˜ ëŒ€í™” ì¢…ë£Œ ì´ë²¤íŠ¸ì— ì½œë°± í•¨ìˆ˜ ë“±ë¡
     //}
 
     //void Update()
     //{
-    //    // ÇÃ·¹ÀÌ¾î°¡ Æ®¸®°Å ¿µ¿ª ¾È¿¡ ÀÖ´Â µ¿¾È ¼³Á¤µÈ »óÈ£ÀÛ¿ë Å° (F)¸¦ ´©¸£¸é
+    //    // í”Œë ˆì´ì–´ê°€ íŠ¸ë¦¬ê±° ì˜ì—­ ì•ˆì— ìˆëŠ” ë™ì•ˆ ì„¤ì •ëœ ìƒí˜¸ì‘ìš© í‚¤ (F)ë¥¼ ëˆ„ë¥´ë©´
     //    if (isInteract && !isDialogueActive && Input.GetKeyDown(KeyCode.F))
     //    {
     //        Interactive();
@@ -29,25 +25,25 @@ public class SkeletController : MonoBehaviour
 
     //}
 
-    //void OnTriggerEnter2D(Collider2D other) // ÇÃ·¹ÀÌ¾î°¡ Æ®¸®°Å¿¡ µé¾î¿ÔÀ» ¶§ ½ÇÇàµÇ´Â ÇÔ¼ö
+    //void OnTriggerEnter2D(Collider2D other) // í”Œë ˆì´ì–´ê°€ íŠ¸ë¦¬ê±°ì— ë“¤ì–´ì™”ì„ ë•Œ ì‹¤í–‰ë˜ëŠ” í•¨ìˆ˜
     //{
-    //    if (other.CompareTag("Player")) // Æ®¸®°Å¿¡ µé¾î¿Â ¿ÀºêÁ§Æ®°¡ "Player" ÅÂ±×¸¦ °¡Áö°í ÀÖ´ÂÁö È®ÀÎ
+    //    if (other.CompareTag("Player")) // íŠ¸ë¦¬ê±°ì— ë“¤ì–´ì˜¨ ì˜¤ë¸Œì íŠ¸ê°€ "Player" íƒœê·¸ë¥¼ ê°€ì§€ê³  ìˆëŠ”ì§€ í™•ì¸
     //    {
     //        TextMeshProUGUI tmpText = textCanvas.GetComponent<TextMeshProUGUI>();
 
-    //        textCanvas.SetActive(true); // »óÈ£ÀÛ¿ë ÅØ½ºÆ® Ãâ·Â
-    //        isInteract = true; // »óÈ£ÀÛ¿ë °¡´É
+    //        textCanvas.SetActive(true); // ìƒí˜¸ì‘ìš© í…ìŠ¤íŠ¸ ì¶œë ¥
+    //        isInteract = true; // ìƒí˜¸ì‘ìš© ê°€ëŠ¥
     //    }
     //}
 
     //void OnTriggerExit2D(Collider2D other)
     //{
-    //    if (other.CompareTag("Player")) // Æ®¸®°Å¿¡ µé¾î¿Â ¿ÀºêÁ§Æ®°¡ "Player" ÅÂ±×¸¦ °¡Áö°í ÀÖ´ÂÁö È®ÀÎ
+    //    if (other.CompareTag("Player")) // íŠ¸ë¦¬ê±°ì— ë“¤ì–´ì˜¨ ì˜¤ë¸Œì íŠ¸ê°€ "Player" íƒœê·¸ë¥¼ ê°€ì§€ê³  ìˆëŠ”ì§€ í™•ì¸
     //    {
-    //        textCanvas.SetActive(false); // »óÈ£ÀÛ¿ë ÅØ½ºÆ® ¹ÌÃâ·Â
-    //        isInteract = false; // »óÈ£ÀÛ¿ë ºÒ°¡
+    //        textCanvas.SetActive(false); // ìƒí˜¸ì‘ìš© í…ìŠ¤íŠ¸ ë¯¸ì¶œë ¥
+    //        isInteract = false; // ìƒí˜¸ì‘ìš© ë¶ˆê°€
 
-    //        // ´ëÈ­ ÃÊ±âÈ­
+    //        // ëŒ€í™” ì´ˆê¸°í™”
     //        //dm.SettingUI(false);
     //        //dm.currentTextIndex = 0;
     //        //dm.isWaitingInput = false;
@@ -55,109 +51,109 @@ public class SkeletController : MonoBehaviour
     //    }
     //}
 
-    //void Interactive() // »óÈ£ÀÛ¿ë
+    //void Interactive() // ìƒí˜¸ì‘ìš©
     //{
     //    isInteract = true;
-    //    isDialogueActive = true; // ´ëÈ­°¡ ½ÃÀÛµÇ¾úÀ½À» Ç¥½Ã
+    //    isDialogueActive = true; // ëŒ€í™”ê°€ ì‹œì‘ë˜ì—ˆìŒì„ í‘œì‹œ
 
     //    GameObject player = GameObject.FindGameObjectWithTag("Player");
 
-    //    if (player.CompareTag("Player")) // Æ®¸®°Å¿¡ µé¾î¿Â ¿ÀºêÁ§Æ®°¡ "Player" ÅÂ±×¸¦ °¡Áö°í ÀÖ´ÂÁö È®ÀÎ
+    //    if (player.CompareTag("Player")) // íŠ¸ë¦¬ê±°ì— ë“¤ì–´ì˜¨ ì˜¤ë¸Œì íŠ¸ê°€ "Player" íƒœê·¸ë¥¼ ê°€ì§€ê³  ìˆëŠ”ì§€ í™•ì¸
     //    {
-    //        //dm.ShowDialogue(); // ´ëÈ­ ½ÃÀÛ
+    //        //dm.ShowDialogue(); // ëŒ€í™” ì‹œì‘
 
     //        //PlayerPositionManager.Instance.SetLastPositionAndScene(
-    //        //    player.transform.position, SceneManager.GetActiveScene().name); // ÇöÀç À§Ä¡¿Í ¾À ÀÌ¸§ ÀúÀå
+    //        //    player.transform.position, SceneManager.GetActiveScene().name); // í˜„ì¬ ìœ„ì¹˜ì™€ ì”¬ ì´ë¦„ ì €ì¥
     //    }
     //}
 
     //void AfterTalking()
     //{
-    //    isDialogueActive = false; // ´ëÈ­°¡ ³¡³µÀ½À» Ç¥½Ã
-    //    dm.gameObject.SetActive(false); // ¾À ·Îµå Àü¿¡ DialogueManager ¿ÀºêÁ§Æ®¸¦ ºñÈ°¼ºÈ­
+    //    isDialogueActive = false; // ëŒ€í™”ê°€ ëë‚¬ìŒì„ í‘œì‹œ
+    //    dm.gameObject.SetActive(false); // ì”¬ ë¡œë“œ ì „ì— DialogueManager ì˜¤ë¸Œì íŠ¸ë¥¼ ë¹„í™œì„±í™”
 
     //    if (isInteract && !isDialogueActive && Input.GetKeyDown(KeyCode.F))
     //    {
-    //        // MainGameManager¿¡¼­ LoadSceneÀ» ºÒ·¯¿È (¹Ì´Ï°ÔÀÓÀ¸·Î ÀÌµ¿)
-    //        MainGameManager.Instance.LoadScene("MiniGameScene");
+    //        // MainGameManagerì—ì„œ LoadSceneì„ ë¶ˆëŸ¬ì˜´ (ë¯¸ë‹ˆê²Œì„ìœ¼ë¡œ ì´ë™)
+    //        GameManager.Instance.LoadScene("MiniGameScene");
     //    }
     //}
 
     #endregion
 
-    #region °­ÀÇ ±â¹İ ÄÚµå
+    #region ê°•ì˜ ê¸°ë°˜ ì½”ë“œ
 
-    public GameObject textCanvas; // ¹®±¸ UI ¿ÀºêÁ§Æ® (Inspector¿¡¼­ ÇÒ´ç)
-    public DialogueManager dialogueManager; // DialogueManager¸¦ Inspector¿¡¼­ ÇÒ´ç
+    public GameObject textCanvas; // ë¬¸êµ¬ UI ì˜¤ë¸Œì íŠ¸ (Inspectorì—ì„œ í• ë‹¹)
+    public DialogueManager dialogueManager; // DialogueManagerë¥¼ Inspectorì—ì„œ í• ë‹¹
 
-    bool isInteract = false; // »óÈ£ÀÛ¿ë °¡´ÉÇÑÁö
-    bool isDialogueActive = false; // ´ëÈ­°¡ È°¼ºÈ­µÇ¾ú´ÂÁö
+    bool isInteract = false; // ìƒí˜¸ì‘ìš© ê°€ëŠ¥í•œì§€
+    bool isDialogueActive = false; // ëŒ€í™”ê°€ í™œì„±í™”ë˜ì—ˆëŠ”ì§€
 
     void Start()
     {
-        // DialogueManagerÀÇ ´ëÈ­ Á¾·á ÀÌº¥Æ®¿¡ AfterTalking ÇÔ¼ö µî·Ï
+        // DialogueManagerì˜ ëŒ€í™” ì¢…ë£Œ ì´ë²¤íŠ¸ì— AfterTalking í•¨ìˆ˜ ë“±ë¡
         if (dialogueManager != null)
         {
             dialogueManager.OnDialogueEnd += AfterTalking;
         }
         else
         {
-            Debug.LogError("SkeletController: DialogueManager°¡ ÇÒ´çµÇÁö ¾Ê¾Ò½À´Ï´Ù.");
+            Debug.LogError("SkeletController: DialogueManagerê°€ í• ë‹¹ë˜ì§€ ì•Šì•˜ìŠµë‹ˆë‹¤.");
         }
     }
 
     void Update()
     {
-        // ÇÃ·¹ÀÌ¾î°¡ Æ®¸®°Å ¿µ¿ª ¾È¿¡ ÀÖ´Â µ¿¾È ¼³Á¤µÈ »óÈ£ÀÛ¿ë Å° (F)¸¦ ´©¸£¸é
+        // í”Œë ˆì´ì–´ê°€ íŠ¸ë¦¬ê±° ì˜ì—­ ì•ˆì— ìˆëŠ” ë™ì•ˆ ì„¤ì •ëœ ìƒí˜¸ì‘ìš© í‚¤ (F)ë¥¼ ëˆ„ë¥´ë©´
         if (isInteract && Input.GetKeyDown(KeyCode.F))
         {
-            if (!isDialogueActive) // ´ëÈ­°¡ È°¼ºÈ­µÇÁö ¾Ê¾Ò´Ù¸é (Ã³À½ ´ëÈ­ ½ÃÀÛ)
+            if (!isDialogueActive) // ëŒ€í™”ê°€ í™œì„±í™”ë˜ì§€ ì•Šì•˜ë‹¤ë©´ (ì²˜ìŒ ëŒ€í™” ì‹œì‘)
             {
-                Interactive(); // ´ëÈ­ ½ÃÀÛ
+                Interactive(); // ëŒ€í™” ì‹œì‘
             }
-            else // ´ëÈ­°¡ È°¼ºÈ­ ÁßÀÌ¶ó¸é (´ÙÀ½ ´ëÈ­ ÁøÇà ¶Ç´Â ´ëÈ­ °­Á¦ ½ºÅµ)
+            else // ëŒ€í™”ê°€ í™œì„±í™” ì¤‘ì´ë¼ë©´ (ë‹¤ìŒ ëŒ€í™” ì§„í–‰ ë˜ëŠ” ëŒ€í™” ê°•ì œ ìŠ¤í‚µ)
             {
                 dialogueManager.Nextdialogue();
             }
         }
     }
 
-    void OnTriggerEnter2D(Collider2D other) // ÇÃ·¹ÀÌ¾î°¡ Æ®¸®°Å¿¡ µé¾î¿ÔÀ» ¶§ ½ÇÇàµÇ´Â ÇÔ¼ö
+    void OnTriggerEnter2D(Collider2D other) // í”Œë ˆì´ì–´ê°€ íŠ¸ë¦¬ê±°ì— ë“¤ì–´ì™”ì„ ë•Œ ì‹¤í–‰ë˜ëŠ” í•¨ìˆ˜
     {
-        if (other.CompareTag("Player")) // Æ®¸®°Å¿¡ µé¾î¿Â ¿ÀºêÁ§Æ®°¡ "Player" ÅÂ±×¸¦ °¡Áö°í ÀÖ´ÂÁö È®ÀÎ
+        if (other.CompareTag("Player")) // íŠ¸ë¦¬ê±°ì— ë“¤ì–´ì˜¨ ì˜¤ë¸Œì íŠ¸ê°€ "Player" íƒœê·¸ë¥¼ ê°€ì§€ê³  ìˆëŠ”ì§€ í™•ì¸
         {
             //TextMeshProUGUI tmpText = textCanvas.GetComponent<TextMeshProUGUI>();
 
-            textCanvas.SetActive(true); // »óÈ£ÀÛ¿ë ÅØ½ºÆ® Ãâ·Â
-            isInteract = true; // »óÈ£ÀÛ¿ë °¡´É
+            textCanvas.SetActive(true); // ìƒí˜¸ì‘ìš© í…ìŠ¤íŠ¸ ì¶œë ¥
+            isInteract = true; // ìƒí˜¸ì‘ìš© ê°€ëŠ¥
         }
     }
 
     void OnTriggerExit2D(Collider2D other)
     {
-        if (other.CompareTag("Player")) // Æ®¸®°Å¿¡ µé¾î¿Â ¿ÀºêÁ§Æ®°¡ "Player" ÅÂ±×¸¦ °¡Áö°í ÀÖ´ÂÁö È®ÀÎ
+        if (other.CompareTag("Player")) // íŠ¸ë¦¬ê±°ì— ë“¤ì–´ì˜¨ ì˜¤ë¸Œì íŠ¸ê°€ "Player" íƒœê·¸ë¥¼ ê°€ì§€ê³  ìˆëŠ”ì§€ í™•ì¸
         {
-            textCanvas.SetActive(false); // »óÈ£ÀÛ¿ë ÅØ½ºÆ® ¹ÌÃâ·Â
-            isInteract = false; // »óÈ£ÀÛ¿ë ºÒ°¡
+            textCanvas.SetActive(false); // ìƒí˜¸ì‘ìš© í…ìŠ¤íŠ¸ ë¯¸ì¶œë ¥
+            isInteract = false; // ìƒí˜¸ì‘ìš© ë¶ˆê°€
 
             if (isDialogueActive)
             {
-                isDialogueActive = false; // ´ëÈ­ Á¾·á
+                isDialogueActive = false; // ëŒ€í™” ì¢…ë£Œ
 
-                if (dialogueManager != null) // ´ëÈ­ ÄÚ·çÆ¾ÀÌ ½ÇÇà ÁßÀÌ¶ó¸é °­Á¦ ÁßÁö
+                if (dialogueManager != null) // ëŒ€í™” ì½”ë£¨í‹´ì´ ì‹¤í–‰ ì¤‘ì´ë¼ë©´ ê°•ì œ ì¤‘ì§€
                 {
-                    StopAllCoroutines(); // ÇöÀç ½ºÅ©¸³Æ®ÀÇ ÄÚ·çÆ¾ ÁßÁö
-                    dialogueManager.SettingUI(false); // ´ëÈ­Ã¢ UI ºñÈ°¼ºÈ­
-                    dialogueManager.StopAllCoroutines(); // DialogueManagerÀÇ ÄÚ·çÆ¾µµ ¸ğµÎ ÁßÁö
+                    StopAllCoroutines(); // í˜„ì¬ ìŠ¤í¬ë¦½íŠ¸ì˜ ì½”ë£¨í‹´ ì¤‘ì§€
+                    dialogueManager.SettingUI(false); // ëŒ€í™”ì°½ UI ë¹„í™œì„±í™”
+                    dialogueManager.StopAllCoroutines(); // DialogueManagerì˜ ì½”ë£¨í‹´ë„ ëª¨ë‘ ì¤‘ì§€
                 }
             }
         }
     }
 
-    void Interactive() // »óÈ£ÀÛ¿ë
+    void Interactive() // ìƒí˜¸ì‘ìš©
     {
         //isInteract = true;
-        isDialogueActive = true; // ´ëÈ­°¡ ½ÃÀÛµÇ¾úÀ½À» Ç¥½Ã
+        isDialogueActive = true; // ëŒ€í™”ê°€ ì‹œì‘ë˜ì—ˆìŒì„ í‘œì‹œ
         dialogueManager.gameObject.SetActive(true);
         dialogueManager.StartDialogue();
 
@@ -165,22 +161,22 @@ public class SkeletController : MonoBehaviour
 
     void AfterTalking()
     {
-        isDialogueActive = false; // ´ëÈ­°¡ ³¡³µÀ½À» Ç¥½Ã
-        dialogueManager.gameObject.SetActive(false); // ¾À ·Îµå Àü¿¡ DialogueManager ¿ÀºêÁ§Æ®¸¦ ºñÈ°¼ºÈ­
+        isDialogueActive = false; // ëŒ€í™”ê°€ ëë‚¬ìŒì„ í‘œì‹œ
+        dialogueManager.gameObject.SetActive(false); // ì”¬ ë¡œë“œ ì „ì— DialogueManager ì˜¤ë¸Œì íŠ¸ë¥¼ ë¹„í™œì„±í™”
         HandleSceneTransition();
     }
 
     void HandleSceneTransition()
     {
-        // MainGameManager¿¡¼­ LoadSceneÀ» ºÒ·¯¿È (¹Ì´Ï°ÔÀÓÀ¸·Î ÀÌµ¿)
-        if (MainGameManager.Instance != null)
+        // MainGameManagerì—ì„œ LoadSceneì„ ë¶ˆëŸ¬ì˜´ (ë¯¸ë‹ˆê²Œì„ìœ¼ë¡œ ì´ë™)
+        if (GameManager.Instance != null)
         {
-            MainGameManager.Instance.LoadScene("MiniGameScene");
-            Debug.Log("SkeletController: MiniGameSceneÀ¸·Î ÀÌµ¿ÇÕ´Ï´Ù.");
+            GameManager.Instance.LoadScene("MiniGameScene");
+            Debug.Log("SkeletController: MiniGameSceneìœ¼ë¡œ ì´ë™í•©ë‹ˆë‹¤.");
         }
         else
         {
-            Debug.LogError("SkeletController: MainGameManager.Instance°¡ nullÀÔ´Ï´Ù. ¾À ÀüÈ¯ ½ÇÆĞ.");
+            Debug.LogError("SkeletController: GameManager.Instanceê°€ nullì…ë‹ˆë‹¤. ì”¬ ì „í™˜ ì‹¤íŒ¨.");
         }
     }
 

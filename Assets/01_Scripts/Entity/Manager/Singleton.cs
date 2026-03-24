@@ -1,6 +1,6 @@
 using UnityEngine;
 
-// where T : MonoBehaviour´Â "T´Â ¹İµå½Ã À¯´ÏÆ¼ ÄÄÆ÷³ÍÆ®¿©¾ß ÇØ!"¶ó´Â ¾ÈÀüÀåÄ¡
+// where T : MonoBehaviourëŠ” "TëŠ” ë°˜ë“œì‹œ ìœ ë‹ˆí‹° ì»´í¬ë„ŒíŠ¸ì—¬ì•¼ í•´!"ë¼ëŠ” ì•ˆì „ì¥ì¹˜
 public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
 {
     private static T instance;
@@ -8,14 +8,14 @@ public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
     {
         get
         {
-            // ÀÎ½ºÅÏ½º°¡ ¾øÀ» °æ¿ì ¾À¿¡¼­ Ã£¾Æº¸°í, ±×·¡µµ ¾øÀ¸¸é ¿¡·¯¸¦ ¶ç¿ì°Å³ª »õ·Î ¸¸µéÀ½
+            // ì¸ìŠ¤í„´ìŠ¤ê°€ ì—†ì„ ê²½ìš° ì”¬ì—ì„œ ì°¾ì•„ë³´ê³ , ê·¸ë˜ë„ ì—†ìœ¼ë©´ ì—ëŸ¬ë¥¼ ë„ìš°ê±°ë‚˜ ìƒˆë¡œ ë§Œë“¤ìŒ
             if (instance == null)
             {
                 instance = FindObjectOfType<T>();
 
                 if (instance == null)
                 {
-                    Debug.LogError($"{typeof(T).Name} ½Ì±ÛÅæÀÌ ¾À¿¡ ¾øÀ½");
+                    Debug.LogError($"{typeof(T).Name} ì‹±ê¸€í†¤ì´ ì”¬ì— ì—†ìŒ");
                 }
             }
 
@@ -23,17 +23,17 @@ public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
         }
     }
 
-    // ÀÚ½Ä Å¬·¡½º¿¡¼­µµ Awake¸¦ ¾µ ¼ö ÀÖ°Ô ÇÔ
+    // ìì‹ í´ë˜ìŠ¤ì—ì„œë„ Awakeë¥¼ ì“¸ ìˆ˜ ìˆê²Œ í•¨
     protected virtual void Awake()
     {
         if (instance == null)
         {
             instance = this as T;
-            DontDestroyOnLoad(this); // ¾ÀÀÌ ³Ñ¾î°¡µµ ÆÄ±«µÇÁö ¾Ê°Ô À¯Áö
+            DontDestroyOnLoad(this); // ì”¬ì´ ë„˜ì–´ê°€ë„ íŒŒê´´ë˜ì§€ ì•Šê²Œ ìœ ì§€
         }
         else if (instance != this as T)
         {
-            Destroy(this); // Áßº¹ ¹æÁö
+            Destroy(this); // ì¤‘ë³µ ë°©ì§€
         }
     }
 }

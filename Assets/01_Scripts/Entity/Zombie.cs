@@ -7,28 +7,28 @@ using UnityEngine.UI;
 
 public class Zombie : MonoBehaviour
 {
-    [SerializeField] private TextMeshProUGUI _dialogueText; // ÀÎ½ºÆåÅÍ¿¡¼­ ÇÒ´ç °¡´É
-    [SerializeField] string[] _zombieDialogue; // ÀÎ½ºÆåÅÍ¿¡ ¿©·¯ ¹®ÀåÀ» Ãß°¡
+    [SerializeField] private TextMeshProUGUI _dialogueText; // ì¸ìŠ¤í™í„°ì—ì„œ í• ë‹¹ ê°€ëŠ¥
+    [SerializeField] string[] _zombieDialogue; // ì¸ìŠ¤í™í„°ì— ì—¬ëŸ¬ ë¬¸ì¥ì„ ì¶”ê°€
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        // TODO : Ãæµ¹Ã¼°¡ ³» ÇÃ·¹ÀÌ¾î ¿µ¿ª¿¡ µé¾î¿ÔÀ» ¶§
-        RandomDialogue(); // ·£´ı ¹®±¸°¡ Ãâ·Â
-        MainGameManager.Instance.UpdateNoticeText("»óÈ£ÀÛ¿ë ¹üÀ§ ÀÔ´Ï´Ù.");
+        // TODO : ì¶©ëŒì²´ê°€ ë‚´ í”Œë ˆì´ì–´ ì˜ì—­ì— ë“¤ì–´ì™”ì„ ë•Œ
+        RandomDialogue(); // ëœë¤ ë¬¸êµ¬ê°€ ì¶œë ¥
+        GameManager.Instance.UpdateNoticeText("ìƒí˜¸ì‘ìš© ë²”ìœ„ ì…ë‹ˆë‹¤.");
     }
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        // TODO : Ãæµ¹Ã¼°¡ ³» ÇÃ·¹ÀÌ¾î ¿µ¿ª¿¡ ¹ş¾î³ÂÀ» ¶§
-        _dialogueText.gameObject.SetActive(false); // ÅØ½ºÆ® È­¸é ¹ÌÃâ·Â
-        MainGameManager.Instance.UpdateNoticeText("»óÈ£ÀÛ¿ë ¹üÀ§¸¦ ¹ş¾î³µ½À´Ï´Ù.");
+        // TODO : ì¶©ëŒì²´ê°€ ë‚´ í”Œë ˆì´ì–´ ì˜ì—­ì— ë²—ì–´ëƒˆì„ ë•Œ
+        _dialogueText.gameObject.SetActive(false); // í…ìŠ¤íŠ¸ í™”ë©´ ë¯¸ì¶œë ¥
+        GameManager.Instance.UpdateNoticeText("ìƒí˜¸ì‘ìš© ë²”ìœ„ë¥¼ ë²—ì–´ë‚¬ìŠµë‹ˆë‹¤.");
     }
 
     private void RandomDialogue()
     {
-        int randomIndex = Random.Range(0, _zombieDialogue.Length); // 0ºÎÅÍ ¹è¿­ ±æÀÌ ¸¸Å­ ·£´ıÀ¸·Î ¼ıÀÚ ÁöÁ¤
+        int randomIndex = Random.Range(0, _zombieDialogue.Length); // 0ë¶€í„° ë°°ì—´ ê¸¸ì´ ë§Œí¼ ëœë¤ìœ¼ë¡œ ìˆ«ì ì§€ì •
 
-        _dialogueText.text = _zombieDialogue[randomIndex];  // ¹®ÀÚ¿­ ¹è¿­¿¡¼­ ·£´ıÀ¸·Î ¹®Àå Ãâ·Â
-        _dialogueText.gameObject.SetActive(true); // ÅØ½ºÆ® È­¸é¿¡ Ãâ·Â
+        _dialogueText.text = _zombieDialogue[randomIndex];  // ë¬¸ìì—´ ë°°ì—´ì—ì„œ ëœë¤ìœ¼ë¡œ ë¬¸ì¥ ì¶œë ¥
+        _dialogueText.gameObject.SetActive(true); // í…ìŠ¤íŠ¸ í™”ë©´ì— ì¶œë ¥
     }
 }
