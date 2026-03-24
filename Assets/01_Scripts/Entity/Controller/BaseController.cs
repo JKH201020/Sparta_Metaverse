@@ -2,34 +2,34 @@ using UnityEngine;
 
 public class BaseController : MonoBehaviour
 {
-    #region ±âÁ¸ ÄÚµå
+    #region ê¸°ì¡´ ì½”ë“œ
 
-    //protected Rigidbody2D _rigidbody; // ÀÌµ¿À» À§ÇÑ ¹°¸® ÄÄÆ÷³ÍÆ®
-    //protected SpriteRenderer spriteRenderer; // SpriteRenderer ÄÄÆ÷³ÍÆ®¸¦ ÂüÁ¶ÇÏ±â À§ÇÑ º¯¼ö
+    //protected Rigidbody2D _rigidbody; // ì´ë™ì„ ìœ„í•œ ë¬¼ë¦¬ ì»´í¬ë„ŒíŠ¸
+    //protected SpriteRenderer spriteRenderer; // SpriteRenderer ì»´í¬ë„ŒíŠ¸ë¥¼ ì°¸ì¡°í•˜ê¸° ìœ„í•œ ë³€ìˆ˜
     //protected AnimationHandler animationHandler;
 
-    //[SerializeField] private SpriteRenderer characterRenderer; // ÁÂ¿ì ¹İÀüÀ» À§ÇÑ ·»´õ·¯
+    //[SerializeField] private SpriteRenderer characterRenderer; // ì¢Œìš° ë°˜ì „ì„ ìœ„í•œ ë Œë”ëŸ¬
 
-    //protected Vector2 movementDirection = Vector2.zero; // ÇöÀç ÀÌµ¿ ¹æÇâ
+    //protected Vector2 movementDirection = Vector2.zero; // í˜„ì¬ ì´ë™ ë°©í–¥
     //public Vector2 MovementDirection { get { return movementDirection; } }
 
-    //protected Vector2 lookDirection = Vector2.zero; // ÇöÀç ¹Ù¶óº¸´Â ¹æÇâ
+    //protected Vector2 lookDirection = Vector2.zero; // í˜„ì¬ ë°”ë¼ë³´ëŠ” ë°©í–¥
     //public Vector2 LookDirection { get { return lookDirection; } }
 
-    //// °ÔÀÓ ¿ÀºêÁ§Æ®³ª ÄÄÆ÷³ÍÆ® °£ÀÇ ÂüÁ¶¸¦ ¼³Á¤ÇÏ°Å³ª ÃÊ±â »óÅÂ¸¦ ¼³Á¤ÇÏ´Â µîÀÇ ÃÊ±âÈ­ ÀÛ¾÷À» ¼öÇàÇÏ´Â µ¥ ÀûÇÕ
-    //protected virtual void Awake() // ÀÌ ½ºÅ©¸³Æ®ÀÇ °ÔÀÓ¿ÀºêÁ§Æ®°¡ ·ÎµåµÉ ¶§ ÀÚµ¿À¸·Î µü ÇÑ ¹ø È£Ãâ
+    //// ê²Œì„ ì˜¤ë¸Œì íŠ¸ë‚˜ ì»´í¬ë„ŒíŠ¸ ê°„ì˜ ì°¸ì¡°ë¥¼ ì„¤ì •í•˜ê±°ë‚˜ ì´ˆê¸° ìƒíƒœë¥¼ ì„¤ì •í•˜ëŠ” ë“±ì˜ ì´ˆê¸°í™” ì‘ì—…ì„ ìˆ˜í–‰í•˜ëŠ” ë° ì í•©
+    //protected virtual void Awake() // ì´ ìŠ¤í¬ë¦½íŠ¸ì˜ ê²Œì„ì˜¤ë¸Œì íŠ¸ê°€ ë¡œë“œë  ë•Œ ìë™ìœ¼ë¡œ ë”± í•œ ë²ˆ í˜¸ì¶œ
     //{
-    //    // ÇöÀç ½ºÅ©¸³Æ®°¡ ¿¬°áµÈ °ÔÀÓ ¿ÀºêÁ§Æ®°¡ °¡Áö°í ÀÖ´Â Rigidbody 2D ÄÄÆ÷³ÍÆ®¸¦ Ã£¾Æ ¹İÈ¯ÇÏ´Â ¿ªÇÒ
+    //    // í˜„ì¬ ìŠ¤í¬ë¦½íŠ¸ê°€ ì—°ê²°ëœ ê²Œì„ ì˜¤ë¸Œì íŠ¸ê°€ ê°€ì§€ê³  ìˆëŠ” Rigidbody 2D ì»´í¬ë„ŒíŠ¸ë¥¼ ì°¾ì•„ ë°˜í™˜í•˜ëŠ” ì—­í• 
     //    _rigidbody = GetComponent<Rigidbody2D>();
-    //    // ÇöÀç °ÔÀÓ ¿ÀºêÁ§Æ®¿¡¼­ SpriteRenderer ÄÄÆ÷³ÍÆ®¸¦ ÀÚ½Ä¿¡¼­ Ã£¾Æ spriteRenderer º¯¼ö¿¡ ÇÒ´ç
+    //    // í˜„ì¬ ê²Œì„ ì˜¤ë¸Œì íŠ¸ì—ì„œ SpriteRenderer ì»´í¬ë„ŒíŠ¸ë¥¼ ìì‹ì—ì„œ ì°¾ì•„ spriteRenderer ë³€ìˆ˜ì— í• ë‹¹
     //    spriteRenderer = GetComponentInChildren<SpriteRenderer>();
-    //    // ÇöÀç ½ºÅ©¸³Æ®°¡ ¿¬°áµÈ °ÔÀÓ ¿ÀºêÁ§Æ®ÀÇ ÀÚ½ÄÀÌ °¡Áö°í ÀÖ´Â AnimationHandler ÄÄÆ÷³ÍÆ®¸¦ Ã£¾Æ ¹İÈ¯ÇÏ´Â ¿ªÇÒ
+    //    // í˜„ì¬ ìŠ¤í¬ë¦½íŠ¸ê°€ ì—°ê²°ëœ ê²Œì„ ì˜¤ë¸Œì íŠ¸ì˜ ìì‹ì´ ê°€ì§€ê³  ìˆëŠ” AnimationHandler ì»´í¬ë„ŒíŠ¸ë¥¼ ì°¾ì•„ ë°˜í™˜í•˜ëŠ” ì—­í• 
     //    animationHandler = GetComponentInChildren<AnimationHandler>();
     //}
 
     //protected virtual void Start()
     //{
-    //    Time.timeScale = 1.0f; // Scene ÀüÈ¯ ÈÄ ¸ØÃçÀÖ´Â »óÈ² ¹æÁö
+    //    Time.timeScale = 1.0f; // Scene ì „í™˜ í›„ ë©ˆì¶°ìˆëŠ” ìƒí™© ë°©ì§€
     //}
 
     //protected virtual void Update()
@@ -39,7 +39,7 @@ public class BaseController : MonoBehaviour
     //    Jump();
     //}
 
-    //protected virtual void FixedUpdate() // ¹°¸® ¾÷µ¥ÀÌÆ® (°íÁ¤µÈ ½Ã°£ °£°İÀ¸·Î È£ÃâµÊ)
+    //protected virtual void FixedUpdate() // ë¬¼ë¦¬ ì—…ë°ì´íŠ¸ (ê³ ì •ëœ ì‹œê°„ ê°„ê²©ìœ¼ë¡œ í˜¸ì¶œë¨)
     //{
     //    Movement(movementDirection);
     //}
@@ -49,12 +49,12 @@ public class BaseController : MonoBehaviour
 
     //}
 
-    //void Movement(Vector2 direction) // ÀÌµ¿
+    //void Movement(Vector2 direction) // ì´ë™
     //{
-    //    direction = direction * 5; // ÀÌµ¿ ¼Óµµ
+    //    direction = direction * 5; // ì´ë™ ì†ë„
 
-    //    _rigidbody.velocity = direction; // ½ÇÁ¦ ¹°¸® ÀÌµ¿
-    //    animationHandler.Move(direction); // ÀÌµ¿ ¾Ö´Ï¸ŞÀÌ¼Ç Ã³¸®
+    //    _rigidbody.velocity = direction; // ì‹¤ì œ ë¬¼ë¦¬ ì´ë™
+    //    animationHandler.Move(direction); // ì´ë™ ì• ë‹ˆë©”ì´ì…˜ ì²˜ë¦¬
     //}
 
     //void Rotate(Vector2 direction)
@@ -65,23 +65,23 @@ public class BaseController : MonoBehaviour
     //    characterRenderer.flipX = isLeft;
     //}
 
-    //void Jump() // Á¡ÇÁ
+    //void Jump() // ì í”„
     //{
     //    animationHandler.Jump();
     //}
 
     #endregion
 
-    #region °­ÀÇ ±â¹İ ÄÚµå
+    #region ê°•ì˜ ê¸°ë°˜ ì½”ë“œ
 
-    protected Rigidbody2D _rigidbody; // ÀÌµ¿À» À§ÇÑ ¹°¸® ÄÄÆ÷³ÍÆ®
+    protected Rigidbody2D _rigidbody; // ì´ë™ì„ ìœ„í•œ ë¬¼ë¦¬ ì»´í¬ë„ŒíŠ¸
 
-    [SerializeField] private SpriteRenderer characterRenderer; // SpriteRenderer ÄÄÆ÷³ÍÆ®¸¦ ÂüÁ¶ÇÏ±â À§ÇÑ º¯¼ö
+    [SerializeField] private SpriteRenderer characterRenderer; // SpriteRenderer ì»´í¬ë„ŒíŠ¸ë¥¼ ì°¸ì¡°í•˜ê¸° ìœ„í•œ ë³€ìˆ˜
 
-    protected Vector2 movementDirection = Vector2.zero; // ÇöÀç ÀÌµ¿ ¹æÇâ
+    protected Vector2 movementDirection = Vector2.zero; // í˜„ì¬ ì´ë™ ë°©í–¥
     public Vector2 MovementDirection { get { return movementDirection; } }
 
-    protected Vector2 lookDirection = Vector2.zero; // ÇöÀç ¹Ù¶óº¸´Â ¹æÇâ
+    protected Vector2 lookDirection = Vector2.zero; // í˜„ì¬ ë°”ë¼ë³´ëŠ” ë°©í–¥
     public Vector2 LookDirection { get { return lookDirection; } }
 
     protected virtual void Awake()
@@ -91,7 +91,7 @@ public class BaseController : MonoBehaviour
 
     protected virtual void Start()
     {
-        Time.timeScale = 1.0f; // Scene ÀüÈ¯ ÈÄ ¸ØÃçÀÖ´Â »óÈ² ¹æÁö
+        Time.timeScale = 1.0f; // Scene ì „í™˜ í›„ ë©ˆì¶°ìˆëŠ” ìƒí™© ë°©ì§€
     }
 
     protected virtual void Update()
@@ -112,14 +112,14 @@ public class BaseController : MonoBehaviour
 
     private void Movement(Vector2 direction)
     {
-        direction = direction * 5; // ÀÌµ¿ ¼Óµµ
+        direction = direction * 5; // ì´ë™ ì†ë„
         _rigidbody.velocity = direction;
     }
 
     private void Rotate(Vector2 direction)
     {
         float rotZ = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-        bool isLeft = Mathf.Abs(rotZ) > 90f; // ÁÂ¿ì ¹İÀü È®ÀÎ
+        bool isLeft = Mathf.Abs(rotZ) > 90f; // ì¢Œìš° ë°˜ì „ í™•ì¸
 
         characterRenderer.flipX = isLeft;
     }

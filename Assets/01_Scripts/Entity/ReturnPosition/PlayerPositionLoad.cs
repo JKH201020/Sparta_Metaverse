@@ -5,12 +5,12 @@ using UnityEngine.SceneManagement;
 
 public class PlayerPositionLoad : MonoBehaviour
 {
-    public GameObject player; // ÇÃ·¹ÀÌ¾î ¿ÀºêÁ§Æ® (Inspector¿¡¼­ ¼³Á¤)
-    public string returnScene; // µ¹¾Æ¿Ã ¸ŞÀÎ ¾À ÀÌ¸§ (Inspector¿¡¼­ ¼³Á¤)
+    public GameObject player; // í”Œë ˆì´ì–´ ì˜¤ë¸Œì íŠ¸ (Inspectorì—ì„œ ì„¤ì •)
+    public string returnScene; // ëŒì•„ì˜¬ ë©”ì¸ ì”¬ ì´ë¦„ (Inspectorì—ì„œ ì„¤ì •)
 
     void Start()
     {
-        // PlayerPositionManager°¡ Á¸ÀçÇÏ°í, ÀúÀåµÈ ¾À ÀÌ¸§ÀÌ ÇöÀç ¾À ÀÌ¸§°ú °°´Ù¸é À§Ä¡¸¦ ¼³Á¤
+        // PlayerPositionManagerê°€ ì¡´ì¬í•˜ê³ , ì €ì¥ëœ ì”¬ ì´ë¦„ì´ í˜„ì¬ ì”¬ ì´ë¦„ê³¼ ê°™ë‹¤ë©´ ìœ„ì¹˜ë¥¼ ì„¤ì •
         if (PlayerPositionManager.Instance != null &&
                 PlayerPositionManager.Instance.GetLastSceneName() == SceneManager.GetActiveScene().name)
         {
@@ -20,7 +20,7 @@ public class PlayerPositionLoad : MonoBehaviour
             }
         }
 
-        // À§Ä¡¸¦ ¼³Á¤ÇßÀ¸¸é ÀúÀåµÈ Á¤º¸´Â ÃÊ±âÈ­ -> º¹±Í ÈÄ À§Ä¡ µ¥ÀÌÅÍ »èÁ¦
+        // ìœ„ì¹˜ë¥¼ ì„¤ì •í–ˆìœ¼ë©´ ì €ì¥ëœ ì •ë³´ëŠ” ì´ˆê¸°í™” -> ë³µê·€ í›„ ìœ„ì¹˜ ë°ì´í„° ì‚­ì œ
         PlayerPositionManager.Instance.SetLastPositionAndScene(Vector3.zero, null);
     }
 }

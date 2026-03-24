@@ -4,48 +4,48 @@ using UnityEngine;
 
 public class FollowCamera : MonoBehaviour
 {
-    #region ±âÁ¸ ÄÚµå
+    #region ê¸°ì¡´ ì½”ë“œ
 
-    //public Transform target; // µû¶ó°¥ ´ë»ó (ÇÃ·¹ÀÌ¾î)
-    //public float Speed = 5f; // Ä«¸Ş¶ó ÀÌµ¿ ¼Óµµ
-    //public Vector2 minBounds; // Ä«¸Ş¶ó°¡ µµ´ŞÇÒ ¼ö ÀÖ´Â ÃÖ¼Ò À§Ä¡
-    //public Vector2 maxBounds; // Ä«¸Ş¶ó°¡ µµ´ŞÇÒ ¼ö ÀÖ´Â ÃÖ´ë À§Ä¡
-    //private Vector3 offset; // Ä«¸Ş¶ó¿Í ÇÃ·¹ÀÌ¾î °£ÀÇ ÃÊ±â °Å¸®
+    //public Transform target; // ë”°ë¼ê°ˆ ëŒ€ìƒ (í”Œë ˆì´ì–´)
+    //public float Speed = 5f; // ì¹´ë©”ë¼ ì´ë™ ì†ë„
+    //public Vector2 minBounds; // ì¹´ë©”ë¼ê°€ ë„ë‹¬í•  ìˆ˜ ìˆëŠ” ìµœì†Œ ìœ„ì¹˜
+    //public Vector2 maxBounds; // ì¹´ë©”ë¼ê°€ ë„ë‹¬í•  ìˆ˜ ìˆëŠ” ìµœëŒ€ ìœ„ì¹˜
+    //private Vector3 offset; // ì¹´ë©”ë¼ì™€ í”Œë ˆì´ì–´ ê°„ì˜ ì´ˆê¸° ê±°ë¦¬
 
     //void Start()
     //{
-    //    // ÃÊ±â °Å¸® ¼³Á¤ (º¸Åë z Ãà¸¸ -10)
+    //    // ì´ˆê¸° ê±°ë¦¬ ì„¤ì • (ë³´í†µ z ì¶•ë§Œ -10)
     //    offset = transform.position - target.position;
     //}
 
-    //// LateUpdate()¸¦ »ç¿ëÇÏ´Â ÀÌÀ¯´Â ¸ğµç Ä³¸¯ÅÍ ÀÌµ¿ÀÌ ³¡³­ ÈÄ¿¡ Ä«¸Ş¶ó°¡ µû¶ó°¡´Â ¿¬ÃâÀ» ¸¸µé±â À§ÇÔ
+    //// LateUpdate()ë¥¼ ì‚¬ìš©í•˜ëŠ” ì´ìœ ëŠ” ëª¨ë“  ìºë¦­í„° ì´ë™ì´ ëë‚œ í›„ì— ì¹´ë©”ë¼ê°€ ë”°ë¼ê°€ëŠ” ì—°ì¶œì„ ë§Œë“¤ê¸° ìœ„í•¨
     //void LateUpdate()
     //{
-    //    // µû¶ó°¡¾ß ÇÒ À§Ä¡ °è»ê (z´Â À¯Áö)
+    //    // ë”°ë¼ê°€ì•¼ í•  ìœ„ì¹˜ ê³„ì‚° (zëŠ” ìœ ì§€)
     //    Vector3 pos = target.position + offset;
     //    pos.z = transform.position.z;
 
-    //    // À§Ä¡ Á¦ÇÑ Àû¿ë
+    //    // ìœ„ì¹˜ ì œí•œ ì ìš©
     //    pos.x = Mathf.Clamp(pos.x, minBounds.x, maxBounds.x);
     //    pos.y = Mathf.Clamp(pos.y, minBounds.y, maxBounds.y);
 
-    //    // ºÎµå·´°Ô ÀÌµ¿
+    //    // ë¶€ë“œëŸ½ê²Œ ì´ë™
     //    transform.position = Vector3.Lerp(transform.position, pos, Time.deltaTime * Speed);
     //}
 
     #endregion
 
-#region °­ÀÇ ±â¹İ ÄÚµå
+#region ê°•ì˜ ê¸°ë°˜ ì½”ë“œ
 
-    public Transform target; // µû¶ó°¥ ´ë»ó (ÇÃ·¹ÀÌ¾î)
-    float offsetX;  // Ä«¸Ş¶ó¿Í ÇÃ·¹ÀÌ¾î °£ÀÇ ÃÊ±â °Å¸®
+    public Transform target; // ë”°ë¼ê°ˆ ëŒ€ìƒ (í”Œë ˆì´ì–´)
+    float offsetX;  // ì¹´ë©”ë¼ì™€ í”Œë ˆì´ì–´ ê°„ì˜ ì´ˆê¸° ê±°ë¦¬
     float offsetY;
 
     void Start()
     {
         if (target == null) return;
 
-        // ÃÊ±â °Å¸® ¼³Á¤
+        // ì´ˆê¸° ê±°ë¦¬ ì„¤ì •
         offsetX = transform.position.x - target.position.x;
         offsetY = transform.position.y - target.position.y;
     }

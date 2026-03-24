@@ -40,7 +40,7 @@ public class Player : MonoBehaviour
             {
                 if (Input.GetKeyDown(KeyCode.Space) || Input.GetMouseButtonDown(0))
                 {
-                    // °ÔÀÓ Àç½ÃÀÛ
+                    // ê²Œìž„ ìž¬ì‹œìž‘
                 }
             }
             else

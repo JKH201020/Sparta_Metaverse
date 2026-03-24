@@ -1,38 +1,12 @@
 using System.Collections;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class UIManager : Singleton<UIManager>
 {
-    [Header("로비 버튼 UI")]
-    [SerializeField] private Button _startButton;
-    [SerializeField] private Button _loadButton;
-    [SerializeField] private Button _SoundButton;
-
     [Header("Notice")]
     public TextMeshProUGUI NoticeText;
     private Coroutine _noticeTimerCoroutine;
-
-    private void Start()
-    {
-        _startButton.onClick.AddListener(OnStartButtonClicked);
-    }
-
-    private void OnStartButtonClicked()
-    {
-        GameManager.Instance.LoadScene(SceneNames.MainScene);
-    }
-
-    private void OnLoadButtonClicked()
-    {
-
-    }
-
-    private void OnSoundButtonClicked()
-    {
-
-    }
 
     #region NoticeText
 

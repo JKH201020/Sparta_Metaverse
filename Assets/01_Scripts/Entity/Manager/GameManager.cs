@@ -8,6 +8,12 @@ public class GameManager : Singleton<GameManager>
     [SerializeField] private LoadSceneManager _sceneManager;
     [SerializeField] private UIManager _uiManager;
 
+    private void Reset()
+    {
+        _uiManager = GetComponentInChildren<UIManager>();
+        _sceneManager = GetComponentInChildren<LoadSceneManager>();
+    }
+
     #region MainUIManager
 
     public void UpdateNoticeText(string text)

@@ -4,22 +4,22 @@ using UnityEngine;
 
 public class AnimationHandler : MonoBehaviour
 {
-    // Animator ÆÄ¶ó¹ÌÅÍ ÀÌ¸§À» ¹Ì¸® ÇØ½Ã·Î º¯È¯ÇØ Ä³½Ì (¼º´É ÃÖÀûÈ­)
+    // Animator íŒŒë¼ë¯¸í„° ì´ë¦„ì„ ë¯¸ë¦¬ í•´ì‹œë¡œ ë³€í™˜í•´ ìºì‹± (ì„±ëŠ¥ ìµœì í™”)
     static readonly int IsMove = Animator.StringToHash("IsMove");
     static readonly int IsJump = Animator.StringToHash("IsJump");
 
     protected Animator animator;
 
-    bool isJumping = false; // ÇöÀç Á¡ÇÁ ÁßÀÎÁö »óÅÂ¸¦ ÀúÀåÇÏ´Â º¯¼ö
+    bool isJumping = false; // í˜„ì¬ ì í”„ ì¤‘ì¸ì§€ ìƒíƒœë¥¼ ì €ì¥í•˜ëŠ” ë³€ìˆ˜
     float jumpStartTime = 0f;
     float jumpAnimationLength = 0f;
 
     protected virtual void Awake()
     {
-        // ¾Ö´Ï¸ŞÀÌÅÍ ÄÄÆ÷³ÍÆ®¸¦ °¡Á®¿È
+        // ì• ë‹ˆë©”ì´í„° ì»´í¬ë„ŒíŠ¸ë¥¼ ê°€ì ¸ì˜´
         animator = GetComponent<Animator>();
 
-        //// ÃÊ±â ¾Ö´Ï¸ŞÀÌ¼Ç Å¬¸³ Á¤º¸ °¡Á®¿À±â (½ºÅ©¸³Æ® ½ÃÀÛ ½Ã)
+        //// ì´ˆê¸° ì• ë‹ˆë©”ì´ì…˜ í´ë¦½ ì •ë³´ ê°€ì ¸ì˜¤ê¸° (ìŠ¤í¬ë¦½íŠ¸ ì‹œì‘ ì‹œ)
         //AnimationClip[] clips = animator.runtimeAnimatorController.animationClips;
 
         //foreach (AnimationClip clip in clips )
@@ -28,22 +28,22 @@ public class AnimationHandler : MonoBehaviour
         //}
     }
 
-    public void Move(Vector2 obj) // ÀÌµ¿
+    public void Move(Vector2 obj) // ì´ë™
     {
-        // ÀÌµ¿ ¹æÇâ º¤ÅÍÀÇ Å©±â¸¦ ÀÌ¿ëÇØ ¿òÁ÷ÀÌ´Â ÁßÀÎÁö ÆÇ´Ü
+        // ì´ë™ ë°©í–¥ ë²¡í„°ì˜ í¬ê¸°ë¥¼ ì´ìš©í•´ ì›€ì§ì´ëŠ” ì¤‘ì¸ì§€ íŒë‹¨
         animator.SetBool(IsMove, obj.magnitude > .5f);
     }
 
-    public void Jump() // Á¡ÇÁ
+    public void Jump() // ì í”„
     {
-        if (!isJumping && Input.GetKey(KeyCode.Space)) // ½ºÆäÀÌ½º ¹Ù¸¦ ´©¸¦ ¶§
+        if (!isJumping && Input.GetKey(KeyCode.Space)) // ìŠ¤í˜ì´ìŠ¤ ë°”ë¥¼ ëˆ„ë¥¼ ë•Œ
         {
             isJumping = true;
-            animator.SetBool(IsJump, true); // Á¡ÇÁ
-            jumpStartTime = Time.time; // Á¡ÇÁ ½ÃÀÛ ½Ã°£ ±â·Ï
+            animator.SetBool(IsJump, true); // ì í”„
+            jumpStartTime = Time.time; // ì í”„ ì‹œì‘ ì‹œê°„ ê¸°ë¡
         }
 
-        // Á¡ÇÁ ÁßÀÌ°í, Á¡ÇÁ ½ÃÀÛ ÈÄ ¾Ö´Ï¸ŞÀÌ¼Ç ±æÀÌ¸¸Å­ ½Ã°£ÀÌ Áö³µÀ¸¸é Á¡ÇÁ »óÅÂ Á¾·á
+        // ì í”„ ì¤‘ì´ê³ , ì í”„ ì‹œì‘ í›„ ì• ë‹ˆë©”ì´ì…˜ ê¸¸ì´ë§Œí¼ ì‹œê°„ì´ ì§€ë‚¬ìœ¼ë©´ ì í”„ ìƒíƒœ ì¢…ë£Œ
         if (isJumping && (Time.time - jumpStartTime) >= jumpAnimationLength)
         {
             isJumping = false;

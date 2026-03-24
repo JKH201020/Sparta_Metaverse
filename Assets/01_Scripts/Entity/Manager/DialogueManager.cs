@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 
 public class DialogueManager : MonoBehaviour
 {
-    #region ±âÁ¸ ÄÚµå
+    #region ê¸°ì¡´ ì½”ë“œ
 
     //[SerializeField] GameObject go_dialogueBar;
     //[SerializeField] GameObject go_NameBar;
@@ -16,16 +16,16 @@ public class DialogueManager : MonoBehaviour
     //[SerializeField] TMP_Text txt_name;
 
     //string[] dialogueSentences = 
-    //    { "¿À¿ì¿À¿ì\nFlappy PlaneÀº ½ºÆäÀÌ½º ¹Ù¸¦ ´­·¯¼­\nÀå¾Ö¹°µéÀ» ÇÇÇÏ´Â °ÔÀÓÀÌ¾ß" ,
-    //      "½ÃÀÛÇÏ°í ½ÍÀ¸¸é [F]¸¦ ´­·¯Áà"};
+    //    { "ì˜¤ìš°ì˜¤ìš°\nFlappy Planeì€ ìŠ¤í˜ì´ìŠ¤ ë°”ë¥¼ ëˆŒëŸ¬ì„œ\nì¥ì• ë¬¼ë“¤ì„ í”¼í•˜ëŠ” ê²Œì„ì´ì•¼" ,
+    //      "ì‹œì‘í•˜ê³  ì‹¶ìœ¼ë©´ [F]ë¥¼ ëˆŒëŸ¬ì¤˜"};
 
     //public int currentTextIndex = 0;
-    //public bool isWaitingInput = false; // ´ëÈ­ ÁßÀÎÁö È®ÀÎ
-    //public System.Action OnDialogueEnd; // ´ëÈ­ Á¾·á ½Ã È£ÃâµÉ Äİ¹é ÇÔ¼ö
+    //public bool isWaitingInput = false; // ëŒ€í™” ì¤‘ì¸ì§€ í™•ì¸
+    //public System.Action OnDialogueEnd; // ëŒ€í™” ì¢…ë£Œ ì‹œ í˜¸ì¶œë  ì½œë°± í•¨ìˆ˜
 
     //public void ShowDialogue()
     //{
-    //    txt_name.text = "¤¡½ºÆ®"; // ¿ÀÅ¸ ¾Æ´Ô
+    //    txt_name.text = "ã„±ìŠ¤íŠ¸"; // ì˜¤íƒ€ ì•„ë‹˜
     //    currentTextIndex = 0;
     //    ShowCurrentText();
     //    SettingUI(true);
@@ -35,18 +35,18 @@ public class DialogueManager : MonoBehaviour
     //{
     //    if (isWaitingInput && Input.GetKeyDown(KeyCode.F))
     //    {
-    //        //currentTextIndex++; // ´ÙÀ½ ÀÎµ¦½º·Î ³Ñ¾î°¡ ´ÙÀ½ ´ëÈ­¸¦ È£Ãâ
+    //        //currentTextIndex++; // ë‹¤ìŒ ì¸ë±ìŠ¤ë¡œ ë„˜ì–´ê°€ ë‹¤ìŒ ëŒ€í™”ë¥¼ í˜¸ì¶œ
     //        if (currentTextIndex < dialogueSentences.Length)
     //        {
     //            ShowCurrentText();
-    //            currentTextIndex++; // ´ÙÀ½ ÀÎµ¦½º·Î ³Ñ¾î°¡ ´ÙÀ½ ´ëÈ­¸¦ È£Ãâ
+    //            currentTextIndex++; // ë‹¤ìŒ ì¸ë±ìŠ¤ë¡œ ë„˜ì–´ê°€ ë‹¤ìŒ ëŒ€í™”ë¥¼ í˜¸ì¶œ
     //        }
     //        else
     //        {
     //            SettingUI(false);
     //            isWaitingInput = false;
 
-    //            OnDialogueEnd?.Invoke();// ´ëÈ­°¡ ¸ğµÎ ³¡³µÀ½À» ¾Ë¸²
+    //            OnDialogueEnd?.Invoke();// ëŒ€í™”ê°€ ëª¨ë‘ ëë‚¬ìŒì„ ì•Œë¦¼
     //        }
     //    }
     //}
@@ -65,81 +65,81 @@ public class DialogueManager : MonoBehaviour
 
     #endregion
 
-    #region °­ÀÇ ±â¹İ ÄÚµå
+    #region ê°•ì˜ ê¸°ë°˜ ì½”ë“œ
 
-    [SerializeField] GameObject dialogueBar; // ´ëÈ­Ã¢ UI
-    [SerializeField] GameObject nameBar; // ÀÌ¸§Ã¢ UI
+    [SerializeField] GameObject dialogueBar; // ëŒ€í™”ì°½ UI
+    [SerializeField] GameObject nameBar; // ì´ë¦„ì°½ UI
 
-    [SerializeField] private TextMeshProUGUI _dialogueText; // ´ëÈ­ ³»¿ë ÅØ½ºÆ®
-    [SerializeField] string[] _skeletDialogues; // ´ëÈ­ ¹®Àåµé
+    [SerializeField] private TextMeshProUGUI _dialogueText; // ëŒ€í™” ë‚´ìš© í…ìŠ¤íŠ¸
+    [SerializeField] string[] _skeletDialogues; // ëŒ€í™” ë¬¸ì¥ë“¤
 
-    private int currentDialogueIndex = 0; // ¹®Àå ¹øÈ£
-    private Coroutine dialogueCoroutine; // Áßº¹ ½ÇÇà ¹æÁö¸¦ À§ÇÑ ÄÚ·çÆ¾ ÂüÁ¶
+    private int currentDialogueIndex = 0; // ë¬¸ì¥ ë²ˆí˜¸
+    private Coroutine dialogueCoroutine; // ì¤‘ë³µ ì‹¤í–‰ ë°©ì§€ë¥¼ ìœ„í•œ ì½”ë£¨í‹´ ì°¸ì¡°
 
-    public System.Action OnDialogueEnd;       // ´ëÈ­°¡ ¸ğµÎ ³¡³µÀ» ¶§ È£ÃâµÉ ÀÌº¥Æ® (Äİ¹é)
+    public System.Action OnDialogueEnd;       // ëŒ€í™”ê°€ ëª¨ë‘ ëë‚¬ì„ ë•Œ í˜¸ì¶œë  ì´ë²¤íŠ¸ (ì½œë°±)
 
-    // ´ëÈ­ ½ÃÀÛ ÇÔ¼ö: ¿ÜºÎ(¿¹: SkeletController)¿¡¼­ È£Ãâ
+    // ëŒ€í™” ì‹œì‘ í•¨ìˆ˜: ì™¸ë¶€(ì˜ˆ: SkeletController)ì—ì„œ í˜¸ì¶œ
     public void StartDialogue()
     {
         if (_skeletDialogues == null || _skeletDialogues.Length == 0)
         {
-            Debug.LogWarning("´ëÈ­ ³»¿ëÀÌ ¾ø½À´Ï´Ù.");
+            Debug.LogWarning("ëŒ€í™” ë‚´ìš©ì´ ì—†ìŠµë‹ˆë‹¤.");
             SettingUI(false);
             return;
         }
 
-        currentDialogueIndex = 0; // ´ëÈ­ ½ÃÀÛ ½Ã ÀÎµ¦½º ÃÊ±âÈ­
-        SettingUI(true); // ´ëÈ­Ã¢ UI È°¼ºÈ­
+        currentDialogueIndex = 0; // ëŒ€í™” ì‹œì‘ ì‹œ ì¸ë±ìŠ¤ ì´ˆê¸°í™”
+        SettingUI(true); // ëŒ€í™”ì°½ UI í™œì„±í™”
 
 
-        if (dialogueCoroutine != null) // ÀÌÀü ÄÚ·çÆ¾ÀÌ ½ÇÇà ÁßÀÌ¶ó¸é ÁßÁö
+        if (dialogueCoroutine != null) // ì´ì „ ì½”ë£¨í‹´ì´ ì‹¤í–‰ ì¤‘ì´ë¼ë©´ ì¤‘ì§€
         {
             StopCoroutine(dialogueCoroutine);
         }
 
-        // »õ·Î¿î ´ëÈ­ ÄÚ·çÆ¾ ½ÃÀÛ
+        // ìƒˆë¡œìš´ ëŒ€í™” ì½”ë£¨í‹´ ì‹œì‘
         dialogueCoroutine = StartCoroutine(DisplayDialogue());
     }
 
-    // ´ÙÀ½ ´ëÈ­ ÁÙ·Î ³Ñ¾î°¡´Â ÇÔ¼ö (Å° ÀÔ·Â)
+    // ë‹¤ìŒ ëŒ€í™” ì¤„ë¡œ ë„˜ì–´ê°€ëŠ” í•¨ìˆ˜ (í‚¤ ì…ë ¥)
     public void Nextdialogue()
     {
-        // ¹Ù·Î ´ÙÀ½ ÁÙÀ» ½ÃÀÛÇÏÁö ¾Ê°í, ÇÃ·¹ÀÌ¾î°¡ ´Ù½Ã ÀÔ·ÂÇÒ ¶§±îÁö ±â´Ù¸³´Ï´Ù.
-        if (dialogueCoroutine != null) // ÇöÀç ´ëÈ­ Ãâ·Â ÁßÀÌ¸é °­Á¦ Á¾·á
+        // ë°”ë¡œ ë‹¤ìŒ ì¤„ì„ ì‹œì‘í•˜ì§€ ì•Šê³ , í”Œë ˆì´ì–´ê°€ ë‹¤ì‹œ ì…ë ¥í•  ë•Œê¹Œì§€ ê¸°ë‹¤ë¦½ë‹ˆë‹¤.
+        if (dialogueCoroutine != null) // í˜„ì¬ ëŒ€í™” ì¶œë ¥ ì¤‘ì´ë©´ ê°•ì œ ì¢…ë£Œ
         {
-            StopCoroutine(dialogueCoroutine); // ÇöÀç Å¸ÀÌÇÎ Áß´Ü
-            dialogueCoroutine = null; // ÄÚ·çÆ¾ ÂüÁ¶ ÇØÁ¦
-            // ¸¶Áö¸·À¸·Î Ãâ·ÂµÇ´ø ´ëÈ­ ¿Ï¼º
+            StopCoroutine(dialogueCoroutine); // í˜„ì¬ íƒ€ì´í•‘ ì¤‘ë‹¨
+            dialogueCoroutine = null; // ì½”ë£¨í‹´ ì°¸ì¡° í•´ì œ
+            // ë§ˆì§€ë§‰ìœ¼ë¡œ ì¶œë ¥ë˜ë˜ ëŒ€í™” ì™„ì„±
             _dialogueText.text = _skeletDialogues[currentDialogueIndex]; 
             return;
         }
 
         currentDialogueIndex++;
 
-        // ¸ğµç ´ëÈ­¸¦ ´Ù º¸¿©Áá´Ù¸é
+        // ëª¨ë“  ëŒ€í™”ë¥¼ ë‹¤ ë³´ì—¬ì¤¬ë‹¤ë©´
         if (currentDialogueIndex >= _skeletDialogues.Length) 
         {
-            SettingUI(false); // ´ëÈ­Ã¢ UI ºñÈ°¼ºÈ­
-            _dialogueText.text = ""; // ÅØ½ºÆ® ÃÊ±âÈ­
-            Debug.Log("DialogueManager: ´ëÈ­ Á¾·á.");
-            OnDialogueEnd?.Invoke(); // ´ëÈ­ Á¾·á ÀÌº¥Æ® È£Ãâ
+            SettingUI(false); // ëŒ€í™”ì°½ UI ë¹„í™œì„±í™”
+            _dialogueText.text = ""; // í…ìŠ¤íŠ¸ ì´ˆê¸°í™”
+            Debug.Log("DialogueManager: ëŒ€í™” ì¢…ë£Œ.");
+            OnDialogueEnd?.Invoke(); // ëŒ€í™” ì¢…ë£Œ ì´ë²¤íŠ¸ í˜¸ì¶œ
             return;
         }
         else
         {
-            // ´ÙÀ½ ´ëÈ­ ÁÙ ÄÚ·çÆ¾ ½ÃÀÛ
+            // ë‹¤ìŒ ëŒ€í™” ì¤„ ì½”ë£¨í‹´ ì‹œì‘
             dialogueCoroutine = StartCoroutine(DisplayDialogue());
         }
     }
 
-    private IEnumerator DisplayDialogue() // ´ëÈ­ ÇÑ ÁÙÀ» Å¸ÀÌÇÎ È¿°ú·Î º¸¿©ÁÖ´Â ÄÚ·çÆ¾
+    private IEnumerator DisplayDialogue() // ëŒ€í™” í•œ ì¤„ì„ íƒ€ì´í•‘ íš¨ê³¼ë¡œ ë³´ì—¬ì£¼ëŠ” ì½”ë£¨í‹´
     {
         _dialogueText.gameObject.SetActive(true);
 
         string targetDialogue = _skeletDialogues[currentDialogueIndex];
-        _dialogueText.text = ""; // ÅØ½ºÆ®¸¦ ºñ¿ö¼­ Å¸ÀÌÇÎ È¿°ú ½ÃÀÛ
+        _dialogueText.text = ""; // í…ìŠ¤íŠ¸ë¥¼ ë¹„ì›Œì„œ íƒ€ì´í•‘ íš¨ê³¼ ì‹œì‘
 
-        float typeSpeed = 0.05f; // ÇÑ ±ÛÀÚ Å¸ÀÌÇÎ¿¡ °É¸®´Â ½Ã°£
+        float typeSpeed = 0.05f; // í•œ ê¸€ì íƒ€ì´í•‘ì— ê±¸ë¦¬ëŠ” ì‹œê°„
 
         foreach (char letter in targetDialogue.ToCharArray())
         {
@@ -147,10 +147,10 @@ public class DialogueManager : MonoBehaviour
             yield return new WaitForSeconds(typeSpeed);
         }
 
-        dialogueCoroutine = null; // ÄÚ·çÆ¾ Á¾·á ½Ã ÂüÁ¶ ÇØÁ¦
+        dialogueCoroutine = null; // ì½”ë£¨í‹´ ì¢…ë£Œ ì‹œ ì°¸ì¡° í•´ì œ
     }
 
-    public void SettingUI(bool OnOff) // ´ëÈ­Ã¢ UI È°¼ºÈ­/ºñÈ°¼ºÈ­
+    public void SettingUI(bool OnOff) // ëŒ€í™”ì°½ UI í™œì„±í™”/ë¹„í™œì„±í™”
     {
         dialogueBar.SetActive(OnOff);
         nameBar.SetActive(OnOff);

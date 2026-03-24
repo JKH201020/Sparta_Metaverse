@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class DeskController : MonoBehaviour
 {
-    public GameObject textCanvas; // ¹®±¸ UI ¿ÀºêÁ§Æ® (Inspector¿¡¼­ ÇÒ´ç)
+    public GameObject textCanvas; // ë¬¸êµ¬ UI ì˜¤ë¸Œì íŠ¸ (Inspectorì—ì„œ í• ë‹¹)
     public GameObject scoreBoard;
 
-    bool interact = false; // »óÈ£ÀÛ¿ë °¡´ÉÇÑÁö
-    bool scoreboardOpen = false; // ½ºÄÚ¾îº¸µå¸¦ º¸°í ÀÖ´Â°¡
+    bool interact = false; // ìƒí˜¸ì‘ìš© ê°€ëŠ¥í•œì§€
+    bool scoreboardOpen = false; // ìŠ¤ì½”ì–´ë³´ë“œë¥¼ ë³´ê³  ìˆëŠ”ê°€
 
     private void Update()
     {
