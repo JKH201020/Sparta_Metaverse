@@ -20,10 +20,10 @@ public class LobbyUI : MonoBehaviour
         _startButton.onClick.AddListener(OnStartButtonClicked);
     }
 
-    private void OnStartButtonClicked()
+    private async void OnStartButtonClicked()
     {
-        GameManager.Instance.LoadScene(SceneNames.MainScene);
-    }
+        await GameManager.Instance.ChangeScene(SceneNames.MainScene);
+    } 
 
     private void OnLoadButtonClicked()
     {

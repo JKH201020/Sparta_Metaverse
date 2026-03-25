@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class SkeletController : MonoBehaviour
@@ -75,7 +76,7 @@ public class SkeletController : MonoBehaviour
     //    if (isInteract && !isDialogueActive && Input.GetKeyDown(KeyCode.F))
     //    {
     //        // MainGameManager에서 LoadScene을 불러옴 (미니게임으로 이동)
-    //        GameManager.Instance.LoadScene("MiniGameScene");
+    //        GameManager.Instance.ChangeScene("MiniGameScene");
     //    }
     //}
 
@@ -89,7 +90,7 @@ public class SkeletController : MonoBehaviour
     bool isInteract = false; // 상호작용 가능한지
     bool isDialogueActive = false; // 대화가 활성화되었는지
 
-    void Start()
+    private void Start()
     {
         // DialogueManager의 대화 종료 이벤트에 AfterTalking 함수 등록
         if (dialogueManager != null)
@@ -102,7 +103,7 @@ public class SkeletController : MonoBehaviour
         }
     }
 
-    void Update()
+    private void Update()
     {
         // 플레이어가 트리거 영역 안에 있는 동안 설정된 상호작용 키 (F)를 누르면
         if (isInteract && Input.GetKeyDown(KeyCode.F))
@@ -118,7 +119,7 @@ public class SkeletController : MonoBehaviour
         }
     }
 
-    void OnTriggerEnter2D(Collider2D other) // 플레이어가 트리거에 들어왔을 때 실행되는 함수
+    private void OnTriggerEnter2D(Collider2D other) // 플레이어가 트리거에 들어왔을 때 실행되는 함수
     {
         if (other.CompareTag("Player")) // 트리거에 들어온 오브젝트가 "Player" 태그를 가지고 있는지 확인
         {
@@ -129,7 +130,7 @@ public class SkeletController : MonoBehaviour
         }
     }
 
-    void OnTriggerExit2D(Collider2D other)
+    private void OnTriggerExit2D(Collider2D other)
     {
         if (other.CompareTag("Player")) // 트리거에 들어온 오브젝트가 "Player" 태그를 가지고 있는지 확인
         {
@@ -150,7 +151,7 @@ public class SkeletController : MonoBehaviour
         }
     }
 
-    void Interactive() // 상호작용
+    private void Interactive() // 상호작용
     {
         //isInteract = true;
         isDialogueActive = true; // 대화가 시작되었음을 표시
@@ -159,19 +160,22 @@ public class SkeletController : MonoBehaviour
 
     }
 
-    void AfterTalking()
+    private void AfterTalking()
     {
         isDialogueActive = false; // 대화가 끝났음을 표시
         dialogueManager.gameObject.SetActive(false); // 씬 로드 전에 DialogueManager 오브젝트를 비활성화
         HandleSceneTransition();
     }
 
-    void HandleSceneTransition()
+    // 이 함수는 async를 달지 않은 평범한 동기 함수
+    private void HandleSceneTransition()
     {
         // MainGameManager에서 LoadScene을 불러옴 (미니게임으로 이동)
         if (GameManager.Instance != null)
         {
-            GameManager.Instance.LoadScene("MiniGameScene");
+            // 씬을 바꾸라고 명령만 던져놓고, 끝날 때까지 안 기다림
+            // await를 안 썼으니 이 함수에 async를 달 필요가 없음
+            _ = GameManager.Instance.ChangeScene("MiniGameScene");
             Debug.Log("SkeletController: MiniGameScene으로 이동합니다.");
         }
         else
