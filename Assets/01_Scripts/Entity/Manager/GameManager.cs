@@ -2,8 +2,13 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Threading.Tasks;
 
-// 싱글톤 static
-// 제네릭하게 쓰는 방법, 옵션을 주는 방법 DontDestroyObject
+public enum GameState
+{
+    Loading,
+    Playing,
+    paused,
+    GameOver
+}
 
 public class GameManager : Singleton<GameManager>
 {
@@ -15,6 +20,8 @@ public class GameManager : Singleton<GameManager>
         _uiManager = GetComponentInChildren<UIManager>();
         _sceneManager = GetComponentInChildren<LoadSceneManager>();
     }
+
+    #region 씬 이동
 
     /// <summary>
     /// 씬 이동
@@ -43,4 +50,6 @@ public class GameManager : Singleton<GameManager>
         UIManager.Instance.OffLoadingPanel(); // 로딩 패널 끄기
         await UIManager.Instance.FadeOut(1f);
     }
+
+    #endregion
 }
