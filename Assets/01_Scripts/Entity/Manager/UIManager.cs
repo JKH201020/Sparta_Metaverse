@@ -1,24 +1,30 @@
 using DG.Tweening;
-using System;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class UIManager : Singleton<UIManager>
 {
-    [Header ("로딩 UI")]
+    [Header("로딩 UI")]
     [SerializeField] private GameObject _loadingPanel;
     [SerializeField] private GameObject _fadePanel;
     [SerializeField] private Image _fadePanelImage;
 
-    private const String LoadingPanelPathString = "Canvas/LoadingPanel";
-    private const String FadePanelPathString = "Canvas/FadePanel";
+    [Header("대화 UI")]
+    [SerializeField] private GameObject _dialogueUI;
+    [SerializeField] private DialogueUI _dialogueUIScript;
+
+    private const string LoadingPanelPathString = "Canvas/LoadingPanel";
+    private const string FadePanelPathString = "Canvas/FadePanel";
+    private const string DialogueUIString = "Canvas/DialogueUI";
 
     private void Reset()
     {
         _loadingPanel = transform.Find(LoadingPanelPathString).gameObject;
         _fadePanel = transform.Find(FadePanelPathString).gameObject;
         _fadePanelImage = _fadePanel.GetComponent<Image>();
+        _dialogueUI = transform.Find(DialogueUIString).gameObject;
+        _dialogueUIScript = _dialogueUI.GetComponent<DialogueUI>();
     }
 
     protected override void Awake()
@@ -31,7 +37,7 @@ public class UIManager : Singleton<UIManager>
     /// <summary>
     /// 로딩 패널 활성화
     /// </summary>
-    public void OnLoadingPanel() 
+    public void OnLoadingPanel()
     {
         _loadingPanel.SetActive(true);
     }
@@ -39,7 +45,7 @@ public class UIManager : Singleton<UIManager>
     /// <summary>
     /// 로딩 패널 비활성화
     /// </summary>
-    public void OffLoadingPanel() 
+    public void OffLoadingPanel()
     {
         _loadingPanel.SetActive(false);
     }
@@ -69,4 +75,19 @@ public class UIManager : Singleton<UIManager>
 
     #endregion
 
+    #region 대화UI 온오프
+
+    public void ShowDialogueUI(string npcName)
+    {
+        GameManager.Instance.ChangeState(GameState.Talking);
+        _dialogueUI.SetActive(true);
+        _dialogueUIScript.StartDialogue(npcName);
+    }
+
+    public void CloseDialogueUI()
+    {
+        _dialogueUI.SetActive(false);
+    }
+
+    #endregion
 }

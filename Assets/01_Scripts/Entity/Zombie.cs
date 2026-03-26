@@ -1,9 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Android;
-using UnityEngine.UI;
 
 public class Zombie : MonoBehaviour
 {
@@ -12,13 +8,11 @@ public class Zombie : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        // TODO : 충돌체가 내 플레이어 영역에 들어왔을 때
         RandomDialogue(); // 랜덤 문구가 출력
     }
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        // TODO : 충돌체가 내 플레이어 영역에 벗어냈을 때
         _dialogueText.gameObject.SetActive(false); // 텍스트 화면 미출력
     }
 

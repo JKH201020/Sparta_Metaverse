@@ -1,101 +1,158 @@
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using TMPro;
 using UnityEngine;
 
-public class DialogueManager : MonoBehaviour
+public class DialogueManager : Singleton<DialogueManager>
 {
     #region 강의 기반 코드
 
-    [SerializeField] GameObject dialogueBar; // 대화창 UI
-    [SerializeField] GameObject nameBar; // 이름창 UI
+    //[SerializeField] GameObject dialogueBar; // 대화창 UI
+    //[SerializeField] GameObject nameBar; // 이름창 UI
 
-    [SerializeField] private TextMeshProUGUI _dialogueText; // 대화 내용 텍스트
-    [SerializeField] string[] _skeletDialogues; // 대화 문장들
+    //[SerializeField] private TextMeshProUGUI _dialogueText; // 대화 내용 텍스트
+    //[SerializeField] string[] _skeletDialogues; // 대화 문장들
 
-    private int currentDialogueIndex = 0; // 문장 번호
-    private Coroutine dialogueCoroutine; // 중복 실행 방지를 위한 코루틴 참조
+    //private int currentDialogueIndex = 0; // 문장 번호
+    //private Coroutine dialogueCoroutine; // 중복 실행 방지를 위한 코루틴 참조
 
-    public System.Action OnDialogueEnd;       // 대화가 모두 끝났을 때 호출될 이벤트 (콜백)
+    //public System.Action OnDialogueEnd;       
 
-    // 대화 시작 함수: 외부(예: SkeletController)에서 호출
-    public void StartDialogue()
-    {
-        if (_skeletDialogues == null || _skeletDialogues.Length == 0)
-        {
-            Debug.LogWarning("대화 내용이 없습니다.");
-            SettingUI(false);
-            return;
-        }
+    //// 대화 시작 함수: 외부(예: SkeletController)에서 호출
+    //public void StartDialogue()
+    //{
+    //    if (_skeletDialogues == null || _skeletDialogues.Length == 0)
+    //    {
+    //        Debug.LogWarning("대화 내용이 없습니다.");
+    //        SettingUI(false);
+    //        return;
+    //    }
 
-        currentDialogueIndex = 0; // 대화 시작 시 인덱스 초기화
-        SettingUI(true); // 대화창 UI 활성화
+    //    currentDialogueIndex = 0; // 대화 시작 시 인덱스 초기화
+    //    SettingUI(true); // 대화창 UI 활성화
 
 
-        if (dialogueCoroutine != null) // 이전 코루틴이 실행 중이라면 중지
-        {
-            StopCoroutine(dialogueCoroutine);
-        }
+    //    if (dialogueCoroutine != null) // 이전 코루틴이 실행 중이라면 중지
+    //    {
+    //        StopCoroutine(dialogueCoroutine);
+    //    }
 
-        // 새로운 대화 코루틴 시작
-        dialogueCoroutine = StartCoroutine(DisplayDialogue());
-    }
+    //    // 새로운 대화 코루틴 시작
+    //    dialogueCoroutine = StartCoroutine(DisplayDialogue());
+    //}
 
-    // 다음 대화 줄로 넘어가는 함수 (키 입력)
-    public void Nextdialogue()
-    {
-        // 바로 다음 줄을 시작하지 않고, 플레이어가 다시 입력할 때까지 기다립니다.
-        if (dialogueCoroutine != null) // 현재 대화 출력 중이면 강제 종료
-        {
-            StopCoroutine(dialogueCoroutine); // 현재 타이핑 중단
-            dialogueCoroutine = null; // 코루틴 참조 해제
-            // 마지막으로 출력되던 대화 완성
-            _dialogueText.text = _skeletDialogues[currentDialogueIndex]; 
-            return;
-        }
+    //// 다음 대화 줄로 넘어가는 함수 (키 입력)
+    //public void Nextdialogue()
+    //{
+    //    // 바로 다음 줄을 시작하지 않고, 플레이어가 다시 입력할 때까지 기다립니다.
+    //    if (dialogueCoroutine != null) // 현재 대화 출력 중이면 강제 종료
+    //    {
+    //        StopCoroutine(dialogueCoroutine); // 현재 타이핑 중단
+    //        dialogueCoroutine = null; // 코루틴 참조 해제
+    //        // 마지막으로 출력되던 대화 완성
+    //        _dialogueText.text = _skeletDialogues[currentDialogueIndex];
+    //        return;
+    //    }
 
-        currentDialogueIndex++;
+    //    currentDialogueIndex++;
 
-        // 모든 대화를 다 보여줬다면
-        if (currentDialogueIndex >= _skeletDialogues.Length) 
-        {
-            SettingUI(false); // 대화창 UI 비활성화
-            _dialogueText.text = ""; // 텍스트 초기화
-            Debug.Log("DialogueManager: 대화 종료.");
-            OnDialogueEnd?.Invoke(); // 대화 종료 이벤트 호출
-            return;
-        }
-        else
-        {
-            // 다음 대화 줄 코루틴 시작
-            dialogueCoroutine = StartCoroutine(DisplayDialogue());
-        }
-    }
+    //    // 모든 대화를 다 보여줬다면
+    //    if (currentDialogueIndex >= _skeletDialogues.Length)
+    //    {
+    //        SettingUI(false); // 대화창 UI 비활성화
+    //        _dialogueText.text = ""; // 텍스트 초기화
+    //        Debug.Log("DialogueManager: 대화 종료.");
+    //        OnDialogueEnd?.Invoke(); // 대화 종료 이벤트 호출
+    //        return;
+    //    }
+    //    else
+    //    {
+    //        // 다음 대화 줄 코루틴 시작
+    //        dialogueCoroutine = StartCoroutine(DisplayDialogue());
+    //    }
+    //}
 
-    private IEnumerator DisplayDialogue() // 대화 한 줄을 타이핑 효과로 보여주는 코루틴
-    {
-        _dialogueText.gameObject.SetActive(true);
+    //private IEnumerator DisplayDialogue() // 대화 한 줄을 타이핑 효과로 보여주는 코루틴
+    //{
+    //    _dialogueText.gameObject.SetActive(true);
 
-        string targetDialogue = _skeletDialogues[currentDialogueIndex];
-        _dialogueText.text = ""; // 텍스트를 비워서 타이핑 효과 시작
+    //    string targetDialogue = _skeletDialogues[currentDialogueIndex];
+    //    _dialogueText.text = ""; // 텍스트를 비워서 타이핑 효과 시작
 
-        float typeSpeed = 0.05f; // 한 글자 타이핑에 걸리는 시간
+    //    float typeSpeed = 0.05f; // 한 글자 타이핑에 걸리는 시간
 
-        foreach (char letter in targetDialogue.ToCharArray())
-        {
-            _dialogueText.text += letter;
-            yield return new WaitForSeconds(typeSpeed);
-        }
+    //    foreach (char letter in targetDialogue.ToCharArray())
+    //    {
+    //        _dialogueText.text += letter;
+    //        yield return new WaitForSeconds(typeSpeed);
+    //    }
 
-        dialogueCoroutine = null; // 코루틴 종료 시 참조 해제
-    }
+    //    dialogueCoroutine = null; // 코루틴 종료 시 참조 해제
+    //}
 
-    public void SettingUI(bool OnOff) // 대화창 UI 활성화/비활성화
-    {
-        dialogueBar.SetActive(OnOff);
-        nameBar.SetActive(OnOff);
-    }
+    //public void SettingUI(bool OnOff) // 대화창 UI 활성화/비활성화
+    //{
+    //    dialogueBar.SetActive(OnOff);
+    //    nameBar.SetActive(OnOff);
+    //}
 
     #endregion
+
+    private const string Dialogue_CSVString = "Dialogue_CSV";
+
+    private Dictionary<string, List<string>> _npcDialogues = new Dictionary<string, List<string>>();
+
+    private bool _isLoad = false;
+
+    private void Awake()
+    {
+        LoadDialogue();
+    }
+
+    /// <summary>
+    /// 대화 CSV 불러오기
+    /// </summary>
+    public void LoadDialogue()
+    {
+        if (_isLoad) return; // 중복 실행 방지
+
+        TextAsset csvfile = Resources.Load<TextAsset>(Dialogue_CSVString);
+        string[] lines = csvfile.text.Split('\n'); // 줄바꿈으로 행 분리
+
+        // i = 0번 줄은 헤더이기에 1부터 시작
+        for (int i = 1; i < lines.Length; i++)
+        {
+            if (string.IsNullOrWhiteSpace(lines[i])) continue;
+
+            string[] row = lines[i].Split(','); // 쉼표로 열 분리
+
+            DialogueData data = new DialogueData
+            {
+                id = int.Parse(row[0]),
+                name = row[1],
+                context = row[2].Replace("\"", ""), // 큰따옴표 제거
+                nextId = int.Parse(row[3]),
+            };
+
+            if (!_npcDialogues.ContainsKey(data.name)) _npcDialogues[data.name] = new List<string>();
+
+            _npcDialogues[data.name].Add(data.context);
+
+        }
+
+        _isLoad = true;
+    }
+
+    /// <summary>
+    /// 해당 Npc 대사 불러오기
+    /// </summary>
+    /// <param name="npcName">Npc 이름</param>
+    /// <returns></returns>
+    public List<string> GetDialogueList(string npcName)
+    {
+        if (_npcDialogues.ContainsKey(npcName))  return _npcDialogues[npcName];
+        else
+        {
+            Debug.LogError($"[DialogueManager] {npcName}라는 이름의 NPC 대사가 없습니다!");
+            return null;
+        }
+    }
 }

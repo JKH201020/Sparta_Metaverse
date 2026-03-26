@@ -6,6 +6,7 @@ public enum GameState
 {
     Loading,
     Playing,
+    Talking,
     Paused,
     GameOver
 }
@@ -36,6 +37,9 @@ public class GameManager : Singleton<GameManager>
                 Time.timeScale = 1.0f; // 게임 시간 흐름
                 break;
             case GameState.Paused:
+                Time.timeScale = 0.0f; // 게임 시간 정지
+                break;
+            case GameState.Talking:
                 Time.timeScale = 0.0f; // 게임 시간 정지
                 break;
             case GameState.GameOver:
