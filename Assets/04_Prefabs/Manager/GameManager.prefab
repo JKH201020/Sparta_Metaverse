@@ -52,6 +52,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _dialogueBarText: {fileID: 3829621833950734196}
   _nameBarText: {fileID: 6409749626438215687}
+  _interactAction: {fileID: -1446328159327257507, guid: 9181bf17a7f989442b6fa3618686206c, type: 3}
 --- !u!1 &415933935425756623
 GameObject:
   m_ObjectHideFlags: 0
@@ -585,6 +586,7 @@ MonoBehaviour:
   _fadePanel: {fileID: 3580125869716429747}
   _fadePanelImage: {fileID: 2171776621663881771}
   _dialogueUI: {fileID: 61370879774371693}
+  _dialogueUIScript: {fileID: 3933220591149010916}
 --- !u!1 &7630026511259528833
 GameObject:
   m_ObjectHideFlags: 0

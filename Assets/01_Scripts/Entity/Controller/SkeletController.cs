@@ -113,6 +113,6 @@ public class SkeletController : MonoBehaviour
 
     private void OnInteract() // 상호작용
     {
-        if (GameManager.Instance.CurrentState == GameState.Talking) UIManager.Instance.ShowDialogueUI();
+        if (GameManager.Instance.CurrentState == GameState.Talking) UIManager.Instance.ShowDialogueUI(name);
     }
 }

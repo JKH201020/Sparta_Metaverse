@@ -7,6 +7,7 @@ public class DialogueUI : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI _dialogueBarText;
     [SerializeField] private TextMeshProUGUI _nameBarText;
+    [SerializeField] private InputActionReference _interactAction;
 
     private List<string> _currentSentences; // 현재 진행 중인 대사 리스트
 
@@ -24,7 +25,17 @@ public class DialogueUI : MonoBehaviour
 
     private void OnEnable()
     {
-        
+        if (_interactAction != null) _interactAction.action.performed += OnInteractPressed;
+    }
+
+    private void OnDisable()
+    {
+        if (_interactAction != null) _interactAction.action.performed -= OnInteractPressed;
+    }
+
+    private void OnInteractPressed(InputAction.CallbackContext context) // 상호작용 키(F) 눌렀을 때
+    {
+        if (_isDialogueActive) ShowNextSentence();
     }
 
     /// <summary>
