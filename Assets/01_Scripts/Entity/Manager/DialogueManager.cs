@@ -3,68 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class DialogueManager : MonoBehaviour
 {
-    #region 기존 코드
-
-    //[SerializeField] GameObject go_dialogueBar;
-    //[SerializeField] GameObject go_NameBar;
-
-    //[SerializeField] TMP_Text txt_dialogue;
-    //[SerializeField] TMP_Text txt_name;
-
-    //string[] dialogueSentences = 
-    //    { "오우오우\nFlappy Plane은 스페이스 바를 눌러서\n장애물들을 피하는 게임이야" ,
-    //      "시작하고 싶으면 [F]를 눌러줘"};
-
-    //public int currentTextIndex = 0;
-    //public bool isWaitingInput = false; // 대화 중인지 확인
-    //public System.Action OnDialogueEnd; // 대화 종료 시 호출될 콜백 함수
-
-    //public void ShowDialogue()
-    //{
-    //    txt_name.text = "ㄱ스트"; // 오타 아님
-    //    currentTextIndex = 0;
-    //    ShowCurrentText();
-    //    SettingUI(true);
-    //}
-
-    //void Update()
-    //{
-    //    if (isWaitingInput && Input.GetKeyDown(KeyCode.F))
-    //    {
-    //        //currentTextIndex++; // 다음 인덱스로 넘어가 다음 대화를 호출
-    //        if (currentTextIndex < dialogueSentences.Length)
-    //        {
-    //            ShowCurrentText();
-    //            currentTextIndex++; // 다음 인덱스로 넘어가 다음 대화를 호출
-    //        }
-    //        else
-    //        {
-    //            SettingUI(false);
-    //            isWaitingInput = false;
-
-    //            OnDialogueEnd?.Invoke();// 대화가 모두 끝났음을 알림
-    //        }
-    //    }
-    //}
-
-    //void ShowCurrentText()
-    //{
-    //    isWaitingInput = true;
-    //    txt_dialogue.text = dialogueSentences[currentTextIndex];
-    //}
-
-    //public void SettingUI(bool OnOff)
-    //{
-    //    go_dialogueBar.SetActive(OnOff);
-    //    go_NameBar.SetActive(OnOff);
-    //}
-
-    #endregion
-
     #region 강의 기반 코드
 
     [SerializeField] GameObject dialogueBar; // 대화창 UI

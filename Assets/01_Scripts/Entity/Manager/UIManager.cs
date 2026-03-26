@@ -21,6 +21,11 @@ public class UIManager : Singleton<UIManager>
         _fadePanelImage = _fadePanel.GetComponent<Image>();
     }
 
+    protected override void Awake()
+    {
+
+    }
+
     #region 패널 온오프
 
     /// <summary>
@@ -63,11 +68,5 @@ public class UIManager : Singleton<UIManager>
     }
 
     #endregion
-
-    protected override void Awake()
-    {
-
-    }
-
 
 }

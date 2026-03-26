@@ -6,7 +6,7 @@ public enum GameState
 {
     Loading,
     Playing,
-    paused,
+    Paused,
     GameOver
 }
 
@@ -15,10 +15,32 @@ public class GameManager : Singleton<GameManager>
     [SerializeField] private LoadSceneManager _sceneManager;
     [SerializeField] private UIManager _uiManager;
 
+    public GameState CurrentState { get; private set; }
+
     private void Reset()
     {
         _uiManager = GetComponentInChildren<UIManager>();
         _sceneManager = GetComponentInChildren<LoadSceneManager>();
+    }
+
+    public void ChangeState(GameState state)
+    {
+        CurrentState = state;
+
+        switch (CurrentState)
+        {
+            case GameState.Loading:
+                // 로딩 UI 켜기, 비동기 씬 로드 시작
+                break;
+            case GameState.Playing:
+                Time.timeScale = 1.0f; // 게임 시간 흐름
+                break;
+            case GameState.Paused:
+                Time.timeScale = 0.0f; // 게임 시간 정지
+                break;
+            case GameState.GameOver:
+                break;
+        }
     }
 
     #region 씬 이동
@@ -29,6 +51,8 @@ public class GameManager : Singleton<GameManager>
     /// <param name="sceneName">이동할 씬 이름</param>
     public async Task ChangeScene(string sceneName)
     {
+        ChangeState(GameState.Loading);
+
         await UIManager.Instance.FadeIn(1f);
 
         UIManager.Instance.OnLoadingPanel(); // 로딩 패널 켜기
@@ -44,11 +68,13 @@ public class GameManager : Singleton<GameManager>
             timer += Time.deltaTime;
             await Task.Yield(); // 코루틴의 yield return null; 같음 / 다음 프레임에 돌아옴
         }
-         
+
         loadOp.allowSceneActivation = true; // 씬 활성화
 
         UIManager.Instance.OffLoadingPanel(); // 로딩 패널 끄기
         await UIManager.Instance.FadeOut(1f);
+
+        ChangeState(GameState.Playing);
     }
 
     #endregion
