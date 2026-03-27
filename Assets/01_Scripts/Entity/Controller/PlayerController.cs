@@ -42,11 +42,10 @@ public class PlayerController : MonoBehaviour
         Movement(_moveInput);
     }
 
-    public void OnMove(InputAction.CallbackContext context) // 이동 이벤트
+    private void OnDrawGizmosSelected() // 상호작용 범위 기즈모
     {
-        _moveInput = context.ReadValue<Vector2>();
-
-        if (_moveInput != Vector2.zero) _lookDirection = _moveInput;
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, 1.5f);
     }
 
     private void Movement(Vector2 direction) // 이동
@@ -62,5 +61,33 @@ public class PlayerController : MonoBehaviour
         bool isLeft = Mathf.Abs(rotZ) > 90f;
 
         _characterRenderer.flipX = isLeft;
+    }
+
+    public void OnMove(InputAction.CallbackContext context) // 이동 이벤트
+    {
+        _moveInput = context.ReadValue<Vector2>();
+
+        if (_moveInput != Vector2.zero) _lookDirection = _moveInput;
+    }
+
+    public void OnInteract(InputAction.CallbackContext context) // 상호작용 이벤트
+    {
+        if (context.performed && GameManager.Instance.CurrentState != GameState.Talking)
+        {
+            // 주변 1.5 유닛 반경 내의 콜라이더를 찾음
+            Collider2D[] hitColliders = Physics2D.OverlapCircleAll(transform.position, 1.5f);
+
+            foreach (var hit in hitColliders)
+            {
+                // 상대방이 IInteractable 인터페이스를 가지고 있는지 확인
+                IInteractable interactable = hit.GetComponent<IInteractable>();
+
+                if (interactable != null)
+                {
+                    interactable.Interact(); // 상속받은 NPC의 Interact()가 실행됨
+                    break;
+                }
+            }
+        }
     }
 }

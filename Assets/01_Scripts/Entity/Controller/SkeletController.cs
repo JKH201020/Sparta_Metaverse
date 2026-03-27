@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class SkeletController : MonoBehaviour
+public class SkeletController : MonoBehaviour, IInteractable
 {
     #region 강의 기반 코드
 
@@ -105,6 +105,11 @@ public class SkeletController : MonoBehaviour
     //}
 
     #endregion
+
+    public void Interact() // 플레이어와 상호작용 시킬 메서드
+    {
+
+    }
 
     private void OnTriggerStay2D(Collider2D collision)
     {

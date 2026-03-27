@@ -1,21 +1,19 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Plane : MonoBehaviour
 {
-    Animator animator = null; // ¾Ö´Ï¸ŞÀÌÅÍ¿Í ¸®Áöµå¹Ùµğ º¯¼ö ¼±¾ğ
-    Rigidbody2D _rigidbody = null; // ÇÃ·¹ÀÌ¾îÀÇ ¸®Áöµå¹Ùµğ (¹°¸® ¿£Áø Àû¿ë)
+    Animator animator = null; // ì• ë‹ˆë©”ì´í„°ì™€ ë¦¬ì§€ë“œë°”ë”” ë³€ìˆ˜ ì„ ì–¸
+    Rigidbody2D _rigidbody = null; // í”Œë ˆì´ì–´ì˜ ë¦¬ì§€ë“œë°”ë”” (ë¬¼ë¦¬ ì—”ì§„ ì ìš©)
 
-    float flapForce = 6f; // Á¡ÇÁ °­µµ (ÇÃ·¦)
-    float forwardSpeed = 3f; // ¾ÕÀ¸·Î ³ª°¡´Â ¼Óµµ (¼öÆò ÀÌµ¿)
-    public static bool isDead = false; // ÇÃ·¹ÀÌ¾î°¡ Á×¾ú´ÂÁö È®ÀÎÇÏ´Â º¯¼ö
-    bool isFlap = false; // Á¡ÇÁ(ÇÃ·¦) ¿©ºÎ È®ÀÎÇÏ´Â º¯¼ö
+    float flapForce = 6f; // ì í”„ ê°•ë„ (í”Œë©)
+    float forwardSpeed = 3f; // ì•ìœ¼ë¡œ ë‚˜ê°€ëŠ” ì†ë„ (ìˆ˜í‰ ì´ë™)
+    public static bool isDead = false; // í”Œë ˆì´ì–´ê°€ ì£½ì—ˆëŠ”ì§€ í™•ì¸í•˜ëŠ” ë³€ìˆ˜
+    bool isFlap = false; // ì í”„(í”Œë©) ì—¬ë¶€ í™•ì¸í•˜ëŠ” ë³€ìˆ˜
 
     // Start is called before the first frame update
     void Start()
     {
-        // ¾Ö´Ï¸ŞÀÌÅÍ¿Í ¸®Áöµå¹Ùµğ¸¦ ÄÄÆ÷³ÍÆ®¿¡¼­ Ã£±â
+        // ì• ë‹ˆë©”ì´í„°ì™€ ë¦¬ì§€ë“œë°”ë””ë¥¼ ì»´í¬ë„ŒíŠ¸ì—ì„œ ì°¾ê¸°
         animator = transform.GetComponentInChildren<Animator>();
         _rigidbody = transform.GetComponent<Rigidbody2D>();
     }
@@ -23,45 +21,45 @@ public class Plane : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!isDead) // »ıÁ¸
+        if (!isDead) // ìƒì¡´
         {
-            // Á¡ÇÁ (ÇÃ·¦) ÀÔ·Â Ã³¸®
+            // ì í”„ (í”Œë©) ì…ë ¥ ì²˜ë¦¬
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                isFlap = true; // Á¡ÇÁ ½ÃÀÛ
+                isFlap = true; // ì í”„ ì‹œì‘
             }
         }
     }
 
-    public void FixedUpdate() // ¹°¸® ¾÷µ¥ÀÌÆ® (°íÁ¤µÈ ½Ã°£ °£°İÀ¸·Î È£ÃâµÊ)
+    public void FixedUpdate() // ë¬¼ë¦¬ ì—…ë°ì´íŠ¸ (ê³ ì •ëœ ì‹œê°„ ê°„ê²©ìœ¼ë¡œ í˜¸ì¶œë¨)
     {
-        if (isDead) return; // Á×¾úÀ¸¸é ¹°¸® ¿¬»ê ÇÏÁö ¾ÊÀ½
+        if (isDead) return; // ì£½ì—ˆìœ¼ë©´ ë¬¼ë¦¬ ì—°ì‚° í•˜ì§€ ì•ŠìŒ
 
         Vector3 velocity = _rigidbody.velocity;
-        velocity.x = forwardSpeed; // ¼öÆò ¼Óµµ´Â ÀÏÁ¤ÇÏ°Ô À¯Áö (¾ÕÀ¸·Î °è¼Ó ÀÌµ¿)
+        velocity.x = forwardSpeed; // ìˆ˜í‰ ì†ë„ëŠ” ì¼ì •í•˜ê²Œ ìœ ì§€ (ì•ìœ¼ë¡œ ê³„ì† ì´ë™)
 
         if (isFlap)
         {
-            velocity.y += flapForce; // Á¡ÇÁ È¿°ú (¼öÁ÷ ¼Óµµ Áõ°¡)
-            isFlap = false; // Á¡ÇÁ ¿Ï·á ÈÄ ÃÊ±âÈ­
+            velocity.y += flapForce; // ì í”„ íš¨ê³¼ (ìˆ˜ì§ ì†ë„ ì¦ê°€)
+            isFlap = false; // ì í”„ ì™„ë£Œ í›„ ì´ˆê¸°í™”
         }
 
-        _rigidbody.velocity = velocity; // ¸®Áöµå¹Ùµğ ¼Óµµ ¾÷µ¥ÀÌÆ®
+        _rigidbody.velocity = velocity; // ë¦¬ì§€ë“œë°”ë”” ì†ë„ ì—…ë°ì´íŠ¸
 
-        // Á¡ÇÁ ½Ã °¢µµ Á¶Á¤ (À§¾Æ·¡·Î ±â¿ï±â)
-        float angle = Mathf.Clamp((_rigidbody.velocity.y * 10f), -90, 90); // yÃà: -90 ~ 90
+        // ì í”„ ì‹œ ê°ë„ ì¡°ì • (ìœ„ì•„ë˜ë¡œ ê¸°ìš¸ê¸°)
+        float angle = Mathf.Clamp((_rigidbody.velocity.y * 10f), -90, 90); // yì¶•: -90 ~ 90
         float lerpAngle = Mathf.Lerp(transform.rotation.eulerAngles.z, angle, Time.fixedDeltaTime * 5f);
 
         transform.rotation = Quaternion.Euler(0, 0, lerpAngle);
     }
 
-    public void OnCollisionEnter2D(Collision2D collision) // Ãæµ¹ ½ÃÀÛ ½Ã È£Ãâ
+    public void OnCollisionEnter2D(Collision2D collision) // ì¶©ëŒ ì‹œì‘ ì‹œ í˜¸ì¶œ
     {
-        if (isDead) return; // ÀÌ¹Ì Á×¾úÀ¸¸é Ãæµ¹ Ã³¸® ¾È ÇÔ
+        if (isDead) return; // ì´ë¯¸ ì£½ì—ˆìœ¼ë©´ ì¶©ëŒ ì²˜ë¦¬ ì•ˆ í•¨
 
-        // Á×À½ ¾Ö´Ï¸ŞÀÌ¼Ç ½ÇÇà
+        // ì£½ìŒ ì• ë‹ˆë©”ì´ì…˜ ì‹¤í–‰
         animator.SetInteger("IsDie", 1);
-        isDead = true; // Á×À½ »óÅÂ·Î º¯°æ
+        isDead = true; // ì£½ìŒ ìƒíƒœë¡œ ë³€ê²½
         MiniGameUIManager.Instance.GameOver();
     }
 }
