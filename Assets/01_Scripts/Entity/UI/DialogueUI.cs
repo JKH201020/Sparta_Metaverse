@@ -41,17 +41,16 @@ public class DialogueUI : MonoBehaviour
     /// <summary>
     /// 해당 Npc 대화 시작
     /// </summary>
-    /// <param name="npcName">Npc 이름</param>
-    public void StartDialogue(string npcName)
+    /// <param name="npcID">Npc 오브젝트 이름</param>
+    public void StartDialogue(string npcID)
     {
-        _currentSentences = DialogueManager.Instance.GetDialogueList(npcName);
+        _currentSentences = DialogueManager.Instance.GetDialogueList(npcID, out string kName);
 
         if (_currentSentences != null &&  _currentSentences.Count > 0)
         {
             _isDialogueActive = true;
             _currentIndex = 0;
-            _nameBarText.text = npcName;
-            UIManager.Instance.ShowDialogueUI(npcName);
+            _nameBarText.text = kName;
 
             ShowNextSentence();
         }
@@ -73,6 +72,5 @@ public class DialogueUI : MonoBehaviour
     {
         _isDialogueActive = false;
         UIManager.Instance.CloseDialogueUI();
-        Debug.Log("대화 종료");
     }
 }
