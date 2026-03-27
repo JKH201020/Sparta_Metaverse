@@ -42,10 +42,10 @@ public class PlayerController : MonoBehaviour
         Movement(_moveInput);
     }
 
-    private void OnDrawGizmosSelected() // 상호작용 범위 기즈모
+    private void OnDrawGizmos() // 상호작용 범위 기즈모
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, 1.5f);
+        Gizmos.DrawWireSphere(transform.position, 1f);
     }
 
     private void Movement(Vector2 direction) // 이동
@@ -74,8 +74,8 @@ public class PlayerController : MonoBehaviour
     {
         if (context.performed && GameManager.Instance.CurrentState != GameState.Talking)
         {
-            // 주변 1.5 유닛 반경 내의 콜라이더를 찾음
-            Collider2D[] hitColliders = Physics2D.OverlapCircleAll(transform.position, 1.5f);
+            // 주변 1 유닛 반경 내의 콜라이더를 찾음
+            Collider2D[] hitColliders = Physics2D.OverlapCircleAll(transform.position, 1f);
 
             foreach (var hit in hitColliders)
             {

@@ -106,17 +106,12 @@ public class SkeletController : MonoBehaviour, IInteractable
 
     #endregion
 
-    public void Interact() // 플레이어와 상호작용 시킬 메서드
-    {
-
-    }
-
     private void OnTriggerStay2D(Collider2D collision)
     {
 
     }
 
-    private void OnInteract() // 상호작용
+    public void Interact() // 플레이어와 상호작용 시킬 메서드
     {
         if (GameManager.Instance.CurrentState == GameState.Talking) UIManager.Instance.ShowDialogueUI(name);
     }
