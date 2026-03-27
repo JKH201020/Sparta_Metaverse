@@ -102,7 +102,7 @@ public class DialogueManager : Singleton<DialogueManager>
 
     private bool _isLoad = false;
 
-    private void Awake()
+    private void Start()
     {
         LoadDialogue();
     }

@@ -1,30 +1,66 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
-public class PlayerController : BaseController
+public class PlayerController : MonoBehaviour
 {
-    private Camera cam;
+    [SerializeField] private Rigidbody2D _rigidbody; // 이동을 위한 물리 컴포넌트
+    [SerializeField] private SpriteRenderer _characterRenderer; // SpriteRenderer 컴포넌트를 참조하기 위한 변수
 
-    protected override void Start()
+    private Vector2 _moveInput = Vector2.zero; // 현재 이동 방향
+    private Vector2 _lookDirection = Vector2.zero; // 현재 바라보는 방향
+
+    private const string MainSpriteString = "MainSprite";
+
+    private void Reset()
     {
-        base.Start();
-        cam = Camera.main;
+        _rigidbody = GetComponent<Rigidbody2D>();
+        _characterRenderer = transform.Find(MainSpriteString).GetComponent<SpriteRenderer>();
     }
 
-    protected override void HandleAction()
+    private void Start()
     {
-        //// 키보드 입력을 통해 이동 방향 계산 (좌/우/상/하)
-        //float horizontal = Input.GetAxisRaw("Horizontal"); // A/D 또는 ←/→
-        //float vertical = Input.GetAxisRaw("Vertical"); // W/S 또는 ↑/↓
+        Time.timeScale = 1.0f;
+    }
 
-        //// 방향 벡터 정규화 (대각선일 때 속도 보정)
-        //movementDirection = new Vector2(horizontal, vertical).normalized; // normalized: 벡터 크기를 1로 만듦
+    private void Update()
+    {
+        // 대화가 아닐 경우에만 방향 전환 가능
+        if (GameManager.Instance.CurrentState == GameState.Talking) return;
 
-        //if (Mathf.Abs(horizontal) > 0.01f) // 수평의 절대값이 0.01보다 큰가? 얼마나 세게 눌렀나
-        //{
-        //    // 좌우 방향에 따라 lookDirection 값을 설정해준다.
-        //    lookDirection = new Vector2(horizontal, 0).normalized;
-        //}
+        Rotate(_lookDirection);
+    }
 
+    private void FixedUpdate()
+    {
+        // 대화 중일 경우
+        if (GameManager.Instance.CurrentState == GameState.Talking)
+        {
+            _rigidbody.velocity = Vector2.zero; // 정지
+            return;
+        }
 
+        Movement(_moveInput);
+    }
+
+    public void OnMove(InputAction.CallbackContext context) // 이동 이벤트
+    {
+        _moveInput = context.ReadValue<Vector2>();
+
+        if (_moveInput != Vector2.zero) _lookDirection = _moveInput;
+    }
+
+    private void Movement(Vector2 direction) // 이동
+    {
+        _rigidbody.velocity = direction * 5f;
+    }
+
+    private void Rotate(Vector2 direction) // 바라보는 방향
+    {
+        if (direction == Vector2.zero) return;
+
+        float rotZ = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        bool isLeft = Mathf.Abs(rotZ) > 90f;
+
+        _characterRenderer.flipX = isLeft;
     }
 }
