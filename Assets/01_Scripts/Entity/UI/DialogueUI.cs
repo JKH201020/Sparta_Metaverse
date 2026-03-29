@@ -80,7 +80,7 @@ public class DialogueUI : MonoBehaviour
 
         if (_onDialogueEnded != null)
         {
-            _onDialogueEnded.Invoke();
+            _onDialogueEnded?.Invoke();
             _onDialogueEnded = null;
         }
     }
