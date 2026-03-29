@@ -17,23 +17,18 @@ public class PlayerController : MonoBehaviour
         _characterRenderer = transform.Find(MainSpriteString).GetComponent<SpriteRenderer>();
     }
 
-    private void Start()
-    {
-        Time.timeScale = 1.0f;
-    }
-
     private void Update()
     {
-        // 대화가 아닐 경우에만 방향 전환 가능
-        if (GameManager.Instance.CurrentState == GameState.Talking) return;
+        if (GameManager.Instance.CurrentState == GameState.Talking
+            || GameManager.Instance.CurrentState == GameState.Loading) return;
 
         Rotate(_lookDirection);
     }
 
     private void FixedUpdate()
     {
-        // 대화 중일 경우
-        if (GameManager.Instance.CurrentState == GameState.Talking)
+        if (GameManager.Instance.CurrentState == GameState.Talking
+            || GameManager.Instance.CurrentState == GameState.Loading)
         {
             _rigidbody.velocity = Vector2.zero; // 정지
             return;

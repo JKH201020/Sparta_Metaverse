@@ -2,6 +2,7 @@ using UnityEngine.InputSystem;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using System;
 
 public class DialogueUI : MonoBehaviour
 {
@@ -13,6 +14,8 @@ public class DialogueUI : MonoBehaviour
 
     private int _currentIndex = 0; // 현재 대사 몇 번째 줄인지
     private bool _isDialogueActive = false; // 현재 대화 중인지
+
+    private Action _onDialogueEnded; // 대화 종료 시 실행할 콜백 함수
 
     private const string DialogueTextPathString = "DialogueBar/DialogueText";
     private const string NameTextPathString = "NameBar/NameText";
@@ -39,15 +42,16 @@ public class DialogueUI : MonoBehaviour
     }
 
     /// <summary>
-    /// 해당 Npc 대화 시작
+    /// 해당 Zombie 대화 시작
     /// </summary>
-    /// <param name="npcID">Npc 오브젝트 이름</param>
-    public void StartDialogue(string npcID)
+    /// <param name="npcID">Zombie 오브젝트 이름</param>
+    public void StartDialogue(string npcID, Action onEnd = null)
     {
         _currentSentences = DialogueManager.Instance.GetDialogueList(npcID, out string kName);
 
-        if (_currentSentences != null &&  _currentSentences.Count > 0)
+        if (_currentSentences != null && _currentSentences.Count > 0)
         {
+            _onDialogueEnded = onEnd;
             _isDialogueActive = true;
             _currentIndex = 0;
             _nameBarText.text = kName;
@@ -71,6 +75,13 @@ public class DialogueUI : MonoBehaviour
     private void EndDialogue() // 대화 종료
     {
         _isDialogueActive = false;
-        UIManager.Instance.CloseDialogueUI();
+
+        if (UIManager.Instance != null) UIManager.Instance.CloseDialogueUI();
+
+        if (_onDialogueEnded != null)
+        {
+            _onDialogueEnded.Invoke();
+            _onDialogueEnded = null;
+        }
     }
 }

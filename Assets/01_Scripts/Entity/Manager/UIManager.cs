@@ -1,4 +1,5 @@
 using DG.Tweening;
+using System;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
@@ -77,16 +78,21 @@ public class UIManager : Singleton<UIManager>
 
     #region 대화UI 온오프
 
-    public void ShowDialogueUI(string npcName)
+    public void ShowDialogueUI(string npcName, Action onEnd = null)
     {
+        if (GameManager.Instance == null) return;
+
         GameManager.Instance.ChangeState(GameState.Talking);
         _dialogueUI.SetActive(true);
-        _dialogueUIScript.StartDialogue(npcName);
+        _dialogueUIScript.StartDialogue(npcName, onEnd);
     }
 
     public void CloseDialogueUI()
     {
+        if (GameManager.Instance == null) return;
+
         _dialogueUI.SetActive(false);
+        GameManager.Instance.ChangeState(GameState.Playing);
     }
 
     #endregion

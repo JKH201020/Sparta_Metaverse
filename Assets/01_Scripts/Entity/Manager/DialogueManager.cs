@@ -59,26 +59,21 @@ public class DialogueManager : Singleton<DialogueManager>
     }
 
     /// <summary>
-    /// 해당 Npc 대사 불러오기
+    /// 해당 Zombie 대사 불러오기
     /// </summary>
-    /// <param name="npcID">Npc 오브젝트 이름</param>
-    /// <returns>Npc 한국어 이름</returns>
+    /// <param name="npcID">Zombie 오브젝트 이름</param>
+    /// <returns>Zombie 한국어 이름</returns>
     public List<string> GetDialogueList(string npcID, out string koreanName)
     {
         koreanName = UnknownString;
 
         if (_npcDialogues.ContainsKey(npcID))
         {
-            if (_npcDisplayNames.ContainsKey(npcID))
-            {
-                koreanName = _npcDisplayNames[npcID];
-            }
+            if (_npcDisplayNames.ContainsKey(npcID)) koreanName = _npcDisplayNames[npcID];
 
-            Debug.Log("정상적으로 불러옴");
             return _npcDialogues[npcID];
         }
 
-        Debug.Log("null");
         return null;
     }
 }

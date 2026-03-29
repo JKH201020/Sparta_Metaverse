@@ -40,7 +40,6 @@ public class GameManager : Singleton<GameManager>
                 Time.timeScale = 0.0f; // 게임 시간 정지
                 break;
             case GameState.Talking:
-                Time.timeScale = 0.0f; // 게임 시간 정지
                 break;
             case GameState.GameOver:
                 break;
@@ -57,7 +56,7 @@ public class GameManager : Singleton<GameManager>
     {
         ChangeState(GameState.Loading);
 
-        await UIManager.Instance.FadeIn(1f);
+        await UIManager.Instance.FadeIn(0.5f);
 
         UIManager.Instance.OnLoadingPanel(); // 로딩 패널 켜기
 
@@ -76,7 +75,7 @@ public class GameManager : Singleton<GameManager>
         loadOp.allowSceneActivation = true; // 씬 활성화
 
         UIManager.Instance.OffLoadingPanel(); // 로딩 패널 끄기
-        await UIManager.Instance.FadeOut(1f);
+        await UIManager.Instance.FadeOut(0.5f);
 
         ChangeState(GameState.Playing);
     }
