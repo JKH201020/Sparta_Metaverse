@@ -24,11 +24,6 @@ public class GameManager : Singleton<GameManager>
         _sceneManager = GetComponentInChildren<LoadSceneManager>();
     }
 
-    private void Start() // 특정 씬 구현할 때 조작하기 위한 용도. 구현 끝나면 지우기
-    {
-        ChangeState(GameState.Playing);
-    }
-
     public void ChangeState(GameState state)
     {
         CurrentState = state;
