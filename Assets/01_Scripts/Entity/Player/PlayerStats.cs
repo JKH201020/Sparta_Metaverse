@@ -7,6 +7,7 @@ public class PlayerStats : ScriptableObject
     public float health = 30f; // 체력
     public float damage = 5f; // 대미지
     public float speed = 1.0f; // 이동 속도
+    public float deathCooldown = 1f;
 
     [Header("자동 공격 설정")]
     public GameObject bulletPrefab; // 발사할 총알 프리팹

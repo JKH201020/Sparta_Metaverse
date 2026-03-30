@@ -117,8 +117,10 @@ GameObject:
   - component: {fileID: 8610645260750272892}
   - component: {fileID: 2985976327208114556}
   - component: {fileID: 4343714988858251113}
-  - component: {fileID: 2487163911002515390}
   - component: {fileID: 4424547169212612313}
+  - component: {fileID: 2487163911002515390}
+  - component: {fileID: 7229498192850957244}
+  - component: {fileID: 319581895240733615}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -214,20 +216,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1.3}
   m_EdgeRadius: 0
---- !u!114 &2487163911002515390
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2039028244968503589}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fa4a3bc947515af48aafb86ed2d4cf1c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _rigidbody: {fileID: 2985976327208114556}
-  _characterRenderer: {fileID: 6363725395155464398}
 --- !u!114 &4424547169212612313
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -285,8 +273,54 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: be2debbd-3339-4894-8d16-4c54fc48c3a8
     m_ActionName: Player/Interact[/Keyboard/f]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: ae33d102-b0a6-4416-be11-dbd385a33f5a
+    m_ActionName: Player/Look[/Mouse/position]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &2487163911002515390
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2039028244968503589}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa4a3bc947515af48aafb86ed2d4cf1c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _rigidbody: {fileID: 2985976327208114556}
+  _characterRenderer: {fileID: 6363725395155464398}
+--- !u!114 &7229498192850957244
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2039028244968503589}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0b6dfc26ef52c142a81f8598606bf82, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _characterRenderer: {fileID: 6363725395155464398}
+  stats: {fileID: 11400000, guid: 6e2d98684c64ad046b1089dcec648315, type: 2}
+--- !u!114 &319581895240733615
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2039028244968503589}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2298c3bc139c1b4791f21823bd85c73, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _mainController: {fileID: 2487163911002515390}
+  _shootingController: {fileID: 7229498192850957244}
