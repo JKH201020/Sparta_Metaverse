@@ -4,27 +4,27 @@ using UnityEngine;
 
 public class MiniFollowCamera : MonoBehaviour
 {
-    private Transform target; // Ä«¸Ş¶ó°¡ µû¶ó°¥ ´ë»ó
-    float offsetX; // Ä«¸Ş¶ó¿Í ´ë»ó »çÀÌÀÇ XÃà ¿ÀÇÁ¼Â
+    private Transform target; // ì¹´ë©”ë¼ê°€ ë”°ë¼ê°ˆ ëŒ€ìƒ
+    float offsetX; // ì¹´ë©”ë¼ì™€ ëŒ€ìƒ ì‚¬ì´ì˜ Xì¶• ì˜¤í”„ì…‹
 
-    // Update is called once per frame
+    // Tick is called once per frame
     void Update()
     {
-        // targetÀÌ nullÀÌ¶ó¸é Ä«¸Ş¶ó°¡ ¾Æ¹«°Íµµ µû¶ó°¡Áö ¾ÊÀ½
+        // targetì´ nullì´ë¼ë©´ ì¹´ë©”ë¼ê°€ ì•„ë¬´ê²ƒë„ ë”°ë¼ê°€ì§€ ì•ŠìŒ
         if (target == null) return;
 
-        Vector3 pos = transform.position; // ÇöÀç Ä«¸Ş¶ó À§Ä¡¸¦ ÀúÀå
+        Vector3 pos = transform.position; // í˜„ì¬ ì¹´ë©”ë¼ ìœ„ì¹˜ë¥¼ ì €ì¥
 
-        pos.x = target.position.x + offsetX; // Ä«¸Ş¶óÀÇ X À§Ä¡¸¦ ´ë»óÀÇ X À§Ä¡¿¡ ¿ÀÇÁ¼ÂÀ» ´õÇØ ¼³Á¤
-        transform.position = pos; // °è»êµÈ »õ·Î¿î À§Ä¡·Î Ä«¸Ş¶ó ÀÌµ¿
+        pos.x = target.position.x + offsetX; // ì¹´ë©”ë¼ì˜ X ìœ„ì¹˜ë¥¼ ëŒ€ìƒì˜ X ìœ„ì¹˜ì— ì˜¤í”„ì…‹ì„ ë”í•´ ì„¤ì •
+        transform.position = pos; // ê³„ì‚°ëœ ìƒˆë¡œìš´ ìœ„ì¹˜ë¡œ ì¹´ë©”ë¼ ì´ë™
     }
 
-    // ¿¡¼Â Æú´õ¿¡¼­ ÇÁ¸®ÆÕÀ¸·Î ºÒ·¯¿Ã ¶§
-    public void SetTarget(Transform _target) // Ä«¸Ş¶ó Å¸°Ù ¼³Á¤
+    // ì—ì…‹ í´ë”ì—ì„œ í”„ë¦¬íŒ¹ìœ¼ë¡œ ë¶ˆëŸ¬ì˜¬ ë•Œ
+    public void SetTarget(Transform _target) // ì¹´ë©”ë¼ íƒ€ê²Ÿ ì„¤ì •
     {
         target = _target;
 
-        // Ä«¸Ş¶óÀÇ ÇöÀç À§Ä¡¿Í ´ë»óÀÇ X À§Ä¡ Â÷ÀÌ¸¦ ¿ÀÇÁ¼ÂÀ¸·Î ÀúÀå
+        // ì¹´ë©”ë¼ì˜ í˜„ì¬ ìœ„ì¹˜ì™€ ëŒ€ìƒì˜ X ìœ„ì¹˜ ì°¨ì´ë¥¼ ì˜¤í”„ì…‹ìœ¼ë¡œ ì €ì¥
         offsetX = transform.position.x - target.position.x;
     }
 }

@@ -18,7 +18,7 @@ public class Plane : MonoBehaviour
         _rigidbody = transform.GetComponent<Rigidbody2D>();
     }
 
-    // Update is called once per frame
+    // Tick is called once per frame
     void Update()
     {
         if (!isDead) // 생존

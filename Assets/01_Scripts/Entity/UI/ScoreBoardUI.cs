@@ -26,7 +26,7 @@ public class ScoreBoardUI : MonoBehaviour
         bestScoreText = transform.Find("BestScoreText").GetComponent<TextMeshProUGUI>();
     }
 
-    // Update is called once per frame
+    // Tick is called once per frame
     void Update()
     {
         if (MiniGameManager.Instance != null && currentScoreText != null && bestScoreText != null)
