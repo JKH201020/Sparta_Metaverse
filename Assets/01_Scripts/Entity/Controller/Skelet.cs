@@ -2,8 +2,6 @@ using UnityEngine;
 
 public class Skelet : MonoBehaviour, IInteractable
 {
-    private const string MiniGameSceneString = "MiniGameScene";
-
     // 이 함수는 async를 달지 않은 평범한 동기 함수
     public void Interact() // 플레이어와 상호작용 시킬 메서드
     {
@@ -15,6 +13,6 @@ public class Skelet : MonoBehaviour, IInteractable
     {
         // 씬을 바꾸라고 명령만 던져놓고, 끝날 때까지 안 기다림
         // await를 안 썼으니 이 함수에 async를 달 필요가 없음
-        if (GameManager.Instance != null) _ = GameManager.Instance.ChangeScene(MiniGameSceneString);
+        if (GameManager.Instance != null) _ = GameManager.Instance.ChangeScene(SceneNames.MiniGameScene);
     }
 }

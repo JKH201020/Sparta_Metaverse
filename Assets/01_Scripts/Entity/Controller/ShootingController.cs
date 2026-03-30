@@ -4,6 +4,9 @@ using UnityEngine.InputSystem;
 public class ShootingController : MonoBehaviour
 {
     [SerializeField] private SpriteRenderer _characterRenderer; // SpriteRenderer 컴포넌트를 참조하기 위한 변수
+
+    // 상태 클래스에서 SpriteRenderer에 접근하기 위한 프로퍼티
+    public SpriteRenderer CharacterRenderer => _characterRenderer;
     public Rigidbody2D Rigidbody { get; private set; }
     public PlayerStats stats;
 
@@ -20,12 +23,12 @@ public class ShootingController : MonoBehaviour
 
     private void Reset()
     {
-        Rigidbody = GetComponent<Rigidbody2D>();
         _characterRenderer = transform.Find(MainSpriteString).GetComponent<SpriteRenderer>();
     }
 
     private void Awake()
     {
+        Rigidbody = GetComponent<Rigidbody2D>();
         // 상태 객체 생성
         PlayingState = new ShootingPlayingState(this);
         DeadState = new ShootingDeadState(this);

@@ -29,7 +29,6 @@ public class ShootingPlayingState : PlayerBaseState
         _attackTimer += Time.deltaTime;
         if (_attackTimer >= controller.stats.attackRate)
         {
-
             Shoot();
             _attackTimer = 0f;
         }
@@ -39,19 +38,33 @@ public class ShootingPlayingState : PlayerBaseState
     {
         // 이동 속도
         controller.Rigidbody.velocity = controller.MoveInput * controller.stats.speed;
-        // 마우스 방향으로 조준
-        Vector2 worldMousePos = Camera.main.ScreenToWorldPoint(controller.MouseScreenPos);
-        Vector2 lookDir = worldMousePos - (Vector2)controller.transform.position;
 
-        float angle = Mathf.Atan2(lookDir.y, lookDir.x) * Mathf.Rad2Deg;
-        controller.transform.rotation = Quaternion.Euler(0, 0, angle);
+        if (controller.MouseScreenPos != Vector2.zero && controller.CharacterRenderer != null)
+        {
+            // 마우스 방향으로 조준
+            Vector2 worldMousePos = Camera.main.ScreenToWorldPoint(controller.MouseScreenPos);
+
+            // 마우스X가 캐릭터X보다 작으면 -> 마우스가 왼쪽에 있음 -> FlipX = true
+            bool shouldFilp = worldMousePos.x < controller.transform.position.x;
+            controller.CharacterRenderer.flipX = shouldFilp;
+        }
     }
 
     private void Shoot() // 투사체 발사
     {
         if (controller.stats.bulletPrefab != null)
         {
-            Object.Instantiate(controller.stats.bulletPrefab, controller.transform.position, controller.transform.rotation);
+            // 캐릭터 위치에서 총알 생성 (회전값 없이 기본값 Quaternion.identity 사용)
+            GameObject bullet = Object.Instantiate(controller.stats.bulletPrefab, controller.transform.position, Quaternion.identity);
+
+            Vector2 worldMousePos = Camera.main.ScreenToWorldPoint(controller.MouseScreenPos);
+            Vector2 fireDir = worldMousePos - (Vector2)controller.transform.position.normalized;
+
+            //Bullet bulletScript = bullet.GetComponent<Bullet>();
+            //if (bulletScript != null)
+            //{
+            //    bulletScript.SetDirection(fireDir);
+            //}
         }
     }
 }

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 30
   damage: 5
-  speed: 1
+  speed: 5
   deathCooldown: 1
   bulletPrefab: {fileID: 6343340043731968744, guid: 2827cab8dc663a147bc06cc815777f6c, type: 3}
   attackRate: 0.5

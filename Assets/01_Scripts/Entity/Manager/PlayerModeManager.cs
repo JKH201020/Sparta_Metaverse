@@ -6,8 +6,6 @@ public class PlayerModeManager : MonoBehaviour
     [SerializeField] private MonoBehaviour _mainController;
     [SerializeField] private MonoBehaviour _shootingController;
 
-    private const string MiniGameScene_2String = "MiniGameScene_2";
-
     private void Reset()
     {
         _mainController = GetComponent<PlayerController>();
@@ -32,17 +30,15 @@ public class PlayerModeManager : MonoBehaviour
 
     private void UpdatePlayerMode(string sceneName)
     {
-        if (sceneName == MiniGameScene_2String)
+        if (sceneName == SceneNames.MiniGameScene_2)
         {
             _mainController.enabled = false;
             _shootingController.enabled = true;
-            Debug.Log("모드 전환: 슈팅 컨트롤러 활성화");
         }
         else
         {
             _mainController.enabled = true;
             _shootingController.enabled = false;
-            Debug.Log("모드 전환: 플레이어 컨트롤러 활성화");
         }
     }
 }
