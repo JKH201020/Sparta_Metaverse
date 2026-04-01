@@ -6,6 +6,9 @@ TagManager:
   tags:
   - BackGround
   - Npc
+  - Wall
+  - Enemy
+  - Bullet
   layers:
   - Default
   - TransparentFX
@@ -37,8 +40,8 @@ TagManager:
   - 
   - 
   - 
-  - 
-  - 
+  - Wall
+  - Bullet
   m_SortingLayers:
   - name: Default
     uniqueID: 0

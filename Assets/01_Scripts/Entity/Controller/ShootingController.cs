@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Pool;
 using UnityEngine.InputSystem;
 
 public class ShootingController : MonoBehaviour
@@ -19,6 +20,9 @@ public class ShootingController : MonoBehaviour
     public ShootingPlayingState PlayingState { get; private set; }
     public ShootingDeadState DeadState { get; private set; }
 
+    // 오브젝트 풀링
+    private IObjectPool<Bullet> _bulletPool;
+
     private const string MainSpriteString = "MainSprite";
 
     private void Reset()
@@ -32,6 +36,15 @@ public class ShootingController : MonoBehaviour
         // 상태 객체 생성
         PlayingState = new ShootingPlayingState(this);
         DeadState = new ShootingDeadState(this);
+
+        // 풀 초기화
+        _bulletPool = new ObjectPool<Bullet>(
+            CreateBullet,
+            OnTakeFromPool,
+            OnReturnedToPool,
+            OnDestroyPoolObject,
+            maxSize: 20
+            );
     }
 
     private void Start()
@@ -60,6 +73,14 @@ public class ShootingController : MonoBehaviour
         if (PlayingState != null) ChangeState(PlayingState);
     }
 
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (!enabled) return;
+
+        // 적이나 피격 판정에 닿으면 사망 처리 (태그 확인 로직 등을 추가해도 됨)
+        if (_currentState != DeadState) ChangeState(DeadState);
+    }
+
     private void ChangeState(PlayerBaseState newState) // 컨트롤 변환
     {
         // _currentState?.Exit();
@@ -81,11 +102,38 @@ public class ShootingController : MonoBehaviour
         MouseScreenPos = context.ReadValue<Vector2>(); // 마우스 화면 좌표 저장
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (!enabled) return;
+    #region Bullet 오브젝트 풀링
 
-        // 적이나 피격 판정에 닿으면 사망 처리 (태그 확인 로직 등을 추가해도 됨)
-        if (_currentState != DeadState) ChangeState(DeadState);
+    private Bullet CreateBullet()
+    {
+        Bullet bullet = Instantiate(stats.bulletPrefab).GetComponent<Bullet>();
+        bullet.SetPool(_bulletPool);
+        return bullet;
     }
+
+    private void OnTakeFromPool(Bullet bullet) // 미리 생성한 오브젝트 활성화
+    {
+        bullet.gameObject.SetActive(true);
+        bullet.ResetState();
+    }
+
+    private void OnReturnedToPool(Bullet bullet) // 미리 생성한 오브젝트 비활성화
+    {
+        bullet.gameObject.SetActive(false);
+    }
+
+    // 풀(Pool)이 넘치거나, 게임이 종료될 때 메모리를 정리하는 청소부 역할
+    private void OnDestroyPoolObject(Bullet bullet)
+    {
+        Destroy(bullet.gameObject);
+    }
+
+    public void FireBullet(Vector2 pos, Quaternion rot, Vector2 dir)
+    {
+        Bullet bullet = _bulletPool.Get();
+        bullet.transform.SetPositionAndRotation(pos, rot);
+        bullet.SetDirection(dir, stats.attackSpeed);
+    }
+
+    #endregion
 }

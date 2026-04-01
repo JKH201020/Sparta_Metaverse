@@ -36,17 +36,17 @@ public class ShootingPlayingState : PlayerBaseState
 
     public override void PhysicsTick()
     {
-        // 이동 속도
-        controller.Rigidbody.velocity = controller.MoveInput * controller.stats.speed;
+        // 플레이어 이동 속도
+        controller.Rigidbody.velocity = controller.MoveInput * controller.stats.moveSpeed;
 
-        if (controller.MouseScreenPos != Vector2.zero && controller.CharacterRenderer != null)
+        if (controller.MouseScreenPos != Vector2.zero)
         {
             // 마우스 방향으로 조준
             Vector2 worldMousePos = Camera.main.ScreenToWorldPoint(controller.MouseScreenPos);
 
             // 마우스X가 캐릭터X보다 작으면 -> 마우스가 왼쪽에 있음 -> FlipX = true
-            bool shouldFilp = worldMousePos.x < controller.transform.position.x;
-            controller.CharacterRenderer.flipX = shouldFilp;
+            bool isLeft = worldMousePos.x < controller.transform.position.x;
+            controller.CharacterRenderer.flipX = isLeft;
         }
     }
 
@@ -54,17 +54,13 @@ public class ShootingPlayingState : PlayerBaseState
     {
         if (controller.stats.bulletPrefab != null)
         {
-            // 캐릭터 위치에서 총알 생성 (회전값 없이 기본값 Quaternion.identity 사용)
-            GameObject bullet = Object.Instantiate(controller.stats.bulletPrefab, controller.transform.position, Quaternion.identity);
-
+            // 마우스의 월드 좌표 계산
             Vector2 worldMousePos = Camera.main.ScreenToWorldPoint(controller.MouseScreenPos);
-            Vector2 fireDir = worldMousePos - (Vector2)controller.transform.position.normalized;
+            // 발사 방향 계산
+            Vector2 fireDir = (worldMousePos - (Vector2)controller.transform.position).normalized;
 
-            //Bullet bulletScript = bullet.GetComponent<Bullet>();
-            //if (bulletScript != null)
-            //{
-            //    bulletScript.SetDirection(fireDir);
-            //}
+            // 직접 생성(Instantiate)하지 않고, 컨트롤러의 풀에서 빌려옴 / 위치, 회전(기본), 방향을 인자로 전달
+            controller.FireBullet(controller.transform.position, Quaternion.identity, fireDir);
         }
     }
 }
