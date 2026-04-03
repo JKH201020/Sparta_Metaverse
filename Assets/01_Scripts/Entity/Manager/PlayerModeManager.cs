@@ -9,7 +9,7 @@ public class PlayerModeManager : MonoBehaviour
     private void Reset()
     {
         _mainController = GetComponent<PlayerController>();
-        _shootingController = GetComponent<ShootingController>();
+        _shootingController = GetComponent<ShootingPlayerController>();
     }
 
     private void OnEnable()

@@ -119,8 +119,9 @@ GameObject:
   - component: {fileID: 4343714988858251113}
   - component: {fileID: 4424547169212612313}
   - component: {fileID: 2487163911002515390}
-  - component: {fileID: 7229498192850957244}
   - component: {fileID: 319581895240733615}
+  - component: {fileID: 8616362099396620799}
+  - component: {fileID: 3537898750132286131}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -243,8 +244,8 @@ MonoBehaviour:
   m_ActionEvents:
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2487163911002515390}
-        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+      - m_Target: {fileID: 8616362099396620799}
+        m_TargetAssemblyTypeName: ShootingPlayerController, Assembly-CSharp
         m_MethodName: OnMove
         m_Mode: 0
         m_Arguments:
@@ -255,8 +256,8 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 7229498192850957244}
-        m_TargetAssemblyTypeName: ShootingController, Assembly-CSharp
+      - m_Target: {fileID: 2487163911002515390}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
         m_MethodName: OnMove
         m_Mode: 0
         m_Arguments:
@@ -287,8 +288,8 @@ MonoBehaviour:
     m_ActionName: Player/Interact[/Keyboard/f]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 7229498192850957244}
-        m_TargetAssemblyTypeName: ShootingController, Assembly-CSharp
+      - m_Target: {fileID: 8616362099396620799}
+        m_TargetAssemblyTypeName: ShootingPlayerController, Assembly-CSharp
         m_MethodName: OnLook
         m_Mode: 0
         m_Arguments:
@@ -320,20 +321,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _rigidbody: {fileID: 2985976327208114556}
   _characterRenderer: {fileID: 6363725395155464398}
---- !u!114 &7229498192850957244
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2039028244968503589}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f0b6dfc26ef52c142a81f8598606bf82, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _characterRenderer: {fileID: 6363725395155464398}
-  stats: {fileID: 11400000, guid: 6e2d98684c64ad046b1089dcec648315, type: 2}
 --- !u!114 &319581895240733615
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -347,4 +334,35 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _mainController: {fileID: 2487163911002515390}
-  _shootingController: {fileID: 7229498192850957244}
+  _shootingController: {fileID: 8616362099396620799}
+--- !u!114 &8616362099396620799
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2039028244968503589}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 095de66d5ea946f4faa1dc49c451f16b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _characterRenderer: {fileID: 6363725395155464398}
+  stats: {fileID: 11400000, guid: 6e2d98684c64ad046b1089dcec648315, type: 2}
+--- !u!114 &3537898750132286131
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2039028244968503589}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d3d3915d1e84c654cb7cbe694c521a9d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _enemyStats: {fileID: 0}
+  _playerStats: {fileID: 11400000, guid: 6e2d98684c64ad046b1089dcec648315, type: 2}
+  OnDeath:
+    m_PersistentCalls:
+      m_Calls: []

@@ -4,6 +4,7 @@ using UnityEngine.Pool;
 public class Bullet : MonoBehaviour
 {
     [SerializeField] private Rigidbody2D _rb;
+    [SerializeField] private PlayerStats stats;
 
     private Vector2 _direction; // 방향
     private float _speed; // 속도
@@ -25,6 +26,10 @@ public class Bullet : MonoBehaviour
     {
         if (collision.CompareTag(Tag.Wall) || collision.CompareTag(Tag.Enemy))
         {
+            HealthSystem enemyHealth = collision.GetComponent<HealthSystem>();
+
+            if (enemyHealth != null) enemyHealth.TakeDamage(stats.damage);
+
             _isReleased = true;
             _managedPool.Release(this);
         }

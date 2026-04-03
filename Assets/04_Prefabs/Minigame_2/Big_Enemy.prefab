@@ -11,7 +11,9 @@ GameObject:
   - component: {fileID: 7644566169469029644}
   - component: {fileID: 3455028812254470998}
   - component: {fileID: 7981166625454583803}
-  m_Layer: 0
+  - component: {fileID: 1022092799552652843}
+  - component: {fileID: 8924298125535463262}
+  m_Layer: 29
   m_Name: Big_Enemy
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -94,7 +96,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -105,7 +107,41 @@ Rigidbody2D:
   m_Interpolate: 1
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
+--- !u!114 &1022092799552652843
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3401957322917292118}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e08b770ae90e8594f820a1c71fce1bc3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _animator: {fileID: 6450633795144510809}
+  _rigidbody: {fileID: 7981166625454583803}
+  _spriteRenderer: {fileID: 4782589463026907765}
+  _enemyStats: {fileID: 11400000, guid: f8c9b3e353ede0e4e91620288d03c68a, type: 2}
+  _enemyHealth: {fileID: 8924298125535463262}
+--- !u!114 &8924298125535463262
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3401957322917292118}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d3d3915d1e84c654cb7cbe694c521a9d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _enemyStats: {fileID: 11400000, guid: f8c9b3e353ede0e4e91620288d03c68a, type: 2}
+  _playerStats: {fileID: 0}
+  OnDeath:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &4177040801431531585
 GameObject:
   m_ObjectHideFlags: 0
@@ -117,7 +153,7 @@ GameObject:
   - component: {fileID: 2702093718844629768}
   - component: {fileID: 4782589463026907765}
   - component: {fileID: 6450633795144510809}
-  m_Layer: 0
+  m_Layer: 29
   m_Name: MainSprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -179,7 +215,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 100
   m_Sprite: {fileID: 21300000, guid: fdea02b74de89a94c953c3fb662300b5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

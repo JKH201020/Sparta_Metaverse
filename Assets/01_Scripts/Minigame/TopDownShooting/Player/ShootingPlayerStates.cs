@@ -2,8 +2,8 @@ using UnityEngine;
 
 public abstract class PlayerBaseState
 {
-    protected ShootingController controller;
-    public PlayerBaseState(ShootingController controller)
+    protected ShootingPlayerController controller;
+    public PlayerBaseState(ShootingPlayerController controller)
     {
         this.controller = controller;
     }
@@ -17,7 +17,7 @@ public class ShootingPlayingState : PlayerBaseState
 {
     private float _attackTimer;
 
-    public ShootingPlayingState(ShootingController controller) : base(controller) { }
+    public ShootingPlayingState(ShootingPlayerController controller) : base(controller) { }
 
     public override void Enter()
     {
@@ -69,7 +69,7 @@ public class ShootingDeadState : PlayerBaseState
 {
     private float _cooldownTimer;
 
-    public ShootingDeadState(ShootingController controller) : base(controller) { }
+    public ShootingDeadState(ShootingPlayerController controller) : base(controller) { }
 
     public override void Enter()
     {

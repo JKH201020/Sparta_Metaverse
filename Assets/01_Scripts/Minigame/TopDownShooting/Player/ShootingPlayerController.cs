@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.Pool;
 using UnityEngine.InputSystem;
 
-public class ShootingController : MonoBehaviour
+public class ShootingPlayerController : MonoBehaviour
 {
     [SerializeField] private SpriteRenderer _characterRenderer; // SpriteRenderer 컴포넌트를 참조하기 위한 변수
 
@@ -102,7 +102,7 @@ public class ShootingController : MonoBehaviour
         MouseScreenPos = context.ReadValue<Vector2>(); // 마우스 화면 좌표 저장
     }
 
-    #region Bullet 오브젝트 풀링
+ #region Bullet 오브젝트 풀링
 
     private Bullet CreateBullet()
     {
@@ -136,4 +136,5 @@ public class ShootingController : MonoBehaviour
     }
 
     #endregion
+
 }
