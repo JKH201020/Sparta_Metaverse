@@ -92,14 +92,14 @@ public class EnemyController : MonoBehaviour
 
     private void Idle()
     {
-        //_animator.SetBool(AnimParams.IsIdle, true);
+        //_bowAnim.SetBool(AnimParams.IsIdle, true);
         _move = Vector2.zero;
     }
 
     private void Chase()
     {
-        //_animator.SetBool(AnimParams.IsIdle, false);
-        //_animator.SetBool(AnimParams.IsRunning, true);
+        //_bowAnim.SetBool(AnimParams.IsIdle, false);
+        //_bowAnim.SetBool(AnimParams.IsRunning, true);
 
         if (_target != null) _move = (_target.position - transform.position).normalized;
 
@@ -113,8 +113,8 @@ public class EnemyController : MonoBehaviour
     private void Attack()
     {
         _move = Vector2.zero;
-        //_animator.SetBool(AnimParams.IsRunning, false);
-        //_animator.SetBool(AnimParams.IsAttacking, true);
+        //_bowAnim.SetBool(AnimParams.IsRunning, false);
+        //_bowAnim.SetBool(AnimParams.IsAttacking, true);
 
         if (_target == null) return;
 
@@ -123,7 +123,7 @@ public class EnemyController : MonoBehaviour
         // 공격범위 벗어났을 경우
         if (offset.sqrMagnitude > _enemyStats.attackRange * _enemyStats.attackRange)
         {
-            //_animator.SetBool(AnimParams.IsAttacking, false);
+            //_bowAnim.SetBool(AnimParams.IsAttacking, false);
             ChangeState(EnemyState.Chase);
             return;
         }

@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed158244132d2644d9d661d1ebdc6290, type: 3}
   m_Name: NewPlayerStats
   m_EditorClassIdentifier: 
-  health: 30
+  hp: 30
   damage: 5
   moveSpeed: 3
   deathCooldown: 1
   bulletPrefab: {fileID: 6343340043731968744, guid: 2827cab8dc663a147bc06cc815777f6c, type: 3}
-  attackRate: 2
-  attackSpeed: 5
+  attackDelay: 2
+  bulletSpeed: 5

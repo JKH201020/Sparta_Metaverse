@@ -349,6 +349,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _characterRenderer: {fileID: 6363725395155464398}
+  _bowAnim: {fileID: 1406540605714617639}
+  _firePoint: {fileID: 5176915701848344436}
+  _bow: {fileID: 3897524840055287560}
   stats: {fileID: 11400000, guid: 6e2d98684c64ad046b1089dcec648315, type: 2}
 --- !u!114 &3537898750132286131
 MonoBehaviour:
@@ -377,13 +380,15 @@ GameObject:
   m_Component:
   - component: {fileID: 5176915701848344436}
   - component: {fileID: 42505045715539176}
+  - component: {fileID: 1406540605714617639}
+  - component: {fileID: 8164032003145971618}
   m_Layer: 0
-  m_Name: Bow
+  m_Name: BowSprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5176915701848344436
 Transform:
   m_ObjectHideFlags: 0
@@ -451,3 +456,37 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!95 &1406540605714617639
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3897524840055287560}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 8b05ce2aa2132414c94149b656a1f537, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &8164032003145971618
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3897524840055287560}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6da46c608e5f173439cca8ee99723626, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _spController: {fileID: 8616362099396620799}
