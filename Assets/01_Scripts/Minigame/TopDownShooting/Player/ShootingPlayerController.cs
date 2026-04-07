@@ -108,8 +108,11 @@ public class ShootingPlayerController : MonoBehaviour
     {
         if (!enabled) return;
 
-        // 적이나 피격 판정에 닿으면 사망 처리 (태그 확인 로직 등을 추가해도 됨)
-        if (_currentState != DeadState) ChangeState(DeadState);
+        if (collision.gameObject.CompareTag(Tag.Enemy))
+        {
+            // 적이나 피격 판정에 닿으면 사망 처리 (태그 확인 로직 등을 추가해도 됨)
+            if (_currentState != DeadState) ChangeState(DeadState);
+        }
     }
 
     private void ChangeState(PlayerBaseState newState) // 컨트롤 변환
