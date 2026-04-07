@@ -112,7 +112,7 @@ public class ShootingPlayerController : MonoBehaviour
     {
         if (!enabled) return;
 
-        if (collision.gameObject.CompareTag(Tag.Enemy))
+        if (collision.gameObject.CompareTag(Tag.Weapon))
         {
             if (_currentState != DeadState && stats.hp <= 0) ChangeState(DeadState);
         }

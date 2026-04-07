@@ -28,12 +28,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1579767237116183606}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.7, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.6999998, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 7644566169469029644}
+  m_Father: {fileID: 2038224478267629009}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &3122047343162585388
 SpriteRenderer:
@@ -166,6 +166,39 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enemyStats: {fileID: 11400000, guid: f8c9b3e353ede0e4e91620288d03c68a, type: 2}
+  _collider: {fileID: 231710790153747441}
+--- !u!1 &2959452232761663627
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2038224478267629009}
+  m_Layer: 29
+  m_Name: WeaponPivot
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2038224478267629009
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2959452232761663627}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 7296225070314614979}
+  m_Father: {fileID: 7644566169469029644}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3401957322917292118
 GameObject:
   m_ObjectHideFlags: 0
@@ -200,7 +233,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2702093718844629768}
-  - {fileID: 7296225070314614979}
+  - {fileID: 2038224478267629009}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!61 &3455028812254470998
@@ -290,9 +323,11 @@ MonoBehaviour:
   _enemyAnim: {fileID: 6450633795144510809}
   _rigidbody: {fileID: 7981166625454583803}
   _spriteRenderer: {fileID: 4782589463026907765}
+  _weaponSR: {fileID: 2959452232761663627}
   _weaponAnim: {fileID: 6283066691204566581}
-  _enemyStats: {fileID: 11400000, guid: f8c9b3e353ede0e4e91620288d03c68a, type: 2}
-  _enemyHealth: {fileID: 8924298125535463262}
+  _weaponPos: {fileID: 7296225070314614979}
+  _stats: {fileID: 11400000, guid: f8c9b3e353ede0e4e91620288d03c68a, type: 2}
+  _healthSystem: {fileID: 8924298125535463262}
 --- !u!114 &8924298125535463262
 MonoBehaviour:
   m_ObjectHideFlags: 0

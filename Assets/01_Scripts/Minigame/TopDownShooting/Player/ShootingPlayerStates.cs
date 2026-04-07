@@ -54,6 +54,7 @@ public class ShootingDeadState : PlayerBaseState
 
     public override void Enter()
     {
+        Debug.Log("플레이어 사망");
         controller.Rigidbody.velocity = Vector2.zero;
         _cooldownTimer = controller.stats.deathCooldown;
     }
