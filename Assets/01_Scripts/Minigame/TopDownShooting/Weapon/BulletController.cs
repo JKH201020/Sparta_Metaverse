@@ -6,6 +6,7 @@ public class BulletController : MonoBehaviour
     [SerializeField] private Rigidbody2D _rb;
     [SerializeField] private PlayerStats _stats;
 
+    private HealthSystem _enemyHealth;
     private Vector2 _direction; // 방향
     private float _speed; // 속도
     private bool _isReleased; // 중복 반납 방지
@@ -32,9 +33,9 @@ public class BulletController : MonoBehaviour
     {
         if (collision.CompareTag(Tag.Wall) || collision.CompareTag(Tag.Enemy))
         {
-            HealthSystem enemyHealth = collision.GetComponent<HealthSystem>();
+            _enemyHealth = collision.GetComponent<HealthSystem>();
 
-            if (enemyHealth != null) enemyHealth.TakeDamage(_stats.damage);
+            if (_enemyHealth != null) _enemyHealth.TakeDamage(_stats.damage);
 
             Release();
         }
@@ -58,12 +59,12 @@ public class BulletController : MonoBehaviour
         _isReleased = false;
     }
 
-/// <summary>
-/// Bullet 초기화
-/// </summary>
-/// <param name="dir">발사 방향</param>
-/// <param name="bulletSpeed">투사체 속도</param>
-/// <param name="damage">대미지</param>
+    /// <summary>
+    /// Bullet 초기화
+    /// </summary>
+    /// <param name="dir">발사 방향</param>
+    /// <param name="bulletSpeed">투사체 속도</param>
+    /// <param name="damage">대미지</param>
     public void Init(Vector2 dir, float bulletSpeed, float damage)
     {
         ResetState();

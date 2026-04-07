@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 693095291714329055}
   - component: {fileID: 6363725395155464398}
   - component: {fileID: 1890457185762837207}
-  m_Layer: 0
+  m_Layer: 27
   m_Name: MainSprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -122,7 +122,7 @@ GameObject:
   - component: {fileID: 319581895240733615}
   - component: {fileID: 8616362099396620799}
   - component: {fileID: 3537898750132286131}
-  m_Layer: 0
+  m_Layer: 27
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -322,6 +322,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _rigidbody: {fileID: 2985976327208114556}
   _characterRenderer: {fileID: 6363725395155464398}
+  _animator: {fileID: 1890457185762837207}
 --- !u!114 &319581895240733615
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -352,6 +353,7 @@ MonoBehaviour:
   _bowAnim: {fileID: 1406540605714617639}
   _firePoint: {fileID: 5176915701848344436}
   _bow: {fileID: 3897524840055287560}
+  _playerHealth: {fileID: 3537898750132286131}
   stats: {fileID: 11400000, guid: 6e2d98684c64ad046b1089dcec648315, type: 2}
 --- !u!114 &3537898750132286131
 MonoBehaviour:
@@ -367,9 +369,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _enemyStats: {fileID: 0}
   _playerStats: {fileID: 11400000, guid: 6e2d98684c64ad046b1089dcec648315, type: 2}
-  OnDeath:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1 &3897524840055287560
 GameObject:
   m_ObjectHideFlags: 0
@@ -382,7 +381,7 @@ GameObject:
   - component: {fileID: 42505045715539176}
   - component: {fileID: 1406540605714617639}
   - component: {fileID: 8164032003145971618}
-  m_Layer: 0
+  m_Layer: 27
   m_Name: BowSprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -444,7 +443,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 100
+  m_SortingOrder: 101
   m_Sprite: {fileID: 21300000, guid: a4e331766160a7e4081f04f5a2457565, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

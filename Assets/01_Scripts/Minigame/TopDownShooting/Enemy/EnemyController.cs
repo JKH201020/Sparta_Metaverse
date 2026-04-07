@@ -2,7 +2,6 @@ using UnityEngine;
 
 public enum EnemyState
 {
-    Idle,
     Chase,
     Attack,
     Dead
@@ -10,40 +9,40 @@ public enum EnemyState
 
 public class EnemyController : MonoBehaviour
 {
-    [SerializeField] private Animator _animator;
+    [SerializeField] private Animator _enemyAnim;
     [SerializeField] private Rigidbody2D _rigidbody;
     [SerializeField] private SpriteRenderer _spriteRenderer;
+    [SerializeField] private Animator _weaponAnim;
+
+    [Header("스탯")]
     [SerializeField] private EnemyStats _enemyStats;
     [SerializeField] private HealthSystem _enemyHealth;
 
     private float _speed; // 적 이동속도
-    private float _attackTimer; // 공격 시간
+    private float sqrDistance;
 
     private EnemyState _currentState;
 
     private Transform _target; // 플레이어 위치
     private Vector2 _move; // 적 이동방향
+    private Vector2 offset;
+
+    private const string MainSpriteString = "MainSprite";
+    private const string WeaponString = "Weapon";
 
     private void Reset()
     {
-        _animator = GetComponentInChildren<Animator>();
+        _enemyAnim = transform.Find(MainSpriteString).GetComponentInChildren<Animator>();
+        _weaponAnim = transform.Find(WeaponString).GetComponentInChildren<Animator>();
         _rigidbody = GetComponent<Rigidbody2D>();
         _spriteRenderer = GetComponentInChildren<SpriteRenderer>();
         _enemyHealth = GetComponentInChildren<HealthSystem>();
-    }
-
-    private void Awake()
-    {
-        _enemyHealth.OnDeath.AddListener(OnEnemyDeadEvent);
     }
 
     private void Update()
     {
         switch (_currentState)
         {
-            case EnemyState.Idle:
-                Idle();
-                break;
             case EnemyState.Chase:
                 Chase();
                 break;
@@ -71,10 +70,19 @@ public class EnemyController : MonoBehaviour
 
     private void OnEnable()
     {
+        _enemyHealth.OnDeath += OnEnemyDeadEvent;
+        _enemyHealth.ResetHp();
+
+        // 이 부분 스포너든지 어떻게든 수정해보기. 계속 활성화할 때마다 부하걸림
+        // 그리고 몬스터 체력 복구 시키기
         if (_target == null) _target = GameObject.FindGameObjectWithTag(Tag.Player)?.transform;
 
-        _attackTimer = 0f;
         ChangeState(EnemyState.Chase);
+    }
+
+    private void OnDisable()
+    {
+        _enemyHealth.OnDeath -= OnEnemyDeadEvent;
     }
 
     private void OnDrawGizmos()
@@ -90,60 +98,41 @@ public class EnemyController : MonoBehaviour
 
     #region 적 상태
 
-    private void Idle()
-    {
-        //_bowAnim.SetBool(AnimParams.IsIdle, true);
-        _move = Vector2.zero;
-    }
-
     private void Chase()
     {
-        //_bowAnim.SetBool(AnimParams.IsIdle, false);
-        //_bowAnim.SetBool(AnimParams.IsRunning, true);
+        _enemyAnim.SetBool(AnimParams.IsRunning, true);
+        _weaponAnim.SetBool(AnimParams.IsAttacking, false);
 
         if (_target != null) _move = (_target.position - transform.position).normalized;
 
         if (_spriteRenderer != null) _spriteRenderer.flipX = _target.position.x < transform.position.x;
 
         // 공격 범위 안에 들어오면 공격 호출
-        float sqrDistance = (_target.position - transform.position).sqrMagnitude;
+        sqrDistance = (_target.position - transform.position).sqrMagnitude;
         if (sqrDistance <= _enemyStats.attackRange * _enemyStats.attackRange) ChangeState(EnemyState.Attack);
     }
 
     private void Attack()
     {
         _move = Vector2.zero;
-        //_bowAnim.SetBool(AnimParams.IsRunning, false);
-        //_bowAnim.SetBool(AnimParams.IsAttacking, true);
+        _enemyAnim.SetBool(AnimParams.IsRunning, false);
+        _weaponAnim.SetBool(AnimParams.IsAttacking, true);
 
         if (_target == null) return;
 
-        Vector2 offset = _target.position - transform.position;
+        offset = _target.position - transform.position;
 
         // 공격범위 벗어났을 경우
         if (offset.sqrMagnitude > _enemyStats.attackRange * _enemyStats.attackRange)
         {
-            //_bowAnim.SetBool(AnimParams.IsAttacking, false);
+            _weaponAnim.SetBool(AnimParams.IsAttacking, false);
             ChangeState(EnemyState.Chase);
             return;
-        }
-
-        // 공격 쿨타임 계산
-        _attackTimer += Time.deltaTime;
-        if (_attackTimer >= _enemyStats.attackDelay)
-        {
-            _attackTimer = 0f; // 타이머 초기화
-            // 아래 코드도 스포너에서 할당하도록 구현하기
-            HealthSystem playerHealth = _target.GetComponent<HealthSystem>();
-
-            // 플레이어에게 대미지 입힘
-            if (playerHealth != null) playerHealth.TakeDamage(_enemyStats.damage);
         }
     }
 
     private void Dead()
     {
-        _move = Vector2.zero;
         gameObject.SetActive(false);
     }
 
