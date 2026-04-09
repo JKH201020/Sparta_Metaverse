@@ -21,9 +21,12 @@ public class EnemySpawner : MonoBehaviour
 {
     [Header("스폰 설정"), SerializeField] private List<EnemySpawnData> _enemyDataList;
 
-    [Header("스폰 거리")]
-    [SerializeField] private float _minSpawnDistance = 8f; // 플레이어와의 최소 거리
-    [SerializeField] private float _maxSpawnDistance = 15f; // 플레이어와의 최대 거리
+    [Header("스폰 위치")]
+    [SerializeField] private float _mapMinX = -16f;
+    [SerializeField] private float _mapMaxX = 16f;
+    [SerializeField] private float _mapMinY = -9f;
+    [SerializeField] private float _mapMaxY = 9f;
+    [SerializeField] private float _minSpawnDistance = 5f; // 적 소환 최소 거리
 
     [Header("시스템 설정")]
     [SerializeField] private Transform _playerTransform; // 플레이어 위치
@@ -36,7 +39,6 @@ public class EnemySpawner : MonoBehaviour
     private EnemyController _enemy;
     private Coroutine _coroutine;
 
-    private float randomDist; // 적과 플레이어 사이의 랜덤 거리
     private int _currentActiveEnemies = 0; // 현재 생성된 적 수
 
     private void Reset()
@@ -75,6 +77,22 @@ public class EnemySpawner : MonoBehaviour
         }
     }
 
+    private void OnDrawGizmos()
+    {
+        // 맵 전체 구역
+        Gizmos.color = Color.green;
+        Vector3 center = new Vector3((_mapMaxX + _mapMinX) / 2, (_mapMaxY + _mapMinY) / 2, 0);
+        Vector3 size = new Vector3(_mapMaxX - _mapMinX, _mapMaxY - _mapMinY, 1);
+        Gizmos.DrawWireCube(center, size);
+
+        // 스폰 금지 구역 표시
+        if (_playerTransform != null) 
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireSphere(_playerTransform.position, _minSpawnDistance);
+        }
+    }
+
     #region 소환
 
     private IEnumerator SpawnRoutine() // 소환 코루틴
@@ -98,9 +116,27 @@ public class EnemySpawner : MonoBehaviour
 
     private Vector2 CalculateDonutPosition() // 소환 거리 계산
     {
-        Vector2 randomDir = Random.insideUnitCircle.normalized; // 랜덤 방향 (길이 1인 벡터)
-        float randomDist = Random.Range(_minSpawnDistance, _maxSpawnDistance); // 최소 ~ 최대 사이의 랜덤 거리
-        return (Vector2)_playerTransform.position + (randomDir * randomDist); // 플레이어 위치 기준으로 거리 합산
+        Vector2 spawnPos = Vector2.zero;
+        bool isValidPosition = false;
+        int attemptCount = 0; // 무한 루프 방지용
+
+        // 소환 적정 위치를 찾을 때까지 반복
+        while (!isValidPosition && attemptCount < 10)
+        {
+            attemptCount++;
+
+            // 맵 전체 범위 안에서 랜덤 좌표 생성
+            float x = Random.Range(_mapMinX, _mapMaxX);
+            float y = Random.Range(_mapMinY, _mapMaxY);
+            spawnPos = new Vector2(x, y);
+
+            // 플레이어와의 거리 계산
+            float distance = Vector2.Distance(spawnPos, _playerTransform.position);
+
+            if (distance >= _minSpawnDistance) isValidPosition = true;
+        }
+
+        return spawnPos;
     }
 
     #endregion
@@ -109,7 +145,8 @@ public class EnemySpawner : MonoBehaviour
 
     private EnemyController CreateEnemy(GameObject prefab, EnemyType type) // 적 생성
     {
-        _enemy = Instantiate(prefab).GetComponent<EnemyController>();
+        // Instantiate 할 때 'this.transform'을 넣어 현재 스포너의 자식 오브젝트로 생성
+        _enemy = Instantiate(prefab, this.transform).GetComponent<EnemyController>();
         _enemy.SetPool(_enemyPools[type]);
         return _enemy;
     }

@@ -1361,11 +1361,14 @@ MonoBehaviour:
   _enemyDataList:
   - enemyType: 0
     prefab: {fileID: 3401957322917292118, guid: 8d2ce759094bbba4494cf5f4dc661fd0, type: 3}
-  _minSpawnDistance: 8
-  _maxSpawnDistance: 15
+  _mapMinX: -16
+  _mapMaxX: 16
+  _mapMinY: -9
+  _mapMaxY: 9
+  _minSpawnDistance: 5
   _playerTransform: {fileID: 1322085687}
   _spawnInterval: 5
-  _maxEnemyCount: 3
+  _maxEnemyCount: 10
 --- !u!1 &492141279
 GameObject:
   m_ObjectHideFlags: 0

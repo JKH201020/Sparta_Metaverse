@@ -124,6 +124,8 @@ public class ShootingPlayerController : MonoBehaviour
         _currentState?.Enter();
     }
 
+    #region 조작
+
     private void RotateBow() // 활 회전
     {
         _mousePos = new Vector3(MouseScreenPos.x, MouseScreenPos.y, 10f);
@@ -150,6 +152,8 @@ public class ShootingPlayerController : MonoBehaviour
 
         MouseScreenPos = context.ReadValue<Vector2>(); // 마우스 화면 좌표 저장
     }
+
+    #endregion
 
     public void OnShoot() // 애니메이션 이벤트에서 호출할 함수
     {
@@ -186,7 +190,7 @@ public class ShootingPlayerController : MonoBehaviour
 
     private BulletController CreateBullet() // 오브젝트 풀링으로 Bullet 생성
     {
-        BulletController bullet = Instantiate(stats.bulletPrefab).GetComponent<BulletController>();
+        BulletController bullet = Instantiate(stats.bulletPrefab, this.transform).GetComponent<BulletController>();
         bullet.SetPool(_bulletPool);
         return bullet;
     }
