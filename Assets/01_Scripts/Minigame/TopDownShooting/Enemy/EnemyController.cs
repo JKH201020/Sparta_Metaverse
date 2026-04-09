@@ -1,42 +1,46 @@
-using Unity.VisualScripting.Antlr3.Runtime.Misc;
-using UnityEditor;
 using UnityEngine;
+using UnityEngine.Pool;
 
 public enum EnemyState
 {
-    Chase,
-    Attack,
-    Dead
+    Chase,// 추적
+    Attack, // 공격
+    Dead // 죽음
 }
 
 public class EnemyController : MonoBehaviour
 {
-    [SerializeField] private Animator _enemyAnim;
-    [SerializeField] private Rigidbody2D _rigidbody;
-    [SerializeField] private SpriteRenderer _spriteRenderer;
-    [SerializeField] private GameObject _weaponSR;
-    [SerializeField] private Animator _weaponAnim;
-    [SerializeField] private Transform _weaponPos;
+
+    [Header("최상위 오브젝트"), SerializeField] private Rigidbody2D _rigidbody;
+
+    [Header("자식 오브젝트 MainSprite")]
+    [SerializeField] private Animator _enemyAnim; // 본채 애니메이션
+    [SerializeField] private SpriteRenderer _spriteRenderer; // 본채 이미지
+
+    [Header("자식 오브젝트 WeaponPivot")]
+    [SerializeField] private GameObject _weaponSR; // 무기 이미지 있는 오브젝트
+    [SerializeField] private Animator _weaponAnim; // 무기 애니메이션
+    [SerializeField] private Transform _weaponPos; // 무기 위치
 
     [Header("스탯")]
-    [SerializeField] private EnemyStats _stats;
-    [SerializeField] private HealthSystem _healthSystem;
+    [SerializeField] private EnemyStats _stats; // 적 스탯
+    [SerializeField] private HealthSystem _healthSystem; // 
 
     private float _speed; // 적 이동속도
-    private float sqrDistance;
-    private float _defalutAttackSpeed = 1.0f;
-    private float _currentDist;
+    private float _sqrDistance;
+    private float _defalutAttackSpeed = 1.0f; // 기본 공격 속도
+    private float _currentDist; // 공격 감지 범위
 
-    private EnemyState _currentState;
+    private EnemyState _currentState; // 적 현재 상태
     private Transform _target; // 플레이어 위치
     private Vector2 _move; // 적 이동방향
     private AnimatorStateInfo _stateInfo; // 현재 실행 중인 애니메이션
+    private IObjectPool<EnemyController> _pool; // 자기가 속한 풀을 기억할 변수
 
     private const string MainSpriteString = "MainSprite";
     private const string WeaponString = "WeaponPivot/Weapon";
     private const string WeaponPivotString = "WeaponPivot";
     private const string NearAttackString = "NearAttack";
-
 
     private void Reset()
     {
@@ -47,6 +51,12 @@ public class EnemyController : MonoBehaviour
         _weaponSR = GameObject.Find(WeaponPivotString);
         _weaponPos = transform.Find(WeaponString).GetComponent<Transform>();
         _healthSystem = GetComponentInChildren<HealthSystem>();
+    }
+
+    private void Awake()
+    {
+        // 이 부분 스포너든지 어떻게든 수정해보기. 계속 활성화할 때마다 부하걸림
+        if (_target == null) _target = GameObject.FindGameObjectWithTag(Tag.Player)?.transform;
     }
 
     private void Update()
@@ -80,14 +90,9 @@ public class EnemyController : MonoBehaviour
 
     private void OnEnable()
     {
-        _healthSystem.OnDeath += OnEnemyDeadEvent;
-        _healthSystem.ResetHp();
-
-        // 이 부분 스포너든지 어떻게든 수정해보기. 계속 활성화할 때마다 부하걸림
-        // 그리고 몬스터 체력 복구 시키기
-        if (_target == null) _target = GameObject.FindGameObjectWithTag(Tag.Player)?.transform;
-
-        ChangeState(EnemyState.Chase);
+        if (_healthSystem != null) _healthSystem.OnDeath += OnEnemyDeadEvent;
+        
+        ChangeState(EnemyState.Chase); // 상태 초기화
     }
 
     private void OnDisable()
@@ -99,6 +104,11 @@ public class EnemyController : MonoBehaviour
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(_weaponPos.position, _stats.attackRange);
+    }
+
+    public void SetPool(IObjectPool<EnemyController> pool)
+    {
+        _pool = pool;
     }
 
     private void ChangeState(EnemyState newState) // 적 상태 변경
@@ -129,8 +139,8 @@ public class EnemyController : MonoBehaviour
         }
 
         // 공격 범위 안에 들어오면 공격 호출
-        sqrDistance = (_target.position - _weaponPos.position).sqrMagnitude;
-        if (sqrDistance <= _stats.attackRange * _stats.attackRange) ChangeState(EnemyState.Attack);
+        _sqrDistance = (_target.position - _weaponPos.position).sqrMagnitude;
+        if (_sqrDistance <= _stats.attackRange * _stats.attackRange) ChangeState(EnemyState.Attack);
     }
 
     private void Attack()
@@ -160,10 +170,11 @@ public class EnemyController : MonoBehaviour
 
     private void Dead()
     {
-        gameObject.SetActive(false);
+        if (_pool != null) _pool.Release(this); // 죽으면 풀에 반납
+        else Destroy(gameObject); // 풀이 없을 때를 대비한 안전 장치
     }
 
-    private void OnEnemyDeadEvent()
+    private void OnEnemyDeadEvent() // 적이 죽은 후 이벤트
     {
         ChangeState(EnemyState.Dead);
     }
