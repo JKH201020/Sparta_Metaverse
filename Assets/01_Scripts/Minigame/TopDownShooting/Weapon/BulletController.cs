@@ -4,9 +4,7 @@ using UnityEngine.Pool;
 public class BulletController : MonoBehaviour
 {
     [SerializeField] private Rigidbody2D _rb;
-    [SerializeField] private PlayerStats _stats;
 
-    private HealthSystem _enemyHealth;
     private Vector2 _direction; // 방향
     private float _speed; // 속도
     private bool _isReleased; // 중복 반납 방지
@@ -33,9 +31,9 @@ public class BulletController : MonoBehaviour
     {
         if (collision.CompareTag(Tag.Wall) || collision.CompareTag(Tag.Enemy))
         {
-            _enemyHealth = collision.GetComponent<HealthSystem>();
+            HealthSystem enemyHealth = collision.GetComponent<HealthSystem>();
 
-            if (_enemyHealth != null) _enemyHealth.TakeDamage(_stats.damage);
+            if (enemyHealth != null) enemyHealth.TakeDamage(_damage);
 
             Release();
         }
@@ -54,17 +52,20 @@ public class BulletController : MonoBehaviour
         _managedPool.Release(this);
     }
 
+    /// <summary>
+    /// 투사체 상태 초기화
+    /// </summary>
     public void ResetState()
     {
         _isReleased = false;
     }
 
-    /// <summary>
-    /// Bullet 초기화
-    /// </summary>
-    /// <param name="dir">발사 방향</param>
-    /// <param name="bulletSpeed">투사체 속도</param>
-    /// <param name="damage">대미지</param>
+/// <summary>
+/// Bullet 초기설정 / 적이나 플레이어가 사용할 때 각자 스탯을 적용하기 위함
+/// </summary>
+/// <param name="dir">발사 방향</param>
+/// <param name="bulletSpeed">투사체 속도</param>
+/// <param name="damage">대미지</param>
     public void Init(Vector2 dir, float bulletSpeed, float damage)
     {
         ResetState();
@@ -74,6 +75,10 @@ public class BulletController : MonoBehaviour
         _damage = damage;
     }
 
+    /// <summary>
+    /// 투사체를 사용한 후 반납할 풀 알려주기
+    /// </summary>
+    /// <param name="pool"></param>
     public void SetPool(IObjectPool<BulletController> pool)
     {
         _managedPool = pool;

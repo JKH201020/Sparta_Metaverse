@@ -9,11 +9,6 @@ public class BulletManager : MonoBehaviour
 
     private IObjectPool<BulletController> _bulletPool;
 
-    private void Reset()
-    {
-        _bulletPrefab = GameObject.FindWithTag(Tag.Bullet);
-    }
-
     private void Awake()
     {
         if (Instance == null) Instance = this;
@@ -27,6 +22,8 @@ public class BulletManager : MonoBehaviour
             OnDestroyPoolObject,
             maxSize: 50);
     }
+
+    #region 투사체 소환 반납
 
     /// <summary>
     /// 외부(플레이어, 적)에서 총알을 빌려갈 때 쓰는 함수
@@ -46,11 +43,14 @@ public class BulletManager : MonoBehaviour
         _bulletPool.Release(bullet);
     }
 
+    #endregion
+
     #region 오브젝트 풀링
 
     private BulletController CreateBullet() // 투사체 생성
     {
         BulletController bullet = Instantiate(_bulletPrefab, transform).GetComponent<BulletController>();
+        bullet.SetPool(_bulletPool); // 여기로 돌아오라고 알려줌
         return bullet;
     }
 

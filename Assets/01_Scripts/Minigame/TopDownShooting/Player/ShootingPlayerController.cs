@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.Pool;
 using UnityEngine.InputSystem;
 
 public class ShootingPlayerController : MonoBehaviour
@@ -8,17 +7,10 @@ public class ShootingPlayerController : MonoBehaviour
     [SerializeField] private Animator _bowAnim; // 활 애니메이션
     [SerializeField] private Transform _firePoint; // 화살 발사 위치
     [SerializeField] private GameObject _bow;
-    [SerializeField] private HealthSystem _playerHealth;
 
     private Camera _mainCam;
-    private Vector2 _mouseWorldPos; // 마우스 위치
-    private Vector2 _fireDir; // 발사 방향
-    private float _angle; // 발사 각도
+
     private float _defalutBulletSpeed = 1.0f;
-    private Vector3 _mousePos;
-    private Vector3 _worldPos;
-    private Vector2 _lookDir; // 보는 방향
-    private float _bowAngle; // 활 각도
     private float _bowDis = 0.6f; // 활 위치
 
     // 상태 클래스에서 SpriteRenderer에 접근하기 위한 프로퍼티
@@ -35,19 +27,15 @@ public class ShootingPlayerController : MonoBehaviour
     public ShootingPlayingState PlayingState { get; private set; }
     public ShootingDeadState DeadState { get; private set; }
 
-    // 오브젝트 풀링
-    private IObjectPool<BulletController> _bulletPool;
-
     private const string MainSpriteString = "MainSprite";
     private const string BowSpriteString = "BowSprite";
 
     private void Reset()
     {
         _characterRenderer = transform.Find(MainSpriteString).GetComponent<SpriteRenderer>();
-        _bowAnim = transform.Find(BowSpriteString).GetComponent<Animator>();
-        _firePoint = transform.Find(BowSpriteString).GetComponent<Transform>();
-        _bow = GameObject.Find(BowSpriteString);
-        _playerHealth = GetComponent<HealthSystem>();
+        _bow = transform.Find(BowSpriteString).gameObject;
+        _bowAnim = _bow.GetComponent<Animator>();
+        _firePoint = _bow.transform;
     }
 
     private void Awake()
@@ -58,15 +46,6 @@ public class ShootingPlayerController : MonoBehaviour
         // 상태 객체 생성
         PlayingState = new ShootingPlayingState(this);
         DeadState = new ShootingDeadState(this);
-
-        // 풀 초기화
-        _bulletPool = new ObjectPool<BulletController>(
-            CreateBullet,
-            OnTakeFromPool,
-            OnReturnedToPool,
-            OnDestroyPoolObject,
-            maxSize: 20
-            );
     }
 
     private void Start()
@@ -98,13 +77,11 @@ public class ShootingPlayerController : MonoBehaviour
         // 스크립트가 켜질 때(미니게임 시작) 첫 상태로 강제 진입
         if (PlayingState != null) ChangeState(PlayingState);
 
-        if (_playerHealth != null) _playerHealth.OnDeath += HandleDeath;
         _bow.SetActive(true);
     }
 
     private void OnDisable()
     {
-        if (_playerHealth != null) _playerHealth.OnDeath -= HandleDeath;
         _bow.SetActive(false);
     }
 
@@ -114,11 +91,12 @@ public class ShootingPlayerController : MonoBehaviour
 
         if (collision.gameObject.CompareTag(Tag.Weapon))
         {
-            if (_currentState != DeadState && stats.hp <= 0) ChangeState(DeadState);
+            // 적이나 피격 판정에 닿으면 사망 처리 (태그 확인 로직 등을 추가해도 됨)
+            if (_currentState != DeadState) ChangeState(DeadState);
         }
     }
 
-    private void ChangeState(PlayerBaseState newState) // 컨트롤 변환
+    private void ChangeState(PlayerBaseState newState) // 플레이어 상태 변환
     {
         _currentState = newState;
         _currentState?.Enter();
@@ -128,12 +106,12 @@ public class ShootingPlayerController : MonoBehaviour
 
     private void RotateBow() // 활 회전
     {
-        _mousePos = new Vector3(MouseScreenPos.x, MouseScreenPos.y, 10f);
-        _worldPos = _mainCam.ScreenToWorldPoint(_mousePos);
+        Vector3 _mousePos = new Vector3(MouseScreenPos.x, MouseScreenPos.y, 10f);
+        Vector3 _worldPos = _mainCam.ScreenToWorldPoint(_mousePos);
 
-        _lookDir = (_worldPos - transform.position).normalized;
+        Vector2 _lookDir = (_worldPos - transform.position).normalized;
 
-        _bowAngle = Mathf.Atan2(_lookDir.y, _lookDir.x) * Mathf.Rad2Deg;
+        float _bowAngle = Mathf.Atan2(_lookDir.y, _lookDir.x) * Mathf.Rad2Deg;
 
         _bowAnim.transform.position = (Vector2)transform.position + (_lookDir * _bowDis);
         _bowAnim.transform.rotation = Quaternion.Euler(0, 0, _bowAngle);
@@ -155,21 +133,18 @@ public class ShootingPlayerController : MonoBehaviour
 
     #endregion
 
+    #region 투사체 발사
+
     public void OnShoot() // 애니메이션 이벤트에서 호출할 함수
     {
         if (!enabled) return;
 
-        _mouseWorldPos = _mainCam.ScreenToWorldPoint(new Vector2(MouseScreenPos.x, MouseScreenPos.y));
-        _fireDir = ((Vector2)_mouseWorldPos - (Vector2)_firePoint.position).normalized;
-        _angle = Mathf.Atan2(_fireDir.y, _fireDir.x) * Mathf.Rad2Deg;
+        Vector2 _mouseWorldPos = _mainCam.ScreenToWorldPoint(new Vector2(MouseScreenPos.x, MouseScreenPos.y));
+        Vector2 _fireDir = ((Vector2)_mouseWorldPos - (Vector2)_firePoint.position).normalized;
+        float _angle = Mathf.Atan2(_fireDir.y, _fireDir.x) * Mathf.Rad2Deg;
 
         // 오브젝트 이미지가 위를 바라보고 있다면 _angle - 90, x축을 보고 있다면 _angle
         FireBullet(_firePoint.position, Quaternion.Euler(0, 0, _angle - 90), _fireDir);
-    }
-
-    private void HandleDeath()
-    {
-        if (_currentState != DeadState) ChangeState(DeadState);
     }
 
     /// <summary>
@@ -180,36 +155,9 @@ public class ShootingPlayerController : MonoBehaviour
     /// <param name="dir">발사 방향</param>
     public void FireBullet(Vector2 pos, Quaternion rot, Vector2 dir)
     {
-        BulletController bullet = _bulletPool.Get();
+        BulletController bullet = BulletManager.Instance.GetBullet();
         bullet.transform.SetPositionAndRotation(pos, rot);
         bullet.Init(dir, stats.bulletSpeed, stats.damage);
-    }
-
-    // 근데 이걸 플레이어 스크립트에 구현하는게 맞나?
-    #region Bullet 오브젝트 풀링
-
-    private BulletController CreateBullet() // 오브젝트 풀링으로 Bullet 생성
-    {
-        BulletController bullet = Instantiate(stats.bulletPrefab, this.transform).GetComponent<BulletController>();
-        bullet.SetPool(_bulletPool);
-        return bullet;
-    }
-
-    private void OnTakeFromPool(BulletController bullet) // 미리 생성한 오브젝트 활성화
-    {
-        bullet.gameObject.SetActive(true);
-        bullet.ResetState();
-    }
-
-    private void OnReturnedToPool(BulletController bullet) // 미리 생성한 오브젝트 비활성화
-    {
-        bullet.gameObject.SetActive(false);
-    }
-
-    // 풀(Pool)이 넘치거나, 게임이 종료될 때 메모리를 정리하는 청소부 역할
-    private void OnDestroyPoolObject(BulletController bullet)
-    {
-        Destroy(bullet.gameObject);
     }
 
     #endregion
