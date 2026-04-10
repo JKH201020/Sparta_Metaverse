@@ -1,0 +1,74 @@
+using UnityEngine;
+using UnityEngine.Pool;
+
+public class BulletManager : MonoBehaviour
+{
+    public static BulletManager Instance { get; private set; }
+
+    [Header("투사체 설정"), SerializeField] private GameObject _bulletPrefab;
+
+    private IObjectPool<BulletController> _bulletPool;
+
+    private void Reset()
+    {
+        _bulletPrefab = GameObject.FindWithTag(Tag.Bullet);
+    }
+
+    private void Awake()
+    {
+        if (Instance == null) Instance = this;
+        else Destroy(gameObject);
+
+        // 풀 초기화
+        _bulletPool = new ObjectPool<BulletController>(
+            CreateBullet,
+            OnTakeFromPool,
+            OnReturnedToPool,
+            OnDestroyPoolObject,
+            maxSize: 50);
+    }
+
+    /// <summary>
+    /// 외부(플레이어, 적)에서 총알을 빌려갈 때 쓰는 함수
+    /// </summary>
+    /// <returns></returns>
+    public BulletController GetBullet()
+    {
+        return _bulletPool.Get();
+    }
+
+    /// <summary>
+    /// 다 쓴 총알을 창고로 다시 반납할 때 쓰는 함수
+    /// </summary>
+    /// <param name="bullet"></param>
+    public void ReleaseBullet(BulletController bullet)
+    {
+        _bulletPool.Release(bullet);
+    }
+
+    #region 오브젝트 풀링
+
+    private BulletController CreateBullet() // 투사체 생성
+    {
+        BulletController bullet = Instantiate(_bulletPrefab, transform).GetComponent<BulletController>();
+        return bullet;
+    }
+
+    private void OnTakeFromPool(BulletController bullet) // 풀에서 꺼내감
+    {
+        if (bullet != null) bullet.gameObject.SetActive(true);
+    }
+
+    private void OnReturnedToPool(BulletController bullet) // 사용 후 풀에 반납
+    {
+        if (bullet != null) bullet.gameObject.SetActive(false);
+    }
+
+    private void OnDestroyPoolObject(BulletController bullet)
+    {
+        Destroy(bullet.gameObject);
+    }
+
+    #endregion
+
+}
