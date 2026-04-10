@@ -17,6 +17,8 @@ public class ShootingPlayingState : PlayerBaseState
 {
     public ShootingPlayingState(ShootingPlayerController controller) : base(controller) { }
 
+    private bool _isLeft;
+
     public override void Enter()
     {
        
@@ -38,8 +40,8 @@ public class ShootingPlayingState : PlayerBaseState
             Vector2 worldMousePos = Camera.main.ScreenToWorldPoint(controller.MouseScreenPos);
 
             // 마우스X가 캐릭터X보다 작으면 -> 마우스가 왼쪽에 있음 -> FlipX = true
-            bool isLeft = worldMousePos.x < controller.transform.position.x;
-            controller.CharacterRenderer.flipX = isLeft;
+            _isLeft = worldMousePos.x < controller.transform.position.x;
+            controller.CharacterRenderer.flipX = _isLeft;
         }
     }
 }
@@ -52,6 +54,7 @@ public class ShootingDeadState : PlayerBaseState
 
     public override void Enter()
     {
+        Debug.Log("플레이어 사망");
         controller.Rigidbody.velocity = Vector2.zero;
         _cooldownTimer = controller.stats.deathCooldown;
     }

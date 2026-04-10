@@ -8,6 +8,7 @@ public class ShootingPlayerController : MonoBehaviour
     [SerializeField] private Animator _bowAnim; // 활 애니메이션
     [SerializeField] private Transform _firePoint; // 화살 발사 위치
     [SerializeField] private GameObject _bow;
+    [SerializeField] private HealthSystem _playerHealth;
 
     private Camera _mainCam;
     private Vector2 _mouseWorldPos; // 마우스 위치
@@ -46,6 +47,7 @@ public class ShootingPlayerController : MonoBehaviour
         _bowAnim = transform.Find(BowSpriteString).GetComponent<Animator>();
         _firePoint = transform.Find(BowSpriteString).GetComponent<Transform>();
         _bow = GameObject.Find(BowSpriteString);
+        _playerHealth = GetComponent<HealthSystem>();
     }
 
     private void Awake()
@@ -96,11 +98,13 @@ public class ShootingPlayerController : MonoBehaviour
         // 스크립트가 켜질 때(미니게임 시작) 첫 상태로 강제 진입
         if (PlayingState != null) ChangeState(PlayingState);
 
+        if (_playerHealth != null) _playerHealth.OnDeath += HandleDeath;
         _bow.SetActive(true);
     }
 
     private void OnDisable()
     {
+        if (_playerHealth != null) _playerHealth.OnDeath -= HandleDeath;
         _bow.SetActive(false);
     }
 
@@ -108,19 +112,19 @@ public class ShootingPlayerController : MonoBehaviour
     {
         if (!enabled) return;
 
-        if (collision.gameObject.CompareTag(Tag.Enemy))
+        if (collision.gameObject.CompareTag(Tag.Weapon))
         {
-            // 적이나 피격 판정에 닿으면 사망 처리 (태그 확인 로직 등을 추가해도 됨)
-            if (_currentState != DeadState) ChangeState(DeadState);
+            if (_currentState != DeadState && stats.hp <= 0) ChangeState(DeadState);
         }
     }
 
     private void ChangeState(PlayerBaseState newState) // 컨트롤 변환
     {
-        // _currentState?.Exit();
         _currentState = newState;
         _currentState?.Enter();
     }
+
+    #region 조작
 
     private void RotateBow() // 활 회전
     {
@@ -149,16 +153,23 @@ public class ShootingPlayerController : MonoBehaviour
         MouseScreenPos = context.ReadValue<Vector2>(); // 마우스 화면 좌표 저장
     }
 
+    #endregion
+
     public void OnShoot() // 애니메이션 이벤트에서 호출할 함수
     {
         if (!enabled) return;
 
-        _mouseWorldPos = Camera.main.ScreenToWorldPoint(new Vector2(MouseScreenPos.x, MouseScreenPos.y));
+        _mouseWorldPos = _mainCam.ScreenToWorldPoint(new Vector2(MouseScreenPos.x, MouseScreenPos.y));
         _fireDir = ((Vector2)_mouseWorldPos - (Vector2)_firePoint.position).normalized;
         _angle = Mathf.Atan2(_fireDir.y, _fireDir.x) * Mathf.Rad2Deg;
 
         // 오브젝트 이미지가 위를 바라보고 있다면 _angle - 90, x축을 보고 있다면 _angle
         FireBullet(_firePoint.position, Quaternion.Euler(0, 0, _angle - 90), _fireDir);
+    }
+
+    private void HandleDeath()
+    {
+        if (_currentState != DeadState) ChangeState(DeadState);
     }
 
     /// <summary>
@@ -174,11 +185,12 @@ public class ShootingPlayerController : MonoBehaviour
         bullet.Init(dir, stats.bulletSpeed, stats.damage);
     }
 
+    // 근데 이걸 플레이어 스크립트에 구현하는게 맞나?
     #region Bullet 오브젝트 풀링
 
     private BulletController CreateBullet() // 오브젝트 풀링으로 Bullet 생성
     {
-        BulletController bullet = Instantiate(stats.bulletPrefab).GetComponent<BulletController>();
+        BulletController bullet = Instantiate(stats.bulletPrefab, this.transform).GetComponent<BulletController>();
         bullet.SetPool(_bulletPool);
         return bullet;
     }

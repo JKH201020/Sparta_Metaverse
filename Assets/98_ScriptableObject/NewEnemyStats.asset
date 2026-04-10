@@ -13,5 +13,7 @@ MonoBehaviour:
   m_Name: NewEnemyStats
   m_EditorClassIdentifier: 
   hp: 10
-  moveSpeed: 3
-  attackRate: 2
+  damage: 3
+  moveSpeed: 2
+  attackDelay: 3
+  attackRange: 1
