@@ -39,47 +39,59 @@ public class LoadSlotUI : MonoBehaviour
 
     private void Start()
     {
-        _startButton_1.onClick.AddListener(OnStartButton1Clicked);
-        _deleteButton_1.onClick.AddListener(OnDeleteButton1Clicked);
-        _startButton_2.onClick.AddListener(OnStartButton2Clicked);
-        _deleteButton_2.onClick.AddListener(OnDeleteButton2Clicked);
-        _startButton_3.onClick.AddListener(OnStartButton3Clicked);
-        _deleteButton_3.onClick.AddListener(OnDeleteButton3Clicked);
+        _startButton_1.onClick.AddListener(() => OnStartButtonClicked(1));
+        _deleteButton_1.onClick.AddListener(() => OnDeleteButtonClicked(1));
+        _startButton_2.onClick.AddListener(() => OnStartButtonClicked(2));
+        _deleteButton_2.onClick.AddListener(() => OnDeleteButtonClicked(2));
+        _startButton_3.onClick.AddListener(() => OnStartButtonClicked(3));
+        _deleteButton_3.onClick.AddListener(() => OnDeleteButtonClicked(3));
         _closeButton.onClick.AddListener(OnCloseButtonClicked);
     }
 
-    private async void OnStartButton1Clicked()
+    private async void OnStartButtonClicked(int slot)
     {
+        SaveData data;
+        if (SaveManager.Instance.HasData(slot))
+        {
+            data = SaveManager.Instance.Load(slot);
+        }
+        else
+        {
+            data = new SaveData();
+            SaveManager.Instance.Save(slot, data);
+            Debug.Log($"{slot}번 슬롯 신규 생성");
+        }
+
         UIManager.Instance.OffLoadSlotUI();
         await GameManager.Instance.ChangeScene(SceneNames.MainScene);
     }
 
-    private void OnDeleteButton1Clicked()
+    private void OnDeleteButtonClicked(int slot)
     {
-
+        SaveManager.Instance.Delete(slot);
     }
 
-    private async void OnStartButton2Clicked()
-    {
-        UIManager.Instance.OffLoadSlotUI();
-        await GameManager.Instance.ChangeScene(SceneNames.MainScene);
-    }
+    //private async void OnStartButton2Clicked()
+    //{
+    //    UIManager.Instance.OffLoadSlotUI();
+    //    await GameManager.Instance.ChangeScene(SceneNames.MainScene);
+    //}
 
-    private void OnDeleteButton2Clicked()
-    {
+    //private void OnDeleteButton2Clicked()
+    //{
+    //    SaveManager.Instance.Delete(2);
+    //}
 
-    }
+    //private async void OnStartButton3Clicked()
+    //{
+    //    UIManager.Instance.OffLoadSlotUI();
+    //    await GameManager.Instance.ChangeScene(SceneNames.MainScene);
+    //}
 
-    private async void OnStartButton3Clicked()
-    {
-        UIManager.Instance.OffLoadSlotUI();
-        await GameManager.Instance.ChangeScene(SceneNames.MainScene);
-    }
-
-    private void OnDeleteButton3Clicked()
-    {
-
-    }
+    //private void OnDeleteButton3Clicked()
+    //{
+    //    SaveManager.Instance.Delete(3);
+    //}
 
     private void OnCloseButtonClicked()
     {
