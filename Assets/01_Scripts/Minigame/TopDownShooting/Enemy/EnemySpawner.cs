@@ -35,8 +35,6 @@ public class EnemySpawner : MonoBehaviour
 
     // 다중 풀 관리를 위한 딕셔너리
     private Dictionary<EnemyType, IObjectPool<EnemyController>> _enemyPools;
-    private IObjectPool<EnemyController> _enemyPool;
-    private EnemyController _enemy;
     private Coroutine _coroutine;
 
     private int _currentActiveEnemies = 0; // 현재 생성된 적 수
@@ -52,7 +50,7 @@ public class EnemySpawner : MonoBehaviour
 
         foreach (var data in _enemyDataList)
         {
-            _enemyPool = new ObjectPool<EnemyController>(
+            IObjectPool<EnemyController> _enemyPool = new ObjectPool<EnemyController>(
             () => CreateEnemy(data.prefab, data.enemyType),
             OnTakeFromPool,
             OnReturnedToPool,
@@ -109,7 +107,7 @@ public class EnemySpawner : MonoBehaviour
     private void Spawn() // 소환
     {
         EnemyType randomType = (EnemyType)Random.Range(0, _enemyDataList.Count); // 랜덤 타입 결정
-        _enemy = _enemyPools[randomType].Get(); // 해당 풀에서 꺼내기
+        EnemyController _enemy = _enemyPools[randomType].Get(); // 해당 풀에서 꺼내기
         _enemy.transform.position = CalculateDonutPosition(); // 도넛 형태의 랜덤 위치 계산
         _enemy.GetComponent<HealthSystem>()?.ResetHp(); // 체력 초기화
     }
@@ -146,8 +144,8 @@ public class EnemySpawner : MonoBehaviour
     private EnemyController CreateEnemy(GameObject prefab, EnemyType type) // 적 생성
     {
         // Instantiate 할 때 'this.transform'을 넣어 현재 스포너의 자식 오브젝트로 생성
-        _enemy = Instantiate(prefab, this.transform).GetComponent<EnemyController>();
-        _enemy.SetPool(_enemyPools[type]);
+        EnemyController _enemy = Instantiate(prefab, this.transform).GetComponent<EnemyController>();
+        _enemy.SetPool(_enemyPools[type], type);
         return _enemy;
     }
 

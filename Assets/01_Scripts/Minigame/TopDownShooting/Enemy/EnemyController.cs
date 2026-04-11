@@ -36,6 +36,7 @@ public class EnemyController : MonoBehaviour
     private Vector2 _move; // 적 이동방향
     private AnimatorStateInfo _stateInfo; // 현재 실행 중인 애니메이션
     private IObjectPool<EnemyController> _pool; // 자기가 속한 풀을 기억할 변수
+    private EnemyType _enemyType;
 
     private const string MainSpriteString = "MainSprite";
     private const string WeaponString = "WeaponPivot/Weapon";
@@ -55,7 +56,6 @@ public class EnemyController : MonoBehaviour
 
     private void Awake()
     {
-        // 이 부분 스포너든지 어떻게든 수정해보기. 계속 활성화할 때마다 부하걸림
         if (_target == null) _target = GameObject.FindGameObjectWithTag(Tag.Player)?.transform;
     }
 
@@ -106,9 +106,10 @@ public class EnemyController : MonoBehaviour
         Gizmos.DrawWireSphere(_weaponPos.position, _stats.attackRange);
     }
 
-    public void SetPool(IObjectPool<EnemyController> pool)
+    public void SetPool(IObjectPool<EnemyController> pool, EnemyType type)
     {
         _pool = pool;
+        _enemyType = type;
     }
 
     private void ChangeState(EnemyState newState) // 적 상태 변경
@@ -176,6 +177,8 @@ public class EnemyController : MonoBehaviour
 
     private void OnEnemyDeadEvent() // 적이 죽은 후 이벤트
     {
+        if (TopDownManager.Instance != null) TopDownManager.Instance.AddKillScore(_enemyType);
+
         ChangeState(EnemyState.Dead);
     }
 

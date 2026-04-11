@@ -9,11 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 87d5ab95ab2ff134b94aee435199e195, type: 3}
-  m_Name: NewEnemyStats
+  m_Script: {fileID: 11500000, guid: ed158244132d2644d9d661d1ebdc6290, type: 3}
+  m_Name: PlayerStats
   m_EditorClassIdentifier: 
-  hp: 10
-  damage: 3
-  moveSpeed: 2
-  attackDelay: 3
-  attackRange: 1
+  hp: 30
+  damage: 5
+  moveSpeed: 3
+  deathCooldown: 1
+  bulletPrefab: {fileID: 6343340043731968744, guid: 2827cab8dc663a147bc06cc815777f6c, type: 3}
+  attackDelay: 2
+  bulletSpeed: 5
