@@ -15,9 +15,12 @@ public class UIManager : Singleton<UIManager>
     [SerializeField] private GameObject _dialogueUI;
     [SerializeField] private DialogueUI _dialogueUIScript;
 
+    [Header("불러오기 UI"), SerializeField] private GameObject _loadSlotUI;
+
     private const string LoadingPanelPathString = "Canvas/LoadingPanel";
     private const string FadePanelPathString = "Canvas/FadePanel";
     private const string DialogueUIString = "Canvas/DialogueUI";
+    private const string LoadSlotUIString = "Canvas/LoadSlotUI";
 
     private void Reset()
     {
@@ -26,6 +29,7 @@ public class UIManager : Singleton<UIManager>
         _fadePanelImage = _fadePanel.GetComponent<Image>();
         _dialogueUI = transform.Find(DialogueUIString).gameObject;
         _dialogueUIScript = _dialogueUI.GetComponent<DialogueUI>();
+        _loadSlotUI = transform.Find(LoadSlotUIString).gameObject;
     }
 
     protected override void Awake()
@@ -96,4 +100,19 @@ public class UIManager : Singleton<UIManager>
     }
 
     #endregion
+
+    #region 로드UI 온오프
+
+    public void OnLoadSlotUI()
+    {
+        _loadSlotUI.SetActive(true);
+    }
+
+    public void OffLoadSlotUI()
+    {
+        _loadSlotUI.SetActive(false);
+    }
+
+    #endregion
+
 }

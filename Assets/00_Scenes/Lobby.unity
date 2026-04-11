@@ -733,7 +733,7 @@ GameObject:
   - component: {fileID: 1446798561}
   - component: {fileID: 1446798560}
   m_Layer: 5
-  m_Name: Start_Button
+  m_Name: StartButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -854,7 +854,7 @@ GameObject:
   - component: {fileID: 1485913404}
   - component: {fileID: 1485913403}
   m_Layer: 5
-  m_Name: Sound_Button
+  m_Name: SoundButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1175,8 +1175,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _startButton: {fileID: 1446798560}
-  _loadButton: {fileID: 0}
-  _SoundButton: {fileID: 0}
+  _loadButton: {fileID: 1633690910}
+  _soundButton: {fileID: 0}
 --- !u!1 &1633690908
 GameObject:
   m_ObjectHideFlags: 0
@@ -1190,7 +1190,7 @@ GameObject:
   - component: {fileID: 1633690911}
   - component: {fileID: 1633690910}
   m_Layer: 5
-  m_Name: Load_Button
+  m_Name: LoadButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
