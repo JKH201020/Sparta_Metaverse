@@ -48,7 +48,7 @@ public class LoadSlotUI : MonoBehaviour
         _closeButton.onClick.AddListener(OnCloseButtonClicked);
     }
 
-    private async void OnStartButtonClicked(int slot)
+    private async void OnStartButtonClicked(int slot) // 해당 슬롯 시작 버튼 이벤트
     {
         SaveData data;
         if (SaveManager.Instance.HasData(slot))
@@ -62,38 +62,19 @@ public class LoadSlotUI : MonoBehaviour
             Debug.Log($"{slot}번 슬롯 신규 생성");
         }
 
+        // 씬을 넘어가기 전에, SaveManager에게 현재 슬롯 번호를 각인
+        SaveManager.Instance.SetCurrentSlot(slot);
+
         UIManager.Instance.OffLoadSlotUI();
         await GameManager.Instance.ChangeScene(SceneNames.MainScene);
     }
 
-    private void OnDeleteButtonClicked(int slot)
+    private void OnDeleteButtonClicked(int slot) // 해당 슬롯 삭제 버튼 이벤트
     {
         SaveManager.Instance.Delete(slot);
     }
 
-    //private async void OnStartButton2Clicked()
-    //{
-    //    UIManager.Instance.OffLoadSlotUI();
-    //    await GameManager.Instance.ChangeScene(SceneNames.MainScene);
-    //}
-
-    //private void OnDeleteButton2Clicked()
-    //{
-    //    SaveManager.Instance.Delete(2);
-    //}
-
-    //private async void OnStartButton3Clicked()
-    //{
-    //    UIManager.Instance.OffLoadSlotUI();
-    //    await GameManager.Instance.ChangeScene(SceneNames.MainScene);
-    //}
-
-    //private void OnDeleteButton3Clicked()
-    //{
-    //    SaveManager.Instance.Delete(3);
-    //}
-
-    private void OnCloseButtonClicked()
+    private void OnCloseButtonClicked() // 닫기 버튼 이벤트
     {
         UIManager.Instance.OffLoadSlotUI();
     }

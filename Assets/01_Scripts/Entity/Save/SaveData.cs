@@ -1,5 +1,3 @@
-using UnityEngine;
-
 [System.Serializable]
 public class SaveData
 {
@@ -9,7 +7,18 @@ public class SaveData
     // 새 게임을 시작할 때 부여할 '초기값' 세팅
     public SaveData()
     {
-        tdScore = 0; 
+        tdScore = 0;
         planeScore = 0;
+    }
+}
+
+[System.Serializable]
+public class SystemData
+{
+    public int lastPlayedSlot; // 마지막으로 플레이 한 슬롯
+
+    public SystemData()
+    {
+        lastPlayedSlot = 1; // 기본값
     }
 }
