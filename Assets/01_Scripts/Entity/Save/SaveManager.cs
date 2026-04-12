@@ -15,7 +15,7 @@ public class SaveManager : Singleton<SaveManager>
 
     private string GetSystemPath()
     {
-        return Path.Combine(Application.persistentDataPath, "SystemData.json");
+        return Path.Combine(Application.dataPath, "SystemData.json");
     }
 
     /// <summary>
@@ -25,7 +25,7 @@ public class SaveManager : Singleton<SaveManager>
     /// <returns></returns>
     private string GetPath(int slot)
     {
-        return Path.Combine(Application.persistentDataPath, $"SaveSlot_{slot}.json");
+        return Path.Combine(Application.dataPath, $"SaveSlot_{slot}.json");
     }
 
     #endregion

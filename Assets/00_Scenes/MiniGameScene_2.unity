@@ -1363,6 +1363,8 @@ MonoBehaviour:
     prefab: {fileID: 3401957322917292118, guid: 8d2ce759094bbba4494cf5f4dc661fd0, type: 3}
   - enemyType: 0
     prefab: {fileID: 2764454710233780490, guid: c990474ee4badda45b1089c23c759300, type: 3}
+  - enemyType: 1
+    prefab: {fileID: 2764454710233780490, guid: c990474ee4badda45b1089c23c759300, type: 3}
   _mapMinX: -16
   _mapMaxX: 16
   _mapMinY: -9

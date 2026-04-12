@@ -353,7 +353,7 @@ MonoBehaviour:
   _bowAnim: {fileID: 1406540605714617639}
   _firePoint: {fileID: 5176915701848344436}
   _bow: {fileID: 3897524840055287560}
-  _playerHealth: {fileID: 3537898750132286131}
+  _healthSystem: {fileID: 3537898750132286131}
   stats: {fileID: 11400000, guid: 6e2d98684c64ad046b1089dcec648315, type: 2}
 --- !u!114 &3537898750132286131
 MonoBehaviour:

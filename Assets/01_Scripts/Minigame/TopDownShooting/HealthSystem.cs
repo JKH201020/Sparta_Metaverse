@@ -48,6 +48,6 @@ public class HealthSystem : MonoBehaviour
     private void Die() // 죽음
     {
         _currentHealth = 0;
-        OnDeath.Invoke();
+        OnDeath?.Invoke();
     }
 }

@@ -8,9 +8,9 @@ public abstract class PlayerBaseState
         this.controller = controller;
     }
 
-    public virtual void Enter() { }
-    public virtual void Tick() { }
-    public virtual void PhysicsTick() { }
+    public virtual void Enter() { } // 플레이어 상태 변화될 때 한 번만 호출
+    public virtual void Tick() { } // Update에 사용될 메서드
+    public virtual void PhysicsTick() { } // FixedUpdate에 사용될 메서드
 }
 
 public class ShootingPlayingState : PlayerBaseState
@@ -48,26 +48,20 @@ public class ShootingPlayingState : PlayerBaseState
 
 public class ShootingDeadState : PlayerBaseState
 {
-    private float _cooldownTimer;
-
     public ShootingDeadState(ShootingPlayerController controller) : base(controller) { }
 
+    /// <summary>
+    /// 사망상태 진입
+    /// </summary>
     public override void Enter()
     {
         Debug.Log("플레이어 사망");
         controller.Rigidbody.velocity = Vector2.zero;
-        _cooldownTimer = controller.stats.deathCooldown;
+        TopDownManager.Instance.GameOver();
     }
 
     public override void Tick()
     {
-        if (_cooldownTimer <= 0)
-        {
-            // TODO: 씬 재시작 등 게임 오버 처리
-        }
-        else
-        {
-            _cooldownTimer -= Time.deltaTime;
-        }
+        // TODO: 씬 재시작 등 게임 오버 처리
     }
 }

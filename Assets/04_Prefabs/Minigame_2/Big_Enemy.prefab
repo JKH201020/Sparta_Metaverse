@@ -320,8 +320,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e08b770ae90e8594f820a1c71fce1bc3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _enemyAnim: {fileID: 6450633795144510809}
   _rigidbody: {fileID: 7981166625454583803}
+  _enemyAnim: {fileID: 6450633795144510809}
   _spriteRenderer: {fileID: 4782589463026907765}
   _weaponSR: {fileID: 2959452232761663627}
   _weaponAnim: {fileID: 6283066691204566581}

@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class TopDownUI : MonoBehaviour
 {
@@ -7,13 +8,33 @@ public class TopDownUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _score;
     [SerializeField] private TextMeshProUGUI _highScore;
 
+    [Header("게임 오버UI")]
+    [SerializeField] private TextMeshProUGUI _gameOverScore;
+    [SerializeField] private TextMeshProUGUI _gameOverHighScore;
+    [SerializeField] private Button _retryButton; // 다시하기 버튼
+    [SerializeField] private Button _homeButton; // 홈으로 버튼
+
     private const string ScorePathString = "Score/Text - Score";
     private const string HighScorePathString = "Score/Text - HighScore";
+    private const string GOScorePathString = "GameOverUI/Image - BG/Text - Score";
+    private const string GOHighScorePathString = "GameOverUI/Image - BG/Text - HighScore";
+    private const string RetryButtonPathString = "GameOverUI/Button/Button - Retry";
+    private const string HomeButtonPathString = "GameOverUI/Button/Button - Home";
 
     private void Reset()
     {
         _score = transform.Find(ScorePathString).GetComponent<TextMeshProUGUI>();
         _highScore = transform.Find(HighScorePathString).GetComponent<TextMeshProUGUI>();
+        _gameOverScore = transform.Find(GOScorePathString).GetComponent<TextMeshProUGUI>();
+        _gameOverHighScore = transform.Find(GOHighScorePathString).GetComponent<TextMeshProUGUI>();
+        _retryButton = transform.Find(RetryButtonPathString).GetComponent<Button>();
+        _homeButton = transform.Find(HomeButtonPathString).GetComponent<Button>();
+    }
+
+    private void Start()
+    {
+        _retryButton.onClick.AddListener(RetryButtonClicked);
+        _homeButton.onClick.AddListener(HomeButtonClicked);
     }
 
     private void OnEnable()
@@ -31,6 +52,22 @@ public class TopDownUI : MonoBehaviour
         if (TopDownManager.Instance != null) TopDownManager.Instance.OnScoreChanged -= UpdateScoreUI;
     }
 
+    public void RetryButtonClicked() // 재시도 버튼 이벤트
+    {
+        if (UIManager.Instance != null) UIManager.Instance.OffGameOverUI();
+    }
+
+    public void HomeButtonClicked() // 홈으로 버튼 이벤트
+    {
+        if (UIManager.Instance != null)
+        {
+            UIManager.Instance.OffGameOverUI();
+            UIManager.Instance.OffTopDownGameUI();
+        }
+
+        if (GameManager.Instance != null) _ = GameManager.Instance.ChangeScene(SceneNames.MainScene);
+    }
+
     /// <summary>
     /// 점수UI 업데이트
     /// </summary>
@@ -38,5 +75,8 @@ public class TopDownUI : MonoBehaviour
     public void UpdateScoreUI(int currentScore)
     {
         _score.text = TopDownManager.Instance.CurrentScore.ToString();
+        _gameOverScore.text = TopDownManager.Instance.CurrentScore.ToString();
+        _highScore.text = TopDownManager.Instance.HighScore.ToString();
+        _gameOverHighScore.text = TopDownManager.Instance.HighScore.ToString();
     }
 }

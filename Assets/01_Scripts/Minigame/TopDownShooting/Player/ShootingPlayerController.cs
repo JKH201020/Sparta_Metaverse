@@ -3,10 +3,13 @@ using UnityEngine.InputSystem;
 
 public class ShootingPlayerController : MonoBehaviour
 {
+    [Header("플레이어 애니메이션 관련")]
     [SerializeField] private SpriteRenderer _characterRenderer; // SpriteRenderer 컴포넌트를 참조하기 위한 변수
     [SerializeField] private Animator _bowAnim; // 활 애니메이션
     [SerializeField] private Transform _firePoint; // 화살 발사 위치
     [SerializeField] private GameObject _bow;
+
+    [Header("스탯"), SerializeField] private HealthSystem _healthSystem;
 
     private Camera _mainCam;
 
@@ -36,6 +39,7 @@ public class ShootingPlayerController : MonoBehaviour
         _bow = transform.Find(BowSpriteString).gameObject;
         _bowAnim = _bow.GetComponent<Animator>();
         _firePoint = _bow.transform;
+        _healthSystem = transform.GetComponent<HealthSystem>();
     }
 
     private void Awake()
@@ -77,29 +81,27 @@ public class ShootingPlayerController : MonoBehaviour
         // 스크립트가 켜질 때(미니게임 시작) 첫 상태로 강제 진입
         if (PlayingState != null) ChangeState(PlayingState);
 
+        if (_healthSystem != null) _healthSystem.OnDeath += OnPlayerDead;
+
         _bow.SetActive(true);
     }
 
     private void OnDisable()
     {
+        if (_healthSystem != null) _healthSystem.OnDeath -= OnPlayerDead;
+
         _bow.SetActive(false);
-    }
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (!enabled) return;
-
-        if (collision.gameObject.CompareTag(Tag.Weapon))
-        {
-            // 적이나 피격 판정에 닿으면 사망 처리 (태그 확인 로직 등을 추가해도 됨)
-            if (_currentState != DeadState) ChangeState(DeadState);
-        }
     }
 
     private void ChangeState(PlayerBaseState newState) // 플레이어 상태 변환
     {
         _currentState = newState;
         _currentState?.Enter();
+    }
+
+    private void OnPlayerDead() // 플레이어가 죽었을 때 실행 시킬 이벤트 메서드
+    {
+        if (_currentState != DeadState) ChangeState(DeadState);
     }
 
     #region 조작

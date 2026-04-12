@@ -15,6 +15,8 @@ public class TopDownManager : MonoBehaviour
         if (Instance == null) Instance = this;
 
         CurrentScore = 0;
+
+        UIManager.Instance.OnTopDownGameUI();
     }
 
     /// <summary>
@@ -51,6 +53,8 @@ public class TopDownManager : MonoBehaviour
     /// </summary>
     public void GameOver()
     {
+        UIManager.Instance.OnGameOverUI();
+
         int mySlot = SaveManager.Instance.CurrentSlot;
 
         if (mySlot != -1) // 만약 슬롯이 정상적으로 세팅되어 있다면 (-1이 아니라면)

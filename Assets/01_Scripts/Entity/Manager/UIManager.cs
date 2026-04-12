@@ -17,10 +17,16 @@ public class UIManager : Singleton<UIManager>
 
     [Header("불러오기 UI"), SerializeField] private GameObject _loadSlotUI;
 
+    [Header("탑다운 미니게임 UI")]
+    [SerializeField] private GameObject _topDownUI;
+    [SerializeField] private GameObject _gameOverUI;
+
     private const string LoadingPanelPathString = "Canvas/LoadingPanel";
     private const string FadePanelPathString = "Canvas/FadePanel";
     private const string DialogueUIString = "Canvas/DialogueUI";
     private const string LoadSlotUIString = "Canvas/LoadSlotUI";
+    private const string TopDownGameUIString = "Canvas/TopDownGameUI";
+    private const string GameOverUIString = "Canvas/TopDownGameUI/GameOverUI";
 
     private void Reset()
     {
@@ -30,6 +36,8 @@ public class UIManager : Singleton<UIManager>
         _dialogueUI = transform.Find(DialogueUIString).gameObject;
         _dialogueUIScript = _dialogueUI.GetComponent<DialogueUI>();
         _loadSlotUI = transform.Find(LoadSlotUIString).gameObject;
+        _topDownUI = transform.Find(TopDownGameUIString).gameObject;
+        _gameOverUI = transform.Find(GameOverUIString).gameObject;
     }
 
     protected override void Awake()
@@ -111,6 +119,42 @@ public class UIManager : Singleton<UIManager>
     public void OffLoadSlotUI()
     {
         _loadSlotUI.SetActive(false);
+    }
+
+    #endregion
+
+    #region 탑다운 미니게임UI 온오프
+
+    /// <summary>
+    /// 탑다운게임UI 활성화
+    /// </summary>
+    public void OnTopDownGameUI()
+    {
+        _topDownUI.SetActive(true);
+    }
+
+    /// <summary>
+    /// 탑다운게임UI 비활성화
+    /// </summary>
+    public void OffTopDownGameUI()
+    {
+        _topDownUI.SetActive(false);
+    }
+
+    /// <summary>
+    /// 게임오버UI 활성화
+    /// </summary>
+    public void OnGameOverUI()
+    {
+        _gameOverUI.SetActive(true);
+    }
+
+    /// <summary>
+    /// 게임오버UI 비활성화
+    /// </summary>
+    public void OffGameOverUI()
+    {
+        _gameOverUI.SetActive(false);
     }
 
     #endregion
