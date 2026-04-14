@@ -74,7 +74,8 @@ public class TopDownManager : MonoBehaviour
     /// </summary>
     public void GameOver()
     {
-        GameManager.Instance.SetTimeScale(0.0f);
+        //GameManager.Instance.SetTimeScale(0.0f);
+        GameManager.Instance.ChangeState(GameState.GameOver);
         UIManager.Instance.OnGameOverUI();
 
         int mySlot = SaveManager.Instance.CurrentSlot;
@@ -111,6 +112,6 @@ public class TopDownManager : MonoBehaviour
         _player.ResetPlayer();
 
         UIManager.Instance.OffGameOverUI();
-        GameManager.Instance.SetTimeScale(1.0f);
+        GameManager.Instance.ChangeState(GameState.Playing);
     }
 }

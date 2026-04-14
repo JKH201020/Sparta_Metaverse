@@ -70,8 +70,8 @@ public class TopDownUI : MonoBehaviour
 
         if (GameManager.Instance != null)
         {
+            GameManager.Instance.ChangeState(GameState.Playing);
             _ = GameManager.Instance.ChangeScene(SceneNames.MainScene);
-            GameManager.Instance.SetTimeScale(1.0f);
         }
     }
 

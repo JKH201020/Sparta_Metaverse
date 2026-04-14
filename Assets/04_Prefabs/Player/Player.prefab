@@ -323,6 +323,7 @@ MonoBehaviour:
   _rigidbody: {fileID: 2985976327208114556}
   _characterRenderer: {fileID: 6363725395155464398}
   _animator: {fileID: 1890457185762837207}
+  _playerInput: {fileID: 4424547169212612313}
 --- !u!114 &319581895240733615
 MonoBehaviour:
   m_ObjectHideFlags: 0

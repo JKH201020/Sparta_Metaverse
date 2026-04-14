@@ -6,6 +6,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Rigidbody2D _rigidbody; // 이동을 위한 물리 컴포넌트
     [SerializeField] private SpriteRenderer _characterRenderer; // SpriteRenderer 컴포넌트를 참조하기 위한 변수
     [SerializeField] private Animator _animator;
+    [SerializeField] private PlayerInput _playerInput;
 
     private Vector2 _moveInput = Vector2.zero; // 현재 이동 방향
     private Vector2 _lookDirection = Vector2.zero; // 현재 바라보는 방향
@@ -21,6 +22,7 @@ public class PlayerController : MonoBehaviour
         _rigidbody = GetComponent<Rigidbody2D>();
         _characterRenderer = transform.Find(MainSpriteString).GetComponent<SpriteRenderer>();
         _animator = transform.Find(MainSpriteString).GetComponent<Animator>();
+        _playerInput = GetComponent<PlayerInput>();
     }
 
     private void Update()
@@ -48,6 +50,8 @@ public class PlayerController : MonoBehaviour
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, 1f);
     }
+
+    #region 플레이어 컨트롤
 
     private void Movement(Vector2 direction) // 이동
     {
@@ -99,4 +103,27 @@ public class PlayerController : MonoBehaviour
             }
         }
     }
+
+    #endregion
+
+    #region 플레이어 인풋 온오프
+
+    /// <summary>
+    /// 플레이어 인풋 활성화
+    /// </summary>
+    public void PlayerInputActivate()
+    {
+        _playerInput.ActivateInput();
+    }
+
+    /// <summary>
+    /// 플레이어 인풋 비활성화
+    /// </summary>
+    public void PlayerInputDeactivate()
+    {
+        _playerInput.DeactivateInput();
+    }
+
+    #endregion
+
 }

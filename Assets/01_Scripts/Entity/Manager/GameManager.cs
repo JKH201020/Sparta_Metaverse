@@ -32,14 +32,18 @@ public class GameManager : Singleton<GameManager>
     public void ChangeState(GameState state)
     {
         CurrentState = state;
+        GameObject playerObj = GameObject.FindWithTag(Tag.Player);
+        PlayerController playerController = playerObj != null ? playerObj.GetComponent<PlayerController>() : null;
 
         switch (CurrentState)
         {
-            case GameState.Loading:
-                // 로딩 UI 켜기, 비동기 씬 로드 시작
-                break;
             case GameState.Playing:
                 Time.timeScale = 1.0f; // 게임 시간 흐름
+                playerController?.PlayerInputActivate();
+                break;
+            case GameState.Loading:
+                // 로딩 UI 켜기, 비동기 씬 로드 시작
+                playerController?.PlayerInputDeactivate();
                 break;
             case GameState.Paused:
                 Time.timeScale = 0.0f; // 게임 시간 정지
@@ -47,6 +51,7 @@ public class GameManager : Singleton<GameManager>
             case GameState.Talking:
                 break;
             case GameState.GameOver:
+                Time.timeScale = 0.0f;
                 break;
         }
     }
@@ -73,7 +78,7 @@ public class GameManager : Singleton<GameManager>
         float timer = 0f;
         while (timer < 2.0f || loadOp.progress < 0.9f)
         {
-            timer += Time.deltaTime;
+            timer += Time.unscaledDeltaTime; // unscaledDeltaTime: 현실 시간 기준으로 작동
             await Task.Yield(); // 코루틴의 yield return null; 같음 / 다음 프레임에 돌아옴
         }
 
@@ -87,17 +92,17 @@ public class GameManager : Singleton<GameManager>
 
     #endregion
 
-    #region 게임 TimeScale 설정
+    //#region 게임 TimeScale 설정
 
-    /// <summary>
-    /// TimeScale 설정
-    /// </summary>
-    /// <param name="timeScale">설정하고 싶은 timeScale입력</param>
-    public void SetTimeScale(float timeScale)
-    {
-        Time.timeScale = timeScale;
-    }
+    ///// <summary>
+    ///// TimeScale 설정
+    ///// </summary>
+    ///// <param name="timeScale">설정하고 싶은 timeScale입력</param>
+    //public void SetTimeScale(float timeScale)
+    //{
+    //    Time.timeScale = timeScale;
+    //}
 
-    #endregion
+    //#endregion
 
 }
