@@ -8,7 +8,8 @@ public class SaveManager : Singleton<SaveManager>
 
     protected override void Awake()
     {
-
+        CurrentSlot = GetLastPlayedSlot();
+        Debug.Log($"[SaveManager] 부팅 완료! 마지막 플레이 슬롯: {CurrentSlot}번");
     }
 
     #region 경로 관리 메서드
