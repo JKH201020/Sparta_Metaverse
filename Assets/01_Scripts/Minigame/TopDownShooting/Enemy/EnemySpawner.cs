@@ -84,7 +84,7 @@ public class EnemySpawner : MonoBehaviour
         Gizmos.DrawWireCube(center, size);
 
         // 스폰 금지 구역 표시
-        if (_playerTransform != null) 
+        if (_playerTransform != null)
         {
             Gizmos.color = Color.red;
             Gizmos.DrawWireSphere(_playerTransform.position, _minSpawnDistance);
@@ -164,6 +164,41 @@ public class EnemySpawner : MonoBehaviour
     private void OnDestroyPoolObject(EnemyController enemy) // 풀에 자리 없으면 제거
     {
         Destroy(enemy.gameObject);
+    }
+
+    #endregion
+
+    #region 재시작
+
+    /// <summary>
+    /// 소환된적 초기화
+    /// </summary>
+    public void ClearEnemies()
+    {
+        // 현재 맵에 활성화되어 있는 모든 적을 찾음
+        EnemyController[] activeEnemies = GetComponentsInChildren<EnemyController>();
+
+        foreach (EnemyController enemy in activeEnemies) enemy.ReturnToPool();
+
+        _currentActiveEnemies = 0;
+        Debug.Log("모든 적이 풀로 반납");
+    }
+
+    /// <summary>
+    /// 게임 재시작
+    /// </summary>
+    public void RestartSpawner()
+    {
+        // 코루틴 중단
+        if (_coroutine != null)
+        {
+            StopCoroutine( _coroutine );
+            _coroutine = null;
+        }
+
+        ClearEnemies(); // 기존 적 청소
+
+        _coroutine = StartCoroutine(SpawnRoutine()); // 코루틴 재시작
     }
 
     #endregion

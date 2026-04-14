@@ -55,13 +55,11 @@ public class ShootingDeadState : PlayerBaseState
     /// </summary>
     public override void Enter()
     {
-        Debug.Log("플레이어 사망");
-        controller.Rigidbody.velocity = Vector2.zero;
         TopDownManager.Instance.GameOver();
     }
 
     public override void Tick()
     {
-        // TODO: 씬 재시작 등 게임 오버 처리
+        
     }
 }

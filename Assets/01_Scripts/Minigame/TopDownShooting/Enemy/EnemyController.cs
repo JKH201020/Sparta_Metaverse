@@ -117,6 +117,16 @@ public class EnemyController : MonoBehaviour
         _currentState = newState;
     }
 
+    /// <summary>
+    /// 풀에 적 반납
+    /// </summary>
+    public void ReturnToPool()
+    {
+        if (!gameObject.activeSelf) return; // 이미 비활성화된 상태에서 중복 반납 방지
+
+        _pool.Release(this); // 스포너에서 SetPool을 통해 받아왔던 그 풀(_pool)에 자신을 반납
+    }
+
     #region 적 상태
 
     private void Chase()
@@ -183,4 +193,5 @@ public class EnemyController : MonoBehaviour
     }
 
     #endregion
+
 }

@@ -8,7 +8,16 @@ public class TopDownManager : MonoBehaviour
     public int CurrentScore { get; private set; } // 현재 스코어
     public int HighScore { get; private set; } // 최고 스코어
 
-    public event Action<int> OnScoreChanged; // 점수UI 변경 이벤트
+    [SerializeField] private ShootingPlayerController _player; // 플레이어 위치
+    [SerializeField] private EnemySpawner _enemySpawner;
+
+    public event Action<int, int> OnScoreChanged; // 점수UI 변경 이벤트
+
+    private void Reset()
+    {
+        _player = GameObject.FindWithTag(Tag.Player).GetComponent<ShootingPlayerController>();
+        _enemySpawner = FindObjectOfType<EnemySpawner>();
+    }
 
     private void Awake()
     {
@@ -17,6 +26,18 @@ public class TopDownManager : MonoBehaviour
         CurrentScore = 0;
 
         UIManager.Instance.OnTopDownGameUI();
+    }
+
+    private void Start()
+    {
+        // 최고 점수 동기화
+        int mySlot = SaveManager.Instance.CurrentSlot;
+        if (mySlot != -1 && SaveManager.Instance.HasData(mySlot))
+        {
+            SaveData data = SaveManager.Instance.Load(mySlot);
+            HighScore = data.tdScore;
+            OnScoreChanged?.Invoke(CurrentScore, HighScore);
+        }
     }
 
     /// <summary>
@@ -45,7 +66,7 @@ public class TopDownManager : MonoBehaviour
 
         if (HighScore < CurrentScore) HighScore = CurrentScore;
 
-        OnScoreChanged?.Invoke(CurrentScore);
+        OnScoreChanged?.Invoke(CurrentScore, HighScore);
     }
 
     /// <summary>
@@ -53,6 +74,7 @@ public class TopDownManager : MonoBehaviour
     /// </summary>
     public void GameOver()
     {
+        GameManager.Instance.SetTimeScale(0.0f);
         UIManager.Instance.OnGameOverUI();
 
         int mySlot = SaveManager.Instance.CurrentSlot;
@@ -66,5 +88,29 @@ public class TopDownManager : MonoBehaviour
             SaveManager.Instance.Save(mySlot, data); // 파일로 최종 저장
             Debug.Log($"{mySlot}번 슬롯에 최고 점수 {data.tdScore} 저장 완료!");
         }
+    }
+
+    /// <summary>
+    /// 플레이어가 죽은 후 게임 재시작
+    /// </summary>
+    public void Restart()
+    {
+        int mySlot = SaveManager.Instance.CurrentSlot;
+        SaveData data = SaveManager.Instance.Load(mySlot);
+
+        // 점수 초기화
+        CurrentScore = 0;
+        HighScore = data.tdScore;
+        OnScoreChanged?.Invoke(CurrentScore, HighScore);
+
+        // 스포너 리셋
+        _enemySpawner.RestartSpawner();
+
+        // 플레이어 위치 초기화
+        _player.transform.position = Vector2.zero;
+        _player.ResetPlayer();
+
+        UIManager.Instance.OffGameOverUI();
+        GameManager.Instance.SetTimeScale(1.0f);
     }
 }

@@ -104,6 +104,16 @@ public class ShootingPlayerController : MonoBehaviour
         if (_currentState != DeadState) ChangeState(DeadState);
     }
 
+    public void ResetPlayer()
+    {
+        if (stats != null) stats.hp = stats.defaultHp;
+        GetComponent<HealthSystem>()?.ResetHp();
+
+        ChangeState(PlayingState);
+
+        Debug.Log("플레이어 상태 초기화");
+    }
+
     #region 조작
 
     private void RotateBow() // 활 회전

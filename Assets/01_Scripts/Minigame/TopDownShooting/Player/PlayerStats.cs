@@ -5,6 +5,7 @@ public class PlayerStats : ScriptableObject
 {
     [Header ("기본 스탯")]
     public float hp = 30.0f; // 체력
+    public float defaultHp = 30.0f; // 초기화용 체력
     public float damage = 5.0f; // 대미지
     public float moveSpeed = 1.0f; // 이동 속도
     public float deathCooldown = 1.0f;

@@ -86,4 +86,18 @@ public class GameManager : Singleton<GameManager>
     }
 
     #endregion
+
+    #region 게임 TimeScale 설정
+
+    /// <summary>
+    /// TimeScale 설정
+    /// </summary>
+    /// <param name="timeScale">설정하고 싶은 timeScale입력</param>
+    public void SetTimeScale(float timeScale)
+    {
+        Time.timeScale = timeScale;
+    }
+
+    #endregion
+
 }
