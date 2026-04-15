@@ -9,7 +9,6 @@ public class SaveManager : Singleton<SaveManager>
     protected override void Awake()
     {
         CurrentSlot = GetLastPlayedSlot();
-        Debug.Log($"[SaveManager] 부팅 완료! 마지막 플레이 슬롯: {CurrentSlot}번");
     }
 
     #region 경로 관리 메서드
@@ -46,7 +45,6 @@ public class SaveManager : Singleton<SaveManager>
 
         string json = JsonConvert.SerializeObject(sysData, Formatting.Indented);
         File.WriteAllText(GetSystemPath(), json);
-        Debug.Log($"현재 플레이 중인 슬롯이 {CurrentSlot}번으로 설정되었습니다.");
     }
 
     /// <summary>
@@ -82,7 +80,6 @@ public class SaveManager : Singleton<SaveManager>
         string json = JsonConvert.SerializeObject(data, Formatting.Indented);
 
         File.WriteAllText(GetPath(slot), json);
-        Debug.Log($"{slot}번 슬롯 저장");
     }
 
     /// <summary>
@@ -96,7 +93,6 @@ public class SaveManager : Singleton<SaveManager>
         if (File.Exists(path))
         {
             string json = File.ReadAllText(path);
-            Debug.Log($"{slot}번 슬롯 로드");
             return JsonConvert.DeserializeObject<SaveData>(json);
         }
 
@@ -111,7 +107,6 @@ public class SaveManager : Singleton<SaveManager>
     {
         string path = GetPath(slot);
         if (File.Exists(path)) File.Delete(path);
-        Debug.Log($"{slot}번 슬롯 삭제");
     }
 
     /// <summary>

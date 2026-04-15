@@ -43,6 +43,7 @@ public class GameManager : Singleton<GameManager>
                 break;
             case GameState.Loading:
                 // 로딩 UI 켜기, 비동기 씬 로드 시작
+                Time.timeScale = 1.0f;
                 playerController?.PlayerInputDeactivate();
                 break;
             case GameState.Paused:

@@ -37,10 +37,19 @@ public class BulletManager : MonoBehaviour
     /// <summary>
     /// 다 쓴 총알을 창고로 다시 반납할 때 쓰는 함수
     /// </summary>
-    /// <param name="bullet"></param>
+    /// <param name="bullet">투사체</param>
     public void ReleaseBullet(BulletController bullet)
     {
         _bulletPool.Release(bullet);
+    }
+
+    /// <summary>
+    /// 화면에 있는 투사체 초기화
+    /// </summary>
+    public void ClearAllBullets()
+    {
+        BulletController[] activeBullets = GetComponentsInChildren<BulletController>(false);
+        foreach (BulletController bullet in activeBullets) ReleaseBullet(bullet);
     }
 
     #endregion

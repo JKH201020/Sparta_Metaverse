@@ -12,6 +12,11 @@ public class MeleeWeapon : MonoBehaviour
         _collider = GetComponent<Collider2D>();
     }
 
+    private void OnEnable()
+    {
+        DisableAttackCollider();
+    }
+
     private void OnTriggerEnter2D(Collider2D collision) // 적 무기에 닿았을 경우 플레이어가 대미지 받음
     {
         if (collision.gameObject.CompareTag(Tag.Player))

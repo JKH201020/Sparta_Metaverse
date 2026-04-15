@@ -104,14 +104,15 @@ public class ShootingPlayerController : MonoBehaviour
         if (_currentState != DeadState) ChangeState(DeadState);
     }
 
+    /// <summary>
+    /// 플레이어 초기화
+    /// </summary>
     public void ResetPlayer()
     {
         if (stats != null) stats.hp = stats.defaultHp;
         GetComponent<HealthSystem>()?.ResetHp();
 
         ChangeState(PlayingState);
-
-        Debug.Log("플레이어 상태 초기화");
     }
 
     #region 조작
@@ -167,6 +168,8 @@ public class ShootingPlayerController : MonoBehaviour
     /// <param name="dir">발사 방향</param>
     public void FireBullet(Vector2 pos, Quaternion rot, Vector2 dir)
     {
+        if (GameManager.Instance.CurrentState == GameState.GameOver) return;
+
         BulletController bullet = BulletManager.Instance.GetBullet();
         bullet.transform.SetPositionAndRotation(pos, rot);
         bullet.Init(dir, stats.bulletSpeed, stats.damage);

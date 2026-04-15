@@ -68,11 +68,7 @@ public class TopDownUI : MonoBehaviour
             UIManager.Instance.OffTopDownGameUI();
         }
 
-        if (GameManager.Instance != null)
-        {
-            GameManager.Instance.ChangeState(GameState.Playing);
-            _ = GameManager.Instance.ChangeScene(SceneNames.MainScene);
-        }
+        if (GameManager.Instance != null) _ = GameManager.Instance.ChangeScene(SceneNames.MainScene);
     }
 
     #endregion

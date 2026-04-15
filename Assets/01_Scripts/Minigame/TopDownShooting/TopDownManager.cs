@@ -62,7 +62,6 @@ public class TopDownManager : MonoBehaviour
         }
 
         CurrentScore += scoreToAdd;
-        Debug.Log($"{type}처치 / {scoreToAdd} 획득 / 현재 점수 {CurrentScore}");
 
         if (HighScore < CurrentScore) HighScore = CurrentScore;
 
@@ -74,7 +73,6 @@ public class TopDownManager : MonoBehaviour
     /// </summary>
     public void GameOver()
     {
-        //GameManager.Instance.SetTimeScale(0.0f);
         GameManager.Instance.ChangeState(GameState.GameOver);
         UIManager.Instance.OnGameOverUI();
 
@@ -87,7 +85,6 @@ public class TopDownManager : MonoBehaviour
             // 최고 점수 갱신 로직 (Mathf.Max를 쓰면 둘 중 큰 값을 알아서 넣어줌)
             data.tdScore = Mathf.Max(data.tdScore, CurrentScore);
             SaveManager.Instance.Save(mySlot, data); // 파일로 최종 저장
-            Debug.Log($"{mySlot}번 슬롯에 최고 점수 {data.tdScore} 저장 완료!");
         }
     }
 
@@ -104,8 +101,10 @@ public class TopDownManager : MonoBehaviour
         HighScore = data.tdScore;
         OnScoreChanged?.Invoke(CurrentScore, HighScore);
 
-        // 스포너 리셋
-        _enemySpawner.RestartSpawner();
+        // 리셋
+        if (BulletManager.Instance != null) BulletManager.Instance.ClearAllBullets(); // 남은 화살 초기화
+
+        _enemySpawner.RestartSpawner(); // 남은 적 초기화
 
         // 플레이어 위치 초기화
         _player.transform.position = Vector2.zero;

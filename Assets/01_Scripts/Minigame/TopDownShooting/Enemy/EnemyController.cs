@@ -28,7 +28,7 @@ public class EnemyController : MonoBehaviour
 
     private float _speed; // 적 이동속도
     private float _sqrDistance;
-    private float _defalutAttackSpeed = 1.0f; // 기본 공격 속도
+    private float _attackTimer = 0f; // 공격 쿨타임
     private float _currentDist; // 공격 감지 범위
 
     private EnemyState _currentState; // 적 현재 상태
@@ -57,10 +57,14 @@ public class EnemyController : MonoBehaviour
     private void Awake()
     {
         if (_target == null) _target = GameObject.FindGameObjectWithTag(Tag.Player)?.transform;
+
+        ChangeState(EnemyState.Chase); // 초기 상태
     }
 
     private void Update()
     {
+        if (GameManager.Instance.CurrentState != GameState.Playing) Idle();
+
         switch (_currentState)
         {
             case EnemyState.Chase:
@@ -77,6 +81,12 @@ public class EnemyController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (GameManager.Instance.CurrentState != GameState.Playing)
+        {
+            _rigidbody.velocity = Vector2.zero;
+            return;
+        }
+
         if (_currentState == EnemyState.Chase)
         {
             _speed = _stats.moveSpeed;
@@ -91,8 +101,21 @@ public class EnemyController : MonoBehaviour
     private void OnEnable()
     {
         if (_healthSystem != null) _healthSystem.OnDeath += OnEnemyDeadEvent;
-        
+
+        if (_weaponAnim != null)
+        {
+            _weaponAnim.Rebind(); // 애니메이션 기본 상태로 되돌림
+            _weaponAnim.Update(0f); // 0프레임으로 업데이트
+        }
+
+        if (_enemyAnim != null)
+        {
+            _enemyAnim.Rebind(); // 애니메이션 기본 상태로 되돌림
+            _enemyAnim.Update(0f); // 0프레임으로 업데이트
+        }
+
         ChangeState(EnemyState.Chase); // 상태 초기화
+        _attackTimer = _stats.attackDelay; // 첫 공격은 딜레이 없이 바로 할 수 있게 초기화
     }
 
     private void OnDisable()
@@ -129,6 +152,12 @@ public class EnemyController : MonoBehaviour
 
     #region 적 상태
 
+    private void Idle()
+    {
+        _enemyAnim.SetBool(AnimParams.IsRunning, false);
+        _weaponAnim.SetBool(AnimParams.IsAttacking, false);
+    }
+
     private void Chase()
     {
         _enemyAnim.SetBool(AnimParams.IsRunning, true);
@@ -156,31 +185,45 @@ public class EnemyController : MonoBehaviour
 
     private void Attack()
     {
-        _move = Vector2.zero;
+        _move = Vector2.zero; // 공격 중에는 무조건 제자리 정지
         _enemyAnim.SetBool(AnimParams.IsRunning, false);
-        _weaponAnim.SetBool(AnimParams.IsAttacking, true);
-        _stateInfo = _weaponAnim.GetCurrentAnimatorStateInfo(0);
 
         if (_target == null) return;
 
+        _stateInfo = _weaponAnim.GetCurrentAnimatorStateInfo(0);
+
+        // 애니메이션 재생이 100% 완료되었는지 확인
+        // 애니메이션 끝나는 것보다 스크립트가 늦게 실행되기 때문에 1f로 하면 애니메이션은 이미 끝난 상태로 코드가 실행되 2번 때리는 문제가 있음. 
+        if (_stateInfo.IsName(NearAttackString) && _stateInfo.normalizedTime >= 0.8f) _weaponAnim.SetBool(AnimParams.IsAttacking, false);
+
+        bool isAttackingNow = _weaponAnim.GetBool(AnimParams.IsAttacking) ||
+                            (_stateInfo.IsName(NearAttackString) && _stateInfo.normalizedTime < 1.0f);
+        if (isAttackingNow) return; // 공격 모션 재생중이면 아래 로직 실행 안 함
+
         _currentDist = Vector2.Distance(_weaponPos.position, _target.position);
-        // 공격범위 벗어났을 경우
-        if (_currentDist > _stats.attackRange
-            && (_stateInfo.IsName(NearAttackString) && _stateInfo.normalizedTime == 1.0f))
+
+        // 공격 사거리 벗어난 경우 재추적
+        if (_currentDist > _stats.attackRange)
         {
-            _weaponAnim.SetBool(AnimParams.IsAttacking, false);
             ChangeState(EnemyState.Chase);
             return;
         }
-        else if (_currentDist < _stats.attackRange)
+
+        _attackTimer += Time.deltaTime;
+
+        // 쿨타임 다 돌면 다시 공격 애니메이션 시작
+        if (_attackTimer >= _stats.attackDelay)
         {
-            // 공격 딜레이 반영 애니메이션 실행 속도
-            _weaponAnim.speed = _defalutAttackSpeed / _stats.attackDelay;
+            _weaponAnim.SetBool(AnimParams.IsAttacking, true);
+            _attackTimer = 0f; // 타이머 초기화
         }
     }
 
     private void Dead()
     {
+        _enemyAnim.SetBool(AnimParams.IsRunning, false);
+        _weaponAnim.SetBool(AnimParams.IsAttacking, false);
+
         if (_pool != null) _pool.Release(this); // 죽으면 풀에 반납
         else Destroy(gameObject); // 풀이 없을 때를 대비한 안전 장치
     }

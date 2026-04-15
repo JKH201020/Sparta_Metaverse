@@ -39,11 +39,6 @@ public class BulletController : MonoBehaviour
         }
     }
 
-    private void OnBecameInvisible() // 화면 밖으로 나갔을 경우 (최적화)
-    {
-        Release();
-    }
-
     private void Release()
     {
         if (_isReleased || !gameObject.activeSelf) return;
@@ -53,7 +48,7 @@ public class BulletController : MonoBehaviour
     }
 
     /// <summary>
-    /// 투사체 상태 초기화
+    /// 투사체 반납 상태 초기화
     /// </summary>
     public void ResetState()
     {
