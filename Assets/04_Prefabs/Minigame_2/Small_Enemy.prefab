@@ -265,7 +265,7 @@ MonoBehaviour:
   _weaponSR: {fileID: 726383688077159998}
   _weaponAnim: {fileID: 2989815815562304718}
   _weaponPos: {fileID: 2119056787512098173}
-  _stats: {fileID: 11400000, guid: f8c9b3e353ede0e4e91620288d03c68a, type: 2}
+  _stats: {fileID: 11400000, guid: 4849f73872a1527478263b2b505d7f82, type: 2}
   _healthSystem: {fileID: 8714522773501151630}
 --- !u!114 &8714522773501151630
 MonoBehaviour:

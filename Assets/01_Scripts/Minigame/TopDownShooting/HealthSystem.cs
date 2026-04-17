@@ -32,7 +32,6 @@ public class HealthSystem : MonoBehaviour
     public void TakeDamage(float damage)
     {
         _currentHealth -= damage;
-        Debug.Log($"{gameObject.name}가 {damage}의 피해를 받음");
 
         if (_currentHealth <= 0) Die();
     }
