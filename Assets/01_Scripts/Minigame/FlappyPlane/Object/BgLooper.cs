@@ -1,54 +1,52 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class BgLooper : MonoBehaviour
 {
-    public int numBgCount = 5; // ¹è°æ °³¼ö
-    public int obstacleCount = 0; // Àå¾Ö¹°ÀÇ °³¼ö
-    public Vector3 obstacleLastPosition = Vector3.zero; // ¸¶Áö¸·À¸·Î ¹èÄ¡µÈ Àå¾Ö¹°ÀÇ À§Ä¡
+    public int numBgCount = 5; // ë°°ê²½ ê°œìˆ˜
+    public int obstacleCount = 0; // ì¥ì• ë¬¼ì˜ ê°œìˆ˜
+    public Vector3 obstacleLastPosition = Vector3.zero; // ë§ˆì§€ë§‰ìœ¼ë¡œ ë°°ì¹˜ëœ ì¥ì• ë¬¼ì˜ ìœ„ì¹˜
 
     // Start is called before the first frame update
     void Start()
     {
-        // Scene¿¡ Á¸ÀçÇÏ´Â ¸ğµç Obstacle °´Ã¼¸¦ ¹è¿­·Î °¡Á®¿À±â
+        // Sceneì— ì¡´ì¬í•˜ëŠ” ëª¨ë“  Obstacle ê°ì²´ë¥¼ ë°°ì—´ë¡œ ê°€ì ¸ì˜¤ê¸°
         Obstacle[] obstacles = GameObject.FindObjectsOfType<Obstacle>();
-        // Ã¹ ¹øÂ° Àå¾Ö¹°ÀÇ À§Ä¡¸¦ obstacleLastPosition¿¡ ÀúÀå
+        // ì²« ë²ˆì§¸ ì¥ì• ë¬¼ì˜ ìœ„ì¹˜ë¥¼ obstacleLastPositionì— ì €ì¥
         obstacleLastPosition = obstacles[0].transform.position;
-        // Àå¾Ö¹°ÀÇ °³¼ö¸¦ °è»êÇÏ¿© ÀúÀå
+        // ì¥ì• ë¬¼ì˜ ê°œìˆ˜ë¥¼ ê³„ì‚°í•˜ì—¬ ì €ì¥
         obstacleCount = obstacles.Length;
 
-        // Àå¾Ö¹° °³¼ö¸¸Å­ ¹İº¹ÇÏ¿© °¢ Àå¾Ö¹°ÀÇ À§Ä¡¸¦ ·£´ıÇÏ°Ô ¼³Á¤
+        // ì¥ì• ë¬¼ ê°œìˆ˜ë§Œí¼ ë°˜ë³µí•˜ì—¬ ê° ì¥ì• ë¬¼ì˜ ìœ„ì¹˜ë¥¼ ëœë¤í•˜ê²Œ ì„¤ì •
         for (int i = 0; i < obstacleCount; i++)
         {
-            // SetRandomPlace ÇÔ¼ö´Â °¢ Àå¾Ö¹°ÀÇ À§Ä¡¸¦ ÀÌÀü Àå¾Ö¹° À§Ä¡¸¦ ±â¹İÀ¸·Î ¼³Á¤ÇÔ
+            // SetRandomPlace í•¨ìˆ˜ëŠ” ê° ì¥ì• ë¬¼ì˜ ìœ„ì¹˜ë¥¼ ì´ì „ ì¥ì• ë¬¼ ìœ„ì¹˜ë¥¼ ê¸°ë°˜ìœ¼ë¡œ ì„¤ì •í•¨
             obstacleLastPosition = obstacles[i].SetRandomPlace(obstacleLastPosition, obstacleCount);
         }
     }
 
     public void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("BackGround")) // Ãæµ¹Ã¼°¡ ¹é±×¶ó¿îµå ÅÂ±×¸¦ ´Ş°í ÀÖÀ¸¸é
+        if (collision.CompareTag("BackGround")) // ì¶©ëŒì²´ê°€ ë°±ê·¸ë¼ìš´ë“œ íƒœê·¸ë¥¼ ë‹¬ê³  ìˆìœ¼ë©´
         {
-            // Ãæµ¹ÇÑ ¹é±×¶ó¿îµå ¿ÀºêÁ§Æ®ÀÇ BoxCollider2D ÄÄÆ÷³ÍÆ®¿¡¼­ °¡·Î ±æÀÌ¸¦ °¡Á®¿È
+            // ì¶©ëŒí•œ ë°±ê·¸ë¼ìš´ë“œ ì˜¤ë¸Œì íŠ¸ì˜ BoxCollider2D ì»´í¬ë„ŒíŠ¸ì—ì„œ ê°€ë¡œ ê¸¸ì´ë¥¼ ê°€ì ¸ì˜´
             float widthOfBgObject = ((BoxCollider2D)collision).size.x;
-            // Ãæµ¹ÇÑ ¹é±×¶ó¿îµå ¿ÀºêÁ§Æ®ÀÇ ÇöÀç À§Ä¡¸¦ ÀúÀå
+            // ì¶©ëŒí•œ ë°±ê·¸ë¼ìš´ë“œ ì˜¤ë¸Œì íŠ¸ì˜ í˜„ì¬ ìœ„ì¹˜ë¥¼ ì €ì¥
             Vector3 pos = collision.transform.position;
 
-            // ¹é±×¶ó¿îµå ¿ÀºêÁ§Æ®ÀÇ °¡·Î ±æÀÌ¿Í numBgCount °ªÀ» °öÇÏ¿© »õ·Î¿î x ÁÂÇ¥¸¦ °è»ê
-            // ¹é±×¶ó¿îµå¸¦ ¹İº¹ÀûÀ¸·Î ¹èÄ¡ÇÏ±â À§ÇÑ À§Ä¡ Á¶Á¤
+            // ë°±ê·¸ë¼ìš´ë“œ ì˜¤ë¸Œì íŠ¸ì˜ ê°€ë¡œ ê¸¸ì´ì™€ numBgCount ê°’ì„ ê³±í•˜ì—¬ ìƒˆë¡œìš´ x ì¢Œí‘œë¥¼ ê³„ì‚°
+            // ë°±ê·¸ë¼ìš´ë“œë¥¼ ë°˜ë³µì ìœ¼ë¡œ ë°°ì¹˜í•˜ê¸° ìœ„í•œ ìœ„ì¹˜ ì¡°ì •
             pos.x += widthOfBgObject * numBgCount;
-            // Ãæµ¹ÇÑ ¹é±×¶ó¿îµå ¿ÀºêÁ§Æ®ÀÇ À§Ä¡¸¦ »õ·Î °è»êµÈ À§Ä¡·Î ¾÷µ¥ÀÌÆ®
+            // ì¶©ëŒí•œ ë°±ê·¸ë¼ìš´ë“œ ì˜¤ë¸Œì íŠ¸ì˜ ìœ„ì¹˜ë¥¼ ìƒˆë¡œ ê³„ì‚°ëœ ìœ„ì¹˜ë¡œ ì—…ë°ì´íŠ¸
             collision.transform.position = pos;
             return;
         }
 
-        // Ãæµ¹ÇÑ °´Ã¼°¡ ObstacleÀÎÁö È®ÀÎ
+        // ì¶©ëŒí•œ ê°ì²´ê°€ Obstacleì¸ì§€ í™•ì¸
         Obstacle obstacle = collision.GetComponent<Obstacle>();
 
         if(obstacle)
         {
-            // Àå¾Ö¹°ÀÌ Ãæµ¹ ½Ã ·£´ı À§Ä¡·Î Àç¹èÄ¡
+            // ì¥ì• ë¬¼ì´ ì¶©ëŒ ì‹œ ëœë¤ ìœ„ì¹˜ë¡œ ì¬ë°°ì¹˜
             obstacleLastPosition = obstacle.SetRandomPlace(obstacleLastPosition, obstacleCount);
         }
     }

@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: PlayerStats
   m_EditorClassIdentifier: 
   hp: 30
+  defaultHp: 30
   damage: 5
   moveSpeed: 3
   deathCooldown: 1
   bulletPrefab: {fileID: 6343340043731968744, guid: 2827cab8dc663a147bc06cc815777f6c, type: 3}
-  attackDelay: 2
-  bulletSpeed: 5
+  attackDelay: 0.5
+  bulletSpeed: 10

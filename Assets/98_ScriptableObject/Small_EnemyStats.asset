@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Small_EnemyStats
   m_EditorClassIdentifier: 
   hp: 10
-  damage: 10
+  damage: 3
   moveSpeed: 2
   attackDelay: 3
   attackRange: 1

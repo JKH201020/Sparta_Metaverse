@@ -1,9 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
-using UnityEngine.XR;
 
 // 게임의 UI 상태를 정의하는 열거형
 public enum UIState
@@ -15,53 +10,53 @@ public enum UIState
 
 public class MiniGameUIManager : MonoBehaviour
 {
-    public string sceneName; // 이동할 씬의 이름 (Inspector 창에서 설정)
-
     static MiniGameUIManager instance;
     public static MiniGameUIManager Instance { get { return instance; } }
 
     UIState currentState = UIState.Home;
 
-    HomeUI homeUI = null;
-    GameUI gameUI = null;
-    EndUI endUI = null;
+    [SerializeField] private HomeUI _homeUI;
+    [SerializeField] private GameUI _gameUI;
+    [SerializeField] private EndUI _endUI;
 
     private void Awake()
     {
         instance = this;
-
-        // 자식 오브젝트에서 각각의 UI를 찾아 초기화
-        homeUI = GetComponentInChildren<HomeUI>(true);
-        homeUI?.Init(this);
-        gameUI = GetComponentInChildren<GameUI>(true);
-        gameUI?.Init(this);
-        endUI = GetComponentInChildren<EndUI>(true);
-        endUI?.Init(this);
-
-        // 초기 상태를 홈 화면으로 설정
         ChangeState(UIState.Home);
+    }
+
+    private void Reset()
+    {
+        _homeUI = GetComponentInChildren<HomeUI>(true);
+        _gameUI = GetComponentInChildren<GameUI>(true);
+        _endUI = GetComponentInChildren<EndUI>(true);
     }
 
     public void ChangeState(UIState state) // UI 전환
     {
         currentState = state;
-        homeUI?.SetActive(currentState);
-        gameUI?.SetActive(currentState);
-        endUI?.SetActive(currentState);
+        _homeUI?.SetActive(currentState);
+        _gameUI?.SetActive(currentState);
+        _endUI?.SetActive(currentState);
     }
+
+    #region UI 이벤트
 
     public void OnClickStart()
     {
         ChangeState(UIState.Game); // UI를 게임 화면으로 전환
     }
 
-    public void OnClickExit()
+    public async void OnClickExit()
     {
-        SceneManager.LoadScene(sceneName); // 메인 씬으로 복귀
+        await GameManager.Instance.ChangeScene(SceneNames.MainScene);
     }
 
     public void GameOver()
     {
         ChangeState(UIState.End); // UI를 게임 오버화면으로 전환
     }
+
+    #endregion
+
 }

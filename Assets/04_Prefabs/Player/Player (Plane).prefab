@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2705291410455038698}
   - component: {fileID: 1177510676790004283}
   - component: {fileID: 3871505400772809761}
+  - component: {fileID: 3649735347936024033}
   m_Layer: 0
   m_Name: Player (Plane)
   m_TagString: Untagged
@@ -109,6 +110,66 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5429f35010deae4a8de0420cc32a307, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animator: {fileID: 8400600331132781834}
+  _rigidbody: {fileID: 2705291410455038698}
+--- !u!114 &3649735347936024033
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 42675448968605735}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: -944628639613478452, guid: 9181bf17a7f989442b6fa3618686206c, type: 3}
+  m_NotificationBehavior: 2
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents:
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: e3a73ebe-0bbe-4944-8311-8ac68c700b60
+    m_ActionName: Player/Move[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: be2debbd-3339-4894-8d16-4c54fc48c3a8
+    m_ActionName: Player/Interact[/Keyboard/f]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: ae33d102-b0a6-4416-be11-dbd385a33f5a
+    m_ActionName: Player/Look[/Mouse/position]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3871505400772809761}
+        m_TargetAssemblyTypeName: Plane, Assembly-CSharp
+        m_MethodName: OnJump
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 9c3f0f7e-c8db-4542-a43e-81dece968624
+    m_ActionName: Player(Plane)/Jump[/Keyboard/space]
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: Player
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
 --- !u!1 &8444758239350317039
 GameObject:
   m_ObjectHideFlags: 0

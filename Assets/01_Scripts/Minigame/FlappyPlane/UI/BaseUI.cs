@@ -1,13 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-// ¸ğµç UIÀÇ ±âº» µ¿ÀÛÀ» Á¤ÀÇÇÏ´Â Ãß»ó Å¬·¡½º
+// ëª¨ë“  UIì˜ ê¸°ë³¸ ë™ì‘ì„ ì •ì˜í•˜ëŠ” ì¶”ìƒ í´ë˜ìŠ¤
 public abstract class BaseUI : MonoBehaviour
 {
     protected MiniGameUIManager uiManager;
 
-    // ÇöÀç UI »óÅÂ(UIState) Á¤ÀÇ (ÀÚ½Ä Å¬·¡½º¿¡¼­ ±¸ÇöÇØ¾ß ÇÔ)
+    // í˜„ì¬ UI ìƒíƒœ(UIState) ì •ì˜ (ìì‹ í´ë˜ìŠ¤ì—ì„œ êµ¬í˜„í•´ì•¼ í•¨)
     protected abstract UIState GetUIState();
 
     public virtual void Init(MiniGameUIManager uiManager)
@@ -15,7 +13,7 @@ public abstract class BaseUI : MonoBehaviour
         this.uiManager = uiManager;
     }
 
-    // Àü´ŞµÈ »óÅÂ¿Í ÇöÀç UIÀÇ »óÅÂ°¡ ÀÏÄ¡ÇÏ¸é È°¼ºÈ­, ¾Æ´Ï¸é ºñÈ°¼ºÈ­
+    // ì „ë‹¬ëœ ìƒíƒœì™€ í˜„ì¬ UIì˜ ìƒíƒœê°€ ì¼ì¹˜í•˜ë©´ í™œì„±í™”, ì•„ë‹ˆë©´ ë¹„í™œì„±í™”
     public void SetActive(UIState state)
     {
         gameObject.SetActive(GetUIState() == state);

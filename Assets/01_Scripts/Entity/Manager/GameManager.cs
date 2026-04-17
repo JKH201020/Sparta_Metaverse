@@ -13,21 +13,14 @@ public enum GameState
 
 public class GameManager : Singleton<GameManager>
 {
-    [SerializeField] private LoadSceneManager _sceneManager;
-    [SerializeField] private UIManager _uiManager;
-
     public GameState CurrentState { get; private set; }
-
-    private void Reset()
-    {
-        _uiManager = GetComponentInChildren<UIManager>();
-        _sceneManager = GetComponentInChildren<LoadSceneManager>();
-    }
 
     private void Start() // 특정 씬 구현할 때 조작하기 위한 용도. 구현 끝나면 지우기
     {
         ChangeState(GameState.Playing);
     }
+
+    #region 게임 상태
 
     public void ChangeState(GameState state)
     {
@@ -42,7 +35,6 @@ public class GameManager : Singleton<GameManager>
                 playerController?.PlayerInputActivate();
                 break;
             case GameState.Loading:
-                // 로딩 UI 켜기, 비동기 씬 로드 시작
                 Time.timeScale = 1.0f;
                 playerController?.PlayerInputDeactivate();
                 break;
@@ -56,6 +48,8 @@ public class GameManager : Singleton<GameManager>
                 break;
         }
     }
+
+    #endregion
 
     #region 씬 이동
 
@@ -92,18 +86,4 @@ public class GameManager : Singleton<GameManager>
     }
 
     #endregion
-
-    //#region 게임 TimeScale 설정
-
-    ///// <summary>
-    ///// TimeScale 설정
-    ///// </summary>
-    ///// <param name="timeScale">설정하고 싶은 timeScale입력</param>
-    //public void SetTimeScale(float timeScale)
-    //{
-    //    Time.timeScale = timeScale;
-    //}
-
-    //#endregion
-
 }

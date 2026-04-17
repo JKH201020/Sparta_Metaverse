@@ -1,58 +1,55 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.Mathematics;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
 public class Obstacle : MonoBehaviour
 {
-    MiniGameManager gameManager; // GameManager ÀÎ½ºÅÏ½º¸¦ ÀúÀåÇÒ º¯¼ö
+    MiniGameManager gameManager; // GameManager ì¸ìŠ¤í„´ìŠ¤ë¥¼ ì €ì¥í•  ë³€ìˆ˜
 
-    public float highPosY = 1f; // Àå¾Ö¹°ÀÌ ¹èÄ¡µÉ ¼ö ÀÖ´Â YÃà »óÇÑ¼±
-    public float lowPosY = -1f; // Àå¾Ö¹°ÀÌ ¹èÄ¡µÉ ¼ö ÀÖ´Â YÃà ÇÏÇÑ¼±
+    public float highPosY = 1f; // ì¥ì• ë¬¼ì´ ë°°ì¹˜ë  ìˆ˜ ìˆëŠ” Yì¶• ìƒí•œì„ 
+    public float lowPosY = -1f; // ì¥ì• ë¬¼ì´ ë°°ì¹˜ë  ìˆ˜ ìˆëŠ” Yì¶• í•˜í•œì„ 
 
-    public float holeSizeMin = 1.2f; // ±¸¸ÛÀÇ ÃÖ¼Ò Å©±â
-    public float holeSizeMax = 2.5f; // ±¸¸ÛÀÇ ÃÖ´ë Å©±â
+    public float holeSizeMin = 1.2f; // êµ¬ë©ì˜ ìµœì†Œ í¬ê¸°
+    public float holeSizeMax = 2.5f; // êµ¬ë©ì˜ ìµœëŒ€ í¬ê¸°
 
-    public Transform topObject; // Àå¾Ö¹° »ó´Ü ¿ÀºêÁ§Æ® (ÀÌ °´Ã¼¸¦ À§·Î ¹èÄ¡)
-    public Transform bottomObject; // Àå¾Ö¹° ÇÏ´Ü ¿ÀºêÁ§Æ® (ÀÌ °´Ã¼¸¦ ¾Æ·¡·Î ¹èÄ¡)
+    public Transform topObject; // ì¥ì• ë¬¼ ìƒë‹¨ ì˜¤ë¸Œì íŠ¸ (ì´ ê°ì²´ë¥¼ ìœ„ë¡œ ë°°ì¹˜)
+    public Transform bottomObject; // ì¥ì• ë¬¼ í•˜ë‹¨ ì˜¤ë¸Œì íŠ¸ (ì´ ê°ì²´ë¥¼ ì•„ë˜ë¡œ ë°°ì¹˜)
 
-    public float widthPadding = 4f; // °¢ Àå¾Ö¹° °£ÀÇ XÃà °£°İ (³Êºñ ÆĞµù)
+    public float widthPadding = 4f; // ê° ì¥ì• ë¬¼ ê°„ì˜ Xì¶• ê°„ê²© (ë„ˆë¹„ íŒ¨ë”©)
 
     public void Start()
     {
-        gameManager = MiniGameManager.Instance; // °ÔÀÓ ½ÃÀÛ ½Ã GameManagerÀÇ ÀÎ½ºÅÏ½º¸¦ °¡Á®¿Í¼­ »ç¿ë
+        gameManager = MiniGameManager.Instance; // ê²Œì„ ì‹œì‘ ì‹œ GameManagerì˜ ì¸ìŠ¤í„´ìŠ¤ë¥¼ ê°€ì ¸ì™€ì„œ ì‚¬ìš©
     }
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        Plane plane = other.GetComponent<Plane>(); // Ãæµ¹ÇÑ °´Ã¼°¡ ÇÃ·¹ÀÌ¾îÀÎÁö È®ÀÎ
+        Plane plane = other.GetComponent<Plane>(); // ì¶©ëŒí•œ ê°ì²´ê°€ í”Œë ˆì´ì–´ì¸ì§€ í™•ì¸
 
-        if (plane != null && !Plane.isDead) // ÇÃ·¹ÀÌ¾î°¡ ¸Â´Ù¸é
+        if (plane != null && !Plane.isDead) // í”Œë ˆì´ì–´ê°€ ë§ë‹¤ë©´
         {
-            gameManager.UpdateScore(1); // °ÔÀÓ ¸Å´ÏÀú¸¦ ÅëÇØ Á¡¼ö 1 Áõ°¡
+            gameManager.UpdateScore(1); // ê²Œì„ ë§¤ë‹ˆì €ë¥¼ í†µí•´ ì ìˆ˜ 1 ì¦ê°€
         }
     }
 
-    public Vector3 SetRandomPlace(Vector3 lastPosition, int obstacleCount) // Àå¾Ö¹°À» ·£´ı À§Ä¡¿¡ ¹èÄ¡ÇÏ´Â ÇÔ¼ö
+    public Vector3 SetRandomPlace(Vector3 lastPosition, int obstacleCount) // ì¥ì• ë¬¼ì„ ëœë¤ ìœ„ì¹˜ì— ë°°ì¹˜í•˜ëŠ” í•¨ìˆ˜
     {
-        // ±¸¸Û Å©±â ·£´ı ¼³Á¤ (min ~ max ¹üÀ§ ³»¿¡¼­)
+        // êµ¬ë© í¬ê¸° ëœë¤ ì„¤ì • (min ~ max ë²”ìœ„ ë‚´ì—ì„œ)
         float holeSize = Random.Range(holeSizeMin, holeSizeMax);
-        // ±¸¸Û Å©±â¸¦ ¹İÀ¸·Î ³ª´©¾î »ó´Ü°ú ÇÏ´Ü °´Ã¼ÀÇ Y À§Ä¡ ¼³Á¤
+        // êµ¬ë© í¬ê¸°ë¥¼ ë°˜ìœ¼ë¡œ ë‚˜ëˆ„ì–´ ìƒë‹¨ê³¼ í•˜ë‹¨ ê°ì²´ì˜ Y ìœ„ì¹˜ ì„¤ì •
         float halfHoleSize = holeSize / 2f;
 
-        topObject.localPosition = new Vector3(0, halfHoleSize); // »ó´Ü °´Ã¼ÀÇ À§Ä¡
-        bottomObject.localPosition = new Vector3(0, -halfHoleSize); // ÇÏ´Ü °´Ã¼ÀÇ À§Ä¡
+        topObject.localPosition = new Vector3(0, halfHoleSize); // ìƒë‹¨ ê°ì²´ì˜ ìœ„ì¹˜
+        bottomObject.localPosition = new Vector3(0, -halfHoleSize); // í•˜ë‹¨ ê°ì²´ì˜ ìœ„ì¹˜
 
-        // ¸¶Áö¸· À§Ä¡¿¡¼­ XÃàÀ¸·Î °£°İÀ» ´õÇÑ »õ·Î¿î À§Ä¡ °è»ê
+        // ë§ˆì§€ë§‰ ìœ„ì¹˜ì—ì„œ Xì¶•ìœ¼ë¡œ ê°„ê²©ì„ ë”í•œ ìƒˆë¡œìš´ ìœ„ì¹˜ ê³„ì‚°
         Vector3 placePosition = lastPosition + new Vector3(widthPadding, 0);
-        // »õ·Î¿î À§Ä¡ÀÇ YÃàÀ» ·£´ı °ªÀ¸·Î ¼³Á¤ (lowPosY¿Í highPosY »çÀÌ)
+        // ìƒˆë¡œìš´ ìœ„ì¹˜ì˜ Yì¶•ì„ ëœë¤ ê°’ìœ¼ë¡œ ì„¤ì • (lowPosYì™€ highPosY ì‚¬ì´)
         placePosition.y = Random.Range(lowPosY, highPosY);
 
-        // Àå¾Ö¹°ÀÇ À§Ä¡¸¦ »õ·Î¿î À§Ä¡·Î ¼³Á¤
+        // ì¥ì• ë¬¼ì˜ ìœ„ì¹˜ë¥¼ ìƒˆë¡œìš´ ìœ„ì¹˜ë¡œ ì„¤ì •
         transform.position = placePosition;
 
-        // »õ·Î ¼³Á¤µÈ À§Ä¡¸¦ ¹İÈ¯
+        // ìƒˆë¡œ ì„¤ì •ëœ ìœ„ì¹˜ë¥¼ ë°˜í™˜
         return placePosition;
     }
 }

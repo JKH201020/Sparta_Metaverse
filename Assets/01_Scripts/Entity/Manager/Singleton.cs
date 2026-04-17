@@ -13,10 +13,7 @@ public class Singleton<T> : MonoBehaviour where T : MonoBehaviour
             {
                 _instance = FindObjectOfType<T>();
 
-                if (_instance == null)
-                {
-                    Debug.LogError($"{typeof(T).Name} 싱글톤이 씬에 없습니다!");
-                }
+                if (_instance == null) Debug.LogError($"{typeof(T).Name} 싱글톤이 씬에 없습니다!");
             }
             return _instance;
         }

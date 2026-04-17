@@ -21,12 +21,20 @@ public class UIManager : Singleton<UIManager>
     [SerializeField] private GameObject _topDownUI;
     [SerializeField] private GameObject _gameOverUI;
 
+    [Header("플래피 플레인 UI")]
+    [SerializeField] private GameObject _homeUI;
+    [SerializeField] private GameObject _gameUI;
+    [SerializeField] private GameObject _endUI;
+
     private const string LoadingPanelPathString = "Canvas/LoadingPanel";
     private const string FadePanelPathString = "Canvas/FadePanel";
     private const string DialogueUIString = "Canvas/DialogueUI";
     private const string LoadSlotUIString = "Canvas/LoadSlotUI";
     private const string TopDownGameUIString = "Canvas/TopDownGameUI";
     private const string GameOverUIString = "Canvas/TopDownGameUI/GameOverUI";
+    private const string HomeUIString = "Canvas/FlappyPlaneUI/HomeUI";
+    private const string GameUIString = "Canvas/FlappyPlaneUI/GameUI";
+    private const string EndUIString = "Canvas/FlappyPlaneUI/EndUI";
 
     private void Reset()
     {
@@ -38,6 +46,9 @@ public class UIManager : Singleton<UIManager>
         _loadSlotUI = transform.Find(LoadSlotUIString).gameObject;
         _topDownUI = transform.Find(TopDownGameUIString).gameObject;
         _gameOverUI = transform.Find(GameOverUIString).gameObject;
+        _homeUI = transform.Find(HomeUIString).gameObject;
+        _gameUI = transform.Find(GameUIString).gameObject;
+        _endUI = transform.Find(EndUIString).gameObject;
     }
 
     protected override void Awake()
@@ -155,6 +166,58 @@ public class UIManager : Singleton<UIManager>
     public void OffGameOverUI()
     {
         _gameOverUI.SetActive(false);
+    }
+
+    #endregion
+
+    #region 플래피 버드UI 온오프
+
+    /// <summary>
+    /// 시작 UI 활성화
+    /// </summary>
+    public void OnHomeUI()
+    {
+        _homeUI.SetActive(true);
+    }
+
+    /// <summary>
+    /// 시작 UI 비활성화
+    /// </summary>
+    public void OffHomeUI()
+    {
+        _homeUI.SetActive(false);
+    }
+
+    /// <summary>
+    /// 인게임 UI 활성화
+    /// </summary>
+    public void OnGameUI()
+    {
+        _gameUI.SetActive(true);
+    }
+
+    /// <summary>
+    /// 인게임 UI 비활성화
+    /// </summary>
+    public void OffGameUI()
+    {
+        _gameUI.SetActive(false);
+    }
+
+    /// <summary>
+    /// 게임 오버 UI 활성화
+    /// </summary>
+    public void OnEndUI()
+    {
+        _endUI.SetActive(true);
+    }
+
+    /// <summary>
+    /// 게임 오버 UI 비활성화
+    /// </summary>
+    public void OffEndUI()
+    {
+        _endUI.SetActive(false);
     }
 
     #endregion

@@ -1,7 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
-using UnityEngine;
 using UnityEngine.UI;
 
 public class HomeUI : BaseUI
@@ -18,21 +14,21 @@ public class HomeUI : BaseUI
     {
         base.Init(uiManager);
 
-        // ÇÏÀ§ ¿ÀºêÁ§Æ®¿¡¼­ ¹öÆ°µéÀ» Ã£¾Æ¼­ ¿¬°á
+        // í•˜ìœ„ ì˜¤ë¸Œì íŠ¸ì—ì„œ ë²„íŠ¼ë“¤ì„ ì°¾ì•„ì„œ ì—°ê²°
         startButton = transform.Find("StartButton").GetComponent<Button>();
         exitButton = transform.Find("ExitButton").GetComponent<Button>();
 
-        // ¹öÆ° Å¬¸¯ ½Ã ÀÌº¥Æ® ¿¬°á
+        // ë²„íŠ¼ í´ë¦­ ì‹œ ì´ë²¤íŠ¸ ì—°ê²°
         startButton.onClick.AddListener(OnClickStartButton);
         exitButton.onClick.AddListener(OnClickExitButton);
     }
 
-    void OnClickStartButton() // Start ¹öÆ° Å¬¸¯ ½Ã °ÔÀÓ ½ÃÀÛ ¿äÃ»
+    void OnClickStartButton() // Start ë²„íŠ¼ í´ë¦­ ì‹œ ê²Œì„ ì‹œì‘ ìš”ì²­
     {
         uiManager.OnClickStart();
     }
 
-    void OnClickExitButton() // Exit ¹öÆ° Å¬¸¯ ½Ã °ÔÀÓ Á¾·á ¿äÃ»
+    void OnClickExitButton() // Exit ë²„íŠ¼ í´ë¦­ ì‹œ ê²Œì„ ì¢…ë£Œ ìš”ì²­
     {
         uiManager.OnClickExit();
     }
