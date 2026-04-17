@@ -1,39 +1,34 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class GameUI : BaseUI
+public class GameUI : MonoBehaviour
 {
-    public TextMeshProUGUI currentscoreText;
-    public TextMeshProUGUI bestscoreText;
+    [SerializeField] private TextMeshProUGUI currentscoreText;
+    [SerializeField] private TextMeshProUGUI bestscoreText;
 
-    protected override UIState GetUIState()
+    private int currentScore;
+    private int bestScore;
+
+    private void Reset()
     {
-        return UIState.Game;
-    }
-
-    public override void Init(MiniGameUIManager uiManager)
-    {
-        base.Init(uiManager);
-
-        // ÀÚ½Ä ¿ÀºêÁ§Æ®¿¡¼­ °¢ ÄÄÆ÷³ÍÆ® ¿¬°á
         currentscoreText = transform.Find("CurrentScoreText").GetComponent<TextMeshProUGUI>();
         bestscoreText = transform.Find("BestScoreText").GetComponent<TextMeshProUGUI>();
     }
-    private void Start()
+
+    private void Awake()
     {
-        Time.timeScale = 1.0f;
+        if(GameManager.Instance != null) GameManager.Instance.ChangeState(GameState.Playing);
+    }
+
+    private void OnEnable()
+    {
+        currentScore = FlappyBirdGameManager.Instance.CurrentScore;
+        bestScore = FlappyBirdGameManager.Instance.BestScore;
     }
 
     void Update()
     {
-        // GameManager¸¦ ½Ì±ÛÅæÀ¸·Î ¸¸µé¸é ¾îµğ¼­µç ½±°Ô GameManager ÀÎ½ºÅÏ½º¿¡ Á¢±ÙÇÏ¿©
-        // Á¡¼ö µ¥ÀÌÅÍ¸¦ °¡Á®¿Ã ¼ö ÀÖ´Ù.
-        int currentScore = MiniGameManager.Instance.CurrentScore;
-        int bestScore = MiniGameManager.Instance.BestScore;
-
-        // ÀÎ°ÔÀÓ¿¡ Á¡¼ö Ãâ·Â
+        // ì¸ê²Œì„ì— ì ìˆ˜ ì¶œë ¥
         currentscoreText.text = currentScore.ToString();
         bestscoreText.text = bestScore.ToString();
     }

@@ -18,7 +18,7 @@ public class AnimationHandler : MonoBehaviour
         animator = GetComponent<Animator>();
 
         //// 초기 애니메이션 클립 정보 가져오기 (스크립트 시작 시)
-        //AnimationClip[] clips = animator.runtimeAnimatorController.animationClips;
+        //AnimationClip[] clips = _animator.runtimeAnimatorController.animationClips;
 
         //foreach (AnimationClip clip in clips )
         //{

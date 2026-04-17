@@ -173,7 +173,7 @@ public class UIManager : Singleton<UIManager>
     #region 플래피 버드UI 온오프
 
     /// <summary>
-    /// 시작 UI 활성화
+    /// 플래피 버드 시작 UI 활성화
     /// </summary>
     public void OnHomeUI()
     {
@@ -181,7 +181,7 @@ public class UIManager : Singleton<UIManager>
     }
 
     /// <summary>
-    /// 시작 UI 비활성화
+    /// 플래피 버드 시작 UI 비활성화
     /// </summary>
     public void OffHomeUI()
     {
@@ -189,7 +189,7 @@ public class UIManager : Singleton<UIManager>
     }
 
     /// <summary>
-    /// 인게임 UI 활성화
+    /// 플래피 버드 인게임 UI 활성화
     /// </summary>
     public void OnGameUI()
     {
@@ -197,7 +197,7 @@ public class UIManager : Singleton<UIManager>
     }
 
     /// <summary>
-    /// 인게임 UI 비활성화
+    /// 플래피 버드 인게임 UI 비활성화
     /// </summary>
     public void OffGameUI()
     {
@@ -205,7 +205,7 @@ public class UIManager : Singleton<UIManager>
     }
 
     /// <summary>
-    /// 게임 오버 UI 활성화
+    /// 플래피 버드 게임 오버 UI 활성화
     /// </summary>
     public void OnEndUI()
     {
@@ -213,7 +213,7 @@ public class UIManager : Singleton<UIManager>
     }
 
     /// <summary>
-    /// 게임 오버 UI 비활성화
+    /// 플래피 버드 게임 오버 UI 비활성화
     /// </summary>
     public void OffEndUI()
     {

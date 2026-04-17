@@ -1,35 +1,40 @@
+using UnityEngine;
 using UnityEngine.UI;
 
-public class HomeUI : BaseUI
+public class HomeUI : MonoBehaviour
 {
-    Button startButton;
-    Button exitButton;
+    [Header("버튼")]
+    [SerializeField] private Button _startButton;
+    [SerializeField] private Button _exitButton;
 
-    protected override UIState GetUIState()
+    private const string StartButtonString = "StartButton";
+    private const string ExitButtonString = "ExitButton";
+
+    private void Reset()
     {
-        return UIState.Home;
+        _startButton = transform.Find(StartButtonString).GetComponent<Button>();
+        _exitButton = transform.Find(ExitButtonString).GetComponent<Button>();
     }
 
-    public override void Init(MiniGameUIManager uiManager)
+    private void Awake()
     {
-        base.Init(uiManager);
-
-        // 하위 오브젝트에서 버튼들을 찾아서 연결
-        startButton = transform.Find("StartButton").GetComponent<Button>();
-        exitButton = transform.Find("ExitButton").GetComponent<Button>();
-
-        // 버튼 클릭 시 이벤트 연결
-        startButton.onClick.AddListener(OnClickStartButton);
-        exitButton.onClick.AddListener(OnClickExitButton);
+        _startButton.onClick.AddListener(OnClickStartButton);
+        _exitButton.onClick.AddListener(OnClickExitButton);
     }
 
-    void OnClickStartButton() // Start 버튼 클릭 시 게임 시작 요청
+    private void OnEnable()
     {
-        uiManager.OnClickStart();
+        GameManager.Instance.ChangeState(GameState.Paused);
     }
 
-    void OnClickExitButton() // Exit 버튼 클릭 시 게임 종료 요청
+    public void OnClickStartButton() // Start 버튼 클릭 시 게임 시작 요청
     {
-        uiManager.OnClickExit();
+        UIManager.Instance.OffHomeUI();
+        UIManager.Instance.OnGameUI();
+    }
+
+    public async void OnClickExitButton() // Exit 버튼 클릭 시 게임 종료 요청
+    {
+        await GameManager.Instance.ChangeScene(SceneNames.MainScene);
     }
 }

@@ -13,9 +13,9 @@ GameObject:
   - component: {fileID: 1177510676790004283}
   - component: {fileID: 3871505400772809761}
   - component: {fileID: 3649735347936024033}
-  m_Layer: 0
+  m_Layer: 27
   m_Name: Player (Plane)
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -181,7 +181,7 @@ GameObject:
   - component: {fileID: 4149867980206252351}
   - component: {fileID: 1426431687668529598}
   - component: {fileID: 8400600331132781834}
-  m_Layer: 0
+  m_Layer: 27
   m_Name: Model
   m_TagString: Untagged
   m_Icon: {fileID: 0}

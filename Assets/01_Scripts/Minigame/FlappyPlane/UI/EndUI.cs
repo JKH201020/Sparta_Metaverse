@@ -1,59 +1,54 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class EndUI : BaseUI
+public class EndUI : MonoBehaviour
 {
-    TextMeshProUGUI currentScoreText;
-    TextMeshProUGUI bestScoreText;
+    [Header("텍스트")]
+    [SerializeField] private TextMeshProUGUI _currentScoreText;
+    [SerializeField] private TextMeshProUGUI _bestScoreText;
 
-    Button restartButton;
-    Button exitButton;
+    [Header("버튼")]
+    [SerializeField] private Button _restartButton;
+    [SerializeField] private Button _exitButton;
 
-    protected override UIState GetUIState()
+    private const string CurrentScoreTextString = "ScoreImage/CurrentScoreText";
+    private const string BestScoreTextString = "ScoreImage/BestScoreText";
+    private const string ReStartButtonString = "ReStartButton";
+    private const string ExitButtonString = "ExitButton";
+
+    private void Reset()
     {
-        return UIState.End;
+        _currentScoreText = transform.Find(CurrentScoreTextString).GetComponent<TextMeshProUGUI>();
+        _bestScoreText = transform.Find(BestScoreTextString).GetComponent<TextMeshProUGUI>();
+        _restartButton = transform.Find(ReStartButtonString).GetComponent<Button>();
+        _exitButton = transform.Find(ExitButtonString).GetComponent<Button>();
     }
 
-    public override void Init(MiniGameUIManager uiManager)
+    private void Awake()
     {
-        base.Init(uiManager);
+        _restartButton.onClick.AddListener(OnClickRestartButton);
+        _exitButton.onClick.AddListener(OnClickExitButton);
 
-        // "ScoreImage" 오브젝트 찾기
-        Transform scoreImageTransform = transform.Find("ScoreImage");
-
-        // 자식 오브젝트에서 각 컴포넌트 연결
-        currentScoreText = scoreImageTransform.Find("CurrentScoreText").GetComponent<TextMeshProUGUI>();
-        bestScoreText = scoreImageTransform.Find("BestScoreText").GetComponent<TextMeshProUGUI>();
-        restartButton = transform.Find("ReStartButton").GetComponent<Button>();
-        exitButton = transform.Find("ExitButton").GetComponent<Button>();
-
-        // 버튼 클릭 시 이벤트 연결
-        restartButton.onClick.AddListener(OnClickRestartButton);
-        exitButton.onClick.AddListener(OnClickExitButton);
+        ConnectScoreString();
     }
 
-    // UI에 점수 정보 표시
-    void Update()
+    private void ConnectScoreString() // 점수를 텍스트에 연결
     {
-        // 인게임에 점수 출력
-        if (MiniGameManager.Instance != null)
+        if (FlappyBirdGameManager.Instance != null)
         {
-            currentScoreText.text = MiniGameManager.Instance.CurrentScore.ToString();
-            bestScoreText.text = MiniGameManager.Instance.BestScore.ToString();
+            _currentScoreText.text = FlappyBirdGameManager.Instance.CurrentScore.ToString();
+            _bestScoreText.text = FlappyBirdGameManager.Instance.BestScore.ToString();
         }
     }
 
     public void OnClickRestartButton()
     {
-        SceneManager.LoadScene("MiniGameScene"); // 게임을 재시작하는 함수
+        
     }
 
-    public void OnClickExitButton()
+    public async void OnClickExitButton()
     {
-        uiManager.OnClickExit();
+        await GameManager.Instance.ChangeScene(SceneNames.MainScene);
     }
 }

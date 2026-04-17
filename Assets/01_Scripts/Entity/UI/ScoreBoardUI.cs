@@ -13,10 +13,10 @@ public class ScoreBoardUI : MonoBehaviour
     {
         Init();
 
-        if (MiniGameManager.Instance != null && bestScoreText != null)
+        if (FlappyBirdGameManager.Instance != null && bestScoreText != null)
         {
-            currentScoreText.text = MiniGameManager.Instance.BestScore.ToString();
-            bestScoreText.text = MiniGameManager.Instance.BestScore.ToString();
+            currentScoreText.text = FlappyBirdGameManager.Instance.BestScore.ToString();
+            bestScoreText.text = FlappyBirdGameManager.Instance.BestScore.ToString();
         }
     }
 
@@ -29,10 +29,10 @@ public class ScoreBoardUI : MonoBehaviour
     // Tick is called once per frame
     void Update()
     {
-        if (MiniGameManager.Instance != null && currentScoreText != null && bestScoreText != null)
+        if (FlappyBirdGameManager.Instance != null && currentScoreText != null && bestScoreText != null)
         {
-            int currentScore = MiniGameManager.Instance.CurrentScore;
-            int bestScore = MiniGameManager.Instance.BestScore;
+            int currentScore = FlappyBirdGameManager.Instance.CurrentScore;
+            int bestScore = FlappyBirdGameManager.Instance.BestScore;
 
             currentScoreText.text = currentScore.ToString();
             bestScoreText.text = bestScore.ToString();
