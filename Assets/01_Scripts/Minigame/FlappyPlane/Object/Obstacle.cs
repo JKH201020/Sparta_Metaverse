@@ -3,48 +3,56 @@ using Random = UnityEngine.Random;
 
 public class Obstacle : MonoBehaviour
 {
-    FlappyBirdGameManager gameManager; // GameManager 인스턴스를 저장할 변수
+    private FlappyBirdGameManager _gameManager; // GameManager 인스턴스를 저장할 변수
 
-    public float highPosY = 1f; // 장애물이 배치될 수 있는 Y축 상한선
-    public float lowPosY = -1f; // 장애물이 배치될 수 있는 Y축 하한선
+    [Header("장애물 Y축 위치 설정")]
+    [SerializeField] private float _highPosY = 1f; // 장애물이 배치될 수 있는 Y축 상한선
+    [SerializeField] private float _lowPosY = -1f; // 장애물이 배치될 수 있는 Y축 하한선
 
-    public float holeSizeMin = 1.2f; // 구멍의 최소 크기
-    public float holeSizeMax = 2.5f; // 구멍의 최대 크기
+    [Header("장애물 상하 간격 설정")]
+    [SerializeField] private float _holeSizeMin = 1.2f; // 구멍의 최소 크기
+    [SerializeField] private float _holeSizeMax = 2.5f; // 구멍의 최대 크기
 
-    public Transform topObject; // 장애물 상단 오브젝트 (이 객체를 위로 배치)
-    public Transform bottomObject; // 장애물 하단 오브젝트 (이 객체를 아래로 배치)
+    [Header("장애물 X축 간격")]
+    [SerializeField] private float _widthPadding = 4f; // 각 장애물 간의 X축 간격 (너비 패딩)
 
-    public float widthPadding = 4f; // 각 장애물 간의 X축 간격 (너비 패딩)
+    public Transform _topObject; // 장애물 상단 오브젝트 (이 객체를 위로 배치)
+    public Transform _bottomObject; // 장애물 하단 오브젝트 (이 객체를 아래로 배치)
 
-    public void Start()
+    private int _score = 1; // 점수
+
+    private void Start()
     {
-        gameManager = FlappyBirdGameManager.Instance; // 게임 시작 시 GameManager의 인스턴스를 가져와서 사용
+        _gameManager = FlappyBirdGameManager.Instance; // 게임 시작 시 GameManager의 인스턴스를 가져와서 사용
     }
 
     private void OnTriggerExit2D(Collider2D other)
     {
         Plane plane = other.GetComponent<Plane>(); // 충돌한 객체가 플레이어인지 확인
 
-        if (plane != null && !plane.isDead) // 플레이어가 맞다면
-        {
-            gameManager.UpdateScore(1); // 게임 매니저를 통해 점수 1 증가
-        }
+        if (plane != null && !plane.isDead) _gameManager.UpdateScore(_score); // 게임 매니저를 통해 점수 1 증가
     }
 
-    public Vector3 SetRandomPlace(Vector3 lastPosition, int obstacleCount) // 장애물을 랜덤 위치에 배치하는 함수
+    /// <summary>
+    /// 장애물을 랜덤 위치에 배치하는 메서드
+    /// </summary>
+    /// <param name="lastPosition">마지막 장애물 위치</param>
+    /// <param name="obstacleCount">장애물 개수</param>
+    /// <returns></returns>
+    public Vector3 SetRandomPlace(Vector3 lastPosition, int obstacleCount)
     {
         // 구멍 크기 랜덤 설정 (min ~ max 범위 내에서)
-        float holeSize = Random.Range(holeSizeMin, holeSizeMax);
+        float holeSize = Random.Range(_holeSizeMin, _holeSizeMax);
         // 구멍 크기를 반으로 나누어 상단과 하단 객체의 Y 위치 설정
         float halfHoleSize = holeSize / 2f;
 
-        topObject.localPosition = new Vector3(0, halfHoleSize); // 상단 객체의 위치
-        bottomObject.localPosition = new Vector3(0, -halfHoleSize); // 하단 객체의 위치
+        _topObject.localPosition = new Vector3(0, halfHoleSize); // 상단 객체의 위치
+        _bottomObject.localPosition = new Vector3(0, -halfHoleSize); // 하단 객체의 위치
 
         // 마지막 위치에서 X축으로 간격을 더한 새로운 위치 계산
-        Vector3 placePosition = lastPosition + new Vector3(widthPadding, 0);
-        // 새로운 위치의 Y축을 랜덤 값으로 설정 (lowPosY와 highPosY 사이)
-        placePosition.y = Random.Range(lowPosY, highPosY);
+        Vector3 placePosition = lastPosition + new Vector3(_widthPadding, 0);
+        // 새로운 위치의 Y축을 랜덤 값으로 설정 (lowPosY와 _highPosY 사이)
+        placePosition.y = Random.Range(_lowPosY, _highPosY);
 
         // 장애물의 위치를 새로운 위치로 설정
         transform.position = placePosition;

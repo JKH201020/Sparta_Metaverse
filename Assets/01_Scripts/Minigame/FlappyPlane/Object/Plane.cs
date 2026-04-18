@@ -18,6 +18,11 @@ public class Plane : MonoBehaviour
         _rigidbody = transform.GetComponent<Rigidbody2D>();
     }
 
+    private void Start()
+    {
+        SetGravityScale(0f);
+    }
+
     public void FixedUpdate() // 물리 업데이트 (고정된 시간 간격으로 호출됨)
     {
         Jump();
@@ -58,5 +63,14 @@ public class Plane : MonoBehaviour
         if (!enabled || isDead) return;
 
         if (context.started) _isFlap = true; // 점프 시작
+    }
+
+    /// <summary>
+    /// 비행기 중력 설정
+    /// </summary>
+    /// <param name="gravityScale">중력 크기</param>
+    public void SetGravityScale(float gravityScale)
+    {
+        _rigidbody.gravityScale = gravityScale;
     }
 }

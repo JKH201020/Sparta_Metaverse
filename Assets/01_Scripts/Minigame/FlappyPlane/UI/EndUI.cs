@@ -29,7 +29,10 @@ public class EndUI : MonoBehaviour
     {
         _restartButton.onClick.AddListener(OnClickRestartButton);
         _exitButton.onClick.AddListener(OnClickExitButton);
+    }
 
+    private void OnEnable()
+    {
         ConnectScoreString();
     }
 
@@ -44,11 +47,12 @@ public class EndUI : MonoBehaviour
 
     public void OnClickRestartButton()
     {
-        
+        FlappyBirdGameManager.Instance.PrepareNewGame();
     }
 
     public async void OnClickExitButton()
     {
+        GameManager.Instance.ChangeState(GameState.Playing);
         await GameManager.Instance.ChangeScene(SceneNames.MainScene);
     }
 }

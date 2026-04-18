@@ -10,6 +10,7 @@ public class FlappyBirdGameManager : MonoBehaviour
     [SerializeField] private Plane _player;
 
     [Header("메인 카메라"), SerializeField] private MiniFollowCamera _followCamera;
+    [Header("환경 관리"), SerializeField] private BgLooper _bgLooper;
 
     private int _currentScore = 0; // 현재 점수를 저장하는 변수
     public int CurrentScore { get => _currentScore; }
@@ -24,6 +25,7 @@ public class FlappyBirdGameManager : MonoBehaviour
         _playerPos = GameObject.FindWithTag(Tag.Player);
         _player = _playerPos.GetComponent<Plane>();
         _followCamera = GameObject.FindWithTag(Tag.MainCamera).GetComponent<MiniFollowCamera>();
+        _bgLooper = FindObjectOfType<BgLooper>();
     }
 
     private void Awake()
@@ -34,13 +36,12 @@ public class FlappyBirdGameManager : MonoBehaviour
     private void Start()
     {
         UIManager.Instance.OnEnableFlappyBirdUI();
-        _player.isDead = false; // 생존 중
-        _currentScore = 0; // 게임 시작 시 점수를 0으로 초기화하여 UI에 표시
-        _bestScore = PlayerPrefs.GetInt(BestScoreKey, 0); // 저장된 최고 점수 불러오기 (없으면 기본값 0)
+        _followCamera.SetTarget(_playerPos.transform);
+        PrepareNewGame();
     }
 
     /// <summary>
-    /// 게임 오버 시 호출되는 함수
+    /// 게임 오버 시 호출되는 메서드
     /// </summary>
     public void GameOver()
     {
@@ -58,24 +59,34 @@ public class FlappyBirdGameManager : MonoBehaviour
     }
 
     /// <summary>
-    /// 게임을 재시작하는 함수
+    /// 게임 초기화 메서드
     /// </summary>
-    public void RestartGame()
+    public void PrepareNewGame()
     {
+        _player.isDead = false; // 생존 중
+
         int mySlot = SaveManager.Instance.CurrentSlot;
-        SaveData data = SaveManager.Instance.Load(mySlot);
+        if (mySlot != -1)
+        {
+            SaveData data = SaveManager.Instance.Load(mySlot);
+            _bestScore = data.planeScore;
+        }
 
         // 점수 초기화
         _currentScore = 0;
-        _bestScore = data.planeScore;
-        //OnScoreChanged?.Invoke(CurrentScore, _bestScore);
+
+        // 플레이어, 장애물 위치 초기화
+        _playerPos.transform.position = Vector2.zero;
+        _bgLooper.ResetObstacles();
+        _player.SetGravityScale(1f);
+        GameManager.Instance.ChangeState(GameState.Playing);
     }
 
     /// <summary>
-    /// 점수를 추가하는 함수
+    /// 점수를 추가하는 메서드
     /// </summary>
     /// <param name="score">현재 점수</param>
-    public void UpdateScore(int score) 
+    public void UpdateScore(int score)
     {
         _currentScore += score; // 주어진 score를 currentScore에 더함
 

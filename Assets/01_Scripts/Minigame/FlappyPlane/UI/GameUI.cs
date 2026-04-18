@@ -9,26 +9,33 @@ public class GameUI : MonoBehaviour
     private int currentScore;
     private int bestScore;
 
+    private const string CurrentScoreTextString = "CurrentScoreText";
+    private const string BestScoreTextString = "BestScoreText";
+
     private void Reset()
     {
-        currentscoreText = transform.Find("CurrentScoreText").GetComponent<TextMeshProUGUI>();
-        bestscoreText = transform.Find("BestScoreText").GetComponent<TextMeshProUGUI>();
+        currentscoreText = transform.Find(CurrentScoreTextString).GetComponent<TextMeshProUGUI>();
+        bestscoreText = transform.Find(BestScoreTextString).GetComponent<TextMeshProUGUI>();
     }
 
     private void Awake()
     {
-        if(GameManager.Instance != null) GameManager.Instance.ChangeState(GameState.Playing);
+        if (GameManager.Instance != null) GameManager.Instance.ChangeState(GameState.Playing);
+
+        if (FlappyBirdGameManager.Instance != null)
+        {
+            currentScore = FlappyBirdGameManager.Instance.CurrentScore;
+            bestScore = FlappyBirdGameManager.Instance.BestScore;
+        }
     }
 
-    private void OnEnable()
+    private void Update()
     {
-        currentScore = FlappyBirdGameManager.Instance.CurrentScore;
-        bestScore = FlappyBirdGameManager.Instance.BestScore;
+        ScoreUpdate();
     }
 
-    void Update()
+    private void ScoreUpdate() // 화면에 표시되는 점수 텍스트와 연결 
     {
-        // 인게임에 점수 출력
         currentscoreText.text = currentScore.ToString();
         bestscoreText.text = bestScore.ToString();
     }
