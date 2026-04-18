@@ -6,9 +6,6 @@ public class GameUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI currentscoreText;
     [SerializeField] private TextMeshProUGUI bestscoreText;
 
-    private int currentScore;
-    private int bestScore;
-
     private const string CurrentScoreTextString = "CurrentScoreText";
     private const string BestScoreTextString = "BestScoreText";
 
@@ -21,12 +18,6 @@ public class GameUI : MonoBehaviour
     private void Awake()
     {
         if (GameManager.Instance != null) GameManager.Instance.ChangeState(GameState.Playing);
-
-        if (FlappyBirdGameManager.Instance != null)
-        {
-            currentScore = FlappyBirdGameManager.Instance.CurrentScore;
-            bestScore = FlappyBirdGameManager.Instance.BestScore;
-        }
     }
 
     private void Update()
@@ -36,7 +27,7 @@ public class GameUI : MonoBehaviour
 
     private void ScoreUpdate() // 화면에 표시되는 점수 텍스트와 연결 
     {
-        currentscoreText.text = currentScore.ToString();
-        bestscoreText.text = bestScore.ToString();
+        currentscoreText.text = FlappyBirdGameManager.Instance.CurrentScore.ToString();
+        bestscoreText.text = FlappyBirdGameManager.Instance.BestScore.ToString();
     }
 }

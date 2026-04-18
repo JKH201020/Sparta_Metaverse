@@ -1,4 +1,3 @@
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class BgLooper : MonoBehaviour
@@ -6,16 +5,24 @@ public class BgLooper : MonoBehaviour
     [Header("장애물 루프 설정")]
     [SerializeField] private int _numBgCount = 5; // 배경 개수
     [SerializeField] private Vector3 _startObstaclePosition = new Vector3(5f, 0f, 0f); // 배경 개수
+    [SerializeField] private Obstacle[] _obstacles; // 장애물 담을 배열
+    [SerializeField] private GameObject[] _backgrounds; // 배경 담을 배열
+    [SerializeField] private Vector3[] _bgInitialPositions; // 배경 초기 위치 담을 배열
 
-
-    private Obstacle[] _obstacles; // 장애물 담을 배열
     private int _obstacleCount = 0; // 장애물의 개수
     private Vector3 _obstacleLastPosition = Vector3.zero; // 마지막으로 배치된 장애물의 위치
 
+    private void Reset()
+    {
+        _backgrounds = GameObject.FindGameObjectsWithTag(Tag.BackGround);
+        _obstacles = FindObjectsOfType<Obstacle>();
+    }
+
     private void Awake()
     {
-        _obstacles = GameObject.FindObjectsOfType<Obstacle>();
         _obstacleCount = _obstacles.Length;
+        _bgInitialPositions = new Vector3[_backgrounds.Length];
+        for (int i = 0; i < _backgrounds.Length; i++) _bgInitialPositions[i] = _backgrounds[i].transform.position;
     }
 
     private void Start()
@@ -52,6 +59,15 @@ public class BgLooper : MonoBehaviour
     /// </summary>
     public void ResetObstacles()
     {
+        // 배경 리셋
+        if (_backgrounds != null && _backgrounds.Length > 0)
+        {
+            float width = ((BoxCollider2D)_backgrounds[0].GetComponent<BoxCollider2D>()).size.x;
+
+            for (int i = 0; i < _backgrounds.Length; i++) _backgrounds[i].transform.position = _bgInitialPositions[i];
+        }
+
+        // 장애물 리셋
         _obstacleLastPosition = _startObstaclePosition;
 
         // 장애물 개수만큼 반복하여 각 장애물의 위치를 랜덤하게 설정

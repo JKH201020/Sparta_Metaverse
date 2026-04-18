@@ -9,6 +9,7 @@ public class Plane : MonoBehaviour
     private float _flapForce = 6f; // 점프 강도 (플랩)
     private float _forwardSpeed = 3f; // 앞으로 나가는 속도 (수평 이동)
     public bool isDead = false; // 플레이어가 죽었는지 확인하는 변수
+    public bool isStarted = false; // 게임이 시작되었는지 확인
     private bool _isFlap = false; // 점프(플랩) 여부 확인하는 변수
 
     private void Reset()
@@ -16,11 +17,6 @@ public class Plane : MonoBehaviour
         // 애니메이터와 리지드바디를 컴포넌트에서 찾기
         _animator = transform.GetComponentInChildren<Animator>();
         _rigidbody = transform.GetComponent<Rigidbody2D>();
-    }
-
-    private void Start()
-    {
-        SetGravityScale(0f);
     }
 
     public void FixedUpdate() // 물리 업데이트 (고정된 시간 간격으로 호출됨)
@@ -39,7 +35,7 @@ public class Plane : MonoBehaviour
 
     private void Jump() // 점프 로직
     {
-        if (isDead) return; // 죽었으면 물리 연산 하지 않음
+        if (isDead || !isStarted) return; // 죽었으면 물리 연산 하지 않음
 
         Vector3 velocity = _rigidbody.velocity;
         velocity.x = _forwardSpeed; // 수평 속도는 일정하게 유지 (앞으로 계속 이동)
@@ -55,22 +51,33 @@ public class Plane : MonoBehaviour
         // 점프 시 각도 조정 (위아래로 기울기)
         float angle = Mathf.Clamp((_rigidbody.velocity.y * 10f), -90, 90); // y축: -90 ~ 90
 
-        transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(0, 0, angle),Time.fixedDeltaTime * 5f);
+        transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(0, 0, angle), Time.fixedDeltaTime * 5f);
     }
 
     public void OnJump(InputAction.CallbackContext context) /// 점프 인풋 감지
     {
         if (!enabled || isDead) return;
 
-        if (context.started) _isFlap = true; // 점프 시작
+        if (context.started)
+        {
+            if (!isStarted)
+            {
+                isStarted = true;
+                _rigidbody.simulated = true; // 물리 엔진 On
+            }
+
+            _isFlap = true; // 점프 시작
+        }
     }
 
     /// <summary>
-    /// 비행기 중력 설정
+    /// 비행기 제자리 정지
     /// </summary>
-    /// <param name="gravityScale">중력 크기</param>
-    public void SetGravityScale(float gravityScale)
+    public void Stop()
     {
-        _rigidbody.gravityScale = gravityScale;
+        isStarted = false;
+        _rigidbody.velocity = Vector3.zero;
+        _rigidbody.simulated = false; // 물리 엔진 OFF (중력 무시, 충돌 무시, 공중에 완벽히 고정됨)
+        transform.rotation = Quaternion.identity; // 비행기 각도 원상복구
     }
 }

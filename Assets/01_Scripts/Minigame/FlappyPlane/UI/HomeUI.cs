@@ -35,6 +35,7 @@ public class HomeUI : MonoBehaviour
 
     public async void OnClickExitButton() // Exit 버튼 클릭 시 게임 종료 요청
     {
+        GameManager.Instance.ChangeState(GameState.Playing);
         await GameManager.Instance.ChangeScene(SceneNames.MainScene);
     }
 }

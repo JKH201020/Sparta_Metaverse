@@ -37,7 +37,13 @@ public class FlappyBirdGameManager : MonoBehaviour
     {
         UIManager.Instance.OnEnableFlappyBirdUI();
         _followCamera.SetTarget(_playerPos.transform);
-        PrepareNewGame();
+        LoadData();
+        _player.Stop();
+    }
+
+    private void Update()
+    {
+        if (_player.isDead) GameOver();
     }
 
     /// <summary>
@@ -56,6 +62,8 @@ public class FlappyBirdGameManager : MonoBehaviour
             data.planeScore = Mathf.Max(data.planeScore, CurrentScore);
             SaveManager.Instance.Save(mySlot, data); // 파일로 최종 저장
         }
+
+        UIManager.Instance.OnEndUI();
     }
 
     /// <summary>
@@ -63,23 +71,28 @@ public class FlappyBirdGameManager : MonoBehaviour
     /// </summary>
     public void PrepareNewGame()
     {
+        LoadData();
+
         _player.isDead = false; // 생존 중
 
+        // 플레이어, 장애물 위치 초기화
+        _playerPos.transform.position = Vector2.zero;
+        _player.Stop();
+        _bgLooper.ResetObstacles();
+
+        GameManager.Instance.ChangeState(GameState.Playing);
+        // 점수 초기화
+        _currentScore = 0;
+    }
+
+    private void LoadData() // 저장 데이터 로드
+    {
         int mySlot = SaveManager.Instance.CurrentSlot;
         if (mySlot != -1)
         {
             SaveData data = SaveManager.Instance.Load(mySlot);
             _bestScore = data.planeScore;
         }
-
-        // 점수 초기화
-        _currentScore = 0;
-
-        // 플레이어, 장애물 위치 초기화
-        _playerPos.transform.position = Vector2.zero;
-        _bgLooper.ResetObstacles();
-        _player.SetGravityScale(1f);
-        GameManager.Instance.ChangeState(GameState.Playing);
     }
 
     /// <summary>

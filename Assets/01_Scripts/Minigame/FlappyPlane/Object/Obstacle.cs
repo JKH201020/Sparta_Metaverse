@@ -10,16 +10,26 @@ public class Obstacle : MonoBehaviour
     [SerializeField] private float _lowPosY = -1f; // 장애물이 배치될 수 있는 Y축 하한선
 
     [Header("장애물 상하 간격 설정")]
-    [SerializeField] private float _holeSizeMin = 1.2f; // 구멍의 최소 크기
-    [SerializeField] private float _holeSizeMax = 2.5f; // 구멍의 최대 크기
+    [SerializeField] private float _holeSizeMin = 3f; // 구멍의 최소 크기
+    [SerializeField] private float _holeSizeMax = 5f; // 구멍의 최대 크기
 
     [Header("장애물 X축 간격")]
     [SerializeField] private float _widthPadding = 4f; // 각 장애물 간의 X축 간격 (너비 패딩)
 
-    public Transform _topObject; // 장애물 상단 오브젝트 (이 객체를 위로 배치)
-    public Transform _bottomObject; // 장애물 하단 오브젝트 (이 객체를 아래로 배치)
+    [Header("상하 장애물")]
+    [SerializeField] private Transform _topObject; // 장애물 상단 오브젝트 (이 객체를 위로 배치)
+    [SerializeField] private Transform _bottomObject; // 장애물 하단 오브젝트 (이 객체를 아래로 배치)
 
     private int _score = 1; // 점수
+
+    private const string TopStirng = "top";
+    private const string BottomStirng = "bottom";
+
+    private void Reset()
+    {
+        _topObject = transform.Find(TopStirng);
+        _bottomObject = transform.Find(BottomStirng);
+    }
 
     private void Start()
     {
@@ -30,7 +40,7 @@ public class Obstacle : MonoBehaviour
     {
         Plane plane = other.GetComponent<Plane>(); // 충돌한 객체가 플레이어인지 확인
 
-        if (plane != null && !plane.isDead) _gameManager.UpdateScore(_score); // 게임 매니저를 통해 점수 1 증가
+        if (plane != null && !plane.isDead && plane.isStarted) _gameManager.UpdateScore(_score); // 게임 매니저를 통해 점수 1 증가
     }
 
     /// <summary>

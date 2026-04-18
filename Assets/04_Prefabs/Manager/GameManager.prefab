@@ -8553,7 +8553,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3441532525565584443}
-  - component: {fileID: 4752464834030593837}
   m_Layer: 5
   m_Name: FlappyPlaneUI
   m_TagString: Untagged
@@ -8583,21 +8582,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &4752464834030593837
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7693309668486044488}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b5517ee763ae4fb44b0bac1703401e99, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _homeUI: {fileID: 4519258695149492899}
-  _gameUI: {fileID: 1375977024529708669}
-  _endUI: {fileID: 5690737888093495418}
 --- !u!1 &7885466601163259449
 GameObject:
   m_ObjectHideFlags: 0

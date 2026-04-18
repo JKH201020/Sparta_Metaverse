@@ -47,13 +47,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bac742ae77c7c94c8d60d4750aa49a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  highPosY: 1
-  lowPosY: -1
-  holeSizeMin: 3
-  holeSizeMax: 5
-  topObject: {fileID: 5200579256400117422}
-  bottomObject: {fileID: 1815075005490559099}
-  widthPadding: 4
+  _highPosY: 1
+  _lowPosY: -1
+  _holeSizeMin: 2.5
+  _holeSizeMax: 5
+  _widthPadding: 4
+  _topObject: {fileID: 5200579256400117422}
+  _bottomObject: {fileID: 1815075005490559099}
 --- !u!61 &4464269336648479069
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -126,7 +126,7 @@ Transform:
   m_GameObject: {fileID: 4799765724839827842}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 6, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -284,7 +284,7 @@ Transform:
   m_GameObject: {fileID: 5067365427126047413}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 6, y: -1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

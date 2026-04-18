@@ -48,11 +48,20 @@ public class EndUI : MonoBehaviour
     public void OnClickRestartButton()
     {
         FlappyBirdGameManager.Instance.PrepareNewGame();
+        UIManager.Instance.OffEndUI();
     }
 
-    public async void OnClickExitButton()
+    public void OnClickExitButton()
     {
         GameManager.Instance.ChangeState(GameState.Playing);
+        FlappyBirdGameManager.Instance.PrepareNewGame();
+        ChangeScene();
+        UIManager.Instance.OffGameUI();
+        UIManager.Instance.OffEndUI();
+    }
+
+    private async void ChangeScene()
+    {
         await GameManager.Instance.ChangeScene(SceneNames.MainScene);
     }
 }
