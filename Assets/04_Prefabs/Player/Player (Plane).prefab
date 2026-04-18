@@ -110,8 +110,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5429f35010deae4a8de0420cc32a307, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animator: {fileID: 8400600331132781834}
+  _animator: {fileID: 8400600331132781834}
   _rigidbody: {fileID: 2705291410455038698}
+  isDead: 0
 --- !u!114 &3649735347936024033
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -167,7 +168,7 @@ MonoBehaviour:
     m_ActionName: Player(Plane)/Jump[/Keyboard/space]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
-  m_DefaultActionMap: Player
+  m_DefaultActionMap: 440a73c6-0c7d-4bef-8ab0-dae803d57880
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
 --- !u!1 &8444758239350317039

@@ -22,6 +22,7 @@ public class UIManager : Singleton<UIManager>
     [SerializeField] private GameObject _gameOverUI;
 
     [Header("플래피 플레인 UI")]
+    [SerializeField] private GameObject _flappyPlaneUI;
     [SerializeField] private GameObject _homeUI;
     [SerializeField] private GameObject _gameUI;
     [SerializeField] private GameObject _endUI;
@@ -35,6 +36,7 @@ public class UIManager : Singleton<UIManager>
     private const string HomeUIString = "Canvas/FlappyPlaneUI/HomeUI";
     private const string GameUIString = "Canvas/FlappyPlaneUI/GameUI";
     private const string EndUIString = "Canvas/FlappyPlaneUI/EndUI";
+    private const string FlappyPlaneUIString = "Canvas/FlappyPlaneUI";
 
     private void Reset()
     {
@@ -49,6 +51,7 @@ public class UIManager : Singleton<UIManager>
         _homeUI = transform.Find(HomeUIString).gameObject;
         _gameUI = transform.Find(GameUIString).gameObject;
         _endUI = transform.Find(EndUIString).gameObject;
+        _flappyPlaneUI = transform.Find(FlappyPlaneUIString).gameObject;
     }
 
     protected override void Awake()
@@ -171,6 +174,23 @@ public class UIManager : Singleton<UIManager>
     #endregion
 
     #region 플래피 버드UI 온오프
+
+    /// <summary>
+    /// 플래피 버드 오브젝트 활성화
+    /// </summary>
+    public void OnEnableFlappyBirdUI()
+    {
+        _flappyPlaneUI.SetActive(true);
+    }
+
+    /// <summary>
+    /// 플래피 버드 오브젝트 비활성화
+    /// </summary>
+    public void OnDisableFlappyBirdUI()
+    {
+        _flappyPlaneUI.SetActive(false);
+    }
+
 
     /// <summary>
     /// 플래피 버드 시작 UI 활성화

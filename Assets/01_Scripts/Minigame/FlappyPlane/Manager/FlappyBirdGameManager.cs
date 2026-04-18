@@ -33,10 +33,10 @@ public class FlappyBirdGameManager : MonoBehaviour
 
     private void Start()
     {
+        UIManager.Instance.OnEnableFlappyBirdUI();
         _player.isDead = false; // 생존 중
         _currentScore = 0; // 게임 시작 시 점수를 0으로 초기화하여 UI에 표시
         _bestScore = PlayerPrefs.GetInt(BestScoreKey, 0); // 저장된 최고 점수 불러오기 (없으면 기본값 0)
-        Spawn();
     }
 
     /// <summary>
@@ -69,8 +69,6 @@ public class FlappyBirdGameManager : MonoBehaviour
         _currentScore = 0;
         _bestScore = data.planeScore;
         //OnScoreChanged?.Invoke(CurrentScore, _bestScore);
-
-        Spawn();
     }
 
     /// <summary>
@@ -83,14 +81,5 @@ public class FlappyBirdGameManager : MonoBehaviour
 
         // 최고 점수 갱신
         if (_currentScore >= _bestScore) _bestScore = _currentScore;
-    }
-
-    /// <summary>
-    /// 프리팹폴더에 있는 비행기 소환
-    /// </summary>
-    public void Spawn() 
-    {
-        GameObject go = Instantiate(_playerPos, Vector2.zero, Quaternion.identity);
-        _followCamera.SetTarget(go.transform);
     }
 }

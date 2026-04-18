@@ -8151,9 +8151,10 @@ MonoBehaviour:
   _loadSlotUI: {fileID: 1115701627106986231}
   _topDownUI: {fileID: 1733155160761942160}
   _gameOverUI: {fileID: 6141530428035216727}
-  _homeUI: {fileID: 0}
-  _gameUI: {fileID: 0}
-  _endUI: {fileID: 0}
+  _flappyPlaneUI: {fileID: 7693309668486044488}
+  _homeUI: {fileID: 1484155349538132537}
+  _gameUI: {fileID: 1935065729399493621}
+  _endUI: {fileID: 8484965122171354099}
 --- !u!1 &7209830417919608697
 GameObject:
   m_ObjectHideFlags: 0
@@ -8553,7 +8554,6 @@ GameObject:
   m_Component:
   - component: {fileID: 3441532525565584443}
   - component: {fileID: 4752464834030593837}
-  - component: {fileID: 7482030378286834681}
   m_Layer: 5
   m_Name: FlappyPlaneUI
   m_TagString: Untagged
@@ -8584,21 +8584,6 @@ RectTransform:
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &4752464834030593837
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7693309668486044488}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b5517ee763ae4fb44b0bac1703401e99, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _homeUI: {fileID: 4519258695149492899}
-  _gameUI: {fileID: 1375977024529708669}
-  _endUI: {fileID: 5690737888093495418}
---- !u!114 &7482030378286834681
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
