@@ -98,14 +98,14 @@ public class LoadSlotUI : MonoBehaviour
     }
 
     // 데이터 유뮤 확인 + 점수 연결
-    private void UpdateSingleSlotUI(int slot, GameObject emptyObj, GameObject scoreObj, TextMeshProUGUI tdScore, TextMeshProUGUI planeScore)
+    private async void UpdateSingleSlotUI(int slot, GameObject emptyObj, GameObject scoreObj, TextMeshProUGUI tdScore, TextMeshProUGUI planeScore)
     {
         if (SaveManager.Instance.HasData(slot))
         {
             emptyObj.SetActive(false);
             scoreObj.SetActive(true);
 
-            SaveData data = SaveManager.Instance.Load(slot);
+            SaveData data = await SaveManager.Instance.Load(slot);
 
             tdScore.text = data.tdScore.ToString();
             planeScore.text = data.planeScore.ToString();
@@ -124,13 +124,12 @@ public class LoadSlotUI : MonoBehaviour
         SaveData data;
         if (SaveManager.Instance.HasData(slot))
         {
-            data = SaveManager.Instance.Load(slot);
+            data = await SaveManager.Instance.Load(slot);
         }
         else
         {
             data = new SaveData();
-            SaveManager.Instance.Save(slot, data);
-            Debug.Log($"{slot}번 슬롯 신규 생성");
+            await SaveManager.Instance.Save(slot, data);
         }
 
         // 씬을 넘어가기 전에, SaveManager에게 현재 슬롯 번호를 각인

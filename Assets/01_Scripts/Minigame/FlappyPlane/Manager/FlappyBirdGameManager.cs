@@ -1,3 +1,5 @@
+using System;
+using System.Threading.Tasks;
 using UnityEngine;
 
 public class FlappyBirdGameManager : MonoBehaviour
@@ -33,23 +35,28 @@ public class FlappyBirdGameManager : MonoBehaviour
         if (Instance == null) Instance = this; // GameManager 인스턴스를 gameManager에 할당 (싱글톤 초기화)
     }
 
-    private void Start()
+    private async void Start()
     {
         UIManager.Instance.OnEnableFlappyBirdUI();
         _followCamera.SetTarget(_playerPos.transform);
-        LoadData();
+        await LoadData(); // 데이터 다 읽을 때까지 기다림
         _player.Stop();
     }
 
-    private void Update()
+    private void OnEnable()
     {
-        if (_player.isDead) GameOver();
+        _player.gameOverEvent += GameOver;
+    }
+
+    private void OnDisable()
+    {
+        _player.gameOverEvent -= GameOver;
     }
 
     /// <summary>
     /// 게임 오버 시 호출되는 메서드
     /// </summary>
-    public void GameOver()
+    public async void GameOver()
     {
         GameManager.Instance.ChangeState(GameState.GameOver);
 
@@ -57,10 +64,10 @@ public class FlappyBirdGameManager : MonoBehaviour
         if (mySlot != -1) // 만약 슬롯이 정상적으로 세팅되어 있다면 (-1이 아니라면)
         {
             // 해당 슬롯의 데이터를 불러와서, 최신 점수로 덮어씌우고 다시 저장
-            SaveData data = SaveManager.Instance.Load(mySlot);
+            SaveData data = await SaveManager.Instance.Load(mySlot);
             // 최고 점수 갱신 로직 (Mathf.Max를 쓰면 둘 중 큰 값을 알아서 넣어줌)
             data.planeScore = Mathf.Max(data.planeScore, CurrentScore);
-            SaveManager.Instance.Save(mySlot, data); // 파일로 최종 저장
+            await SaveManager.Instance.Save(mySlot, data); // 파일로 최종 저장
         }
 
         UIManager.Instance.OnEndUI();
@@ -69,9 +76,9 @@ public class FlappyBirdGameManager : MonoBehaviour
     /// <summary>
     /// 게임 초기화 메서드
     /// </summary>
-    public void PrepareNewGame()
+    public async void PrepareNewGame()
     {
-        LoadData();
+        await LoadData();
 
         _player.isDead = false; // 생존 중
 
@@ -85,13 +92,13 @@ public class FlappyBirdGameManager : MonoBehaviour
         _currentScore = 0;
     }
 
-    private void LoadData() // 저장 데이터 로드
+    private async Task LoadData() // 저장 데이터 로드
     {
         int mySlot = SaveManager.Instance.CurrentSlot;
         if (mySlot != -1)
         {
-            SaveData data = SaveManager.Instance.Load(mySlot);
-            _bestScore = data.planeScore;
+            SaveData data = await SaveManager.Instance.Load(mySlot);
+            if (data != null) _bestScore = data.planeScore;
         }
     }
 

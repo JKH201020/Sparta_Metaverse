@@ -50,22 +50,20 @@ public class LobbyUI : MonoBehaviour
                         break;
                     }
                 }
-                Debug.Log($"[Lobby] 기존 유저: 마지막으로 플레이한 {targetSlot}번 슬롯을 불러옵니다.");
             }
         }
         else
         {
             // 데이터가 하나도 없다면 신규 유저! 무조건 1번 슬롯
             targetSlot = 1;
-            Debug.Log($"[Lobby] 신규 유저: 1번 슬롯으로 새 게임을 시작합니다.");
         }
 
         // 데이터를 로드해 보고, 진짜 없으면 빈 데이터를 새로 만들어서 저장
-        SaveData data = SaveManager.Instance.Load(targetSlot);
+        SaveData data = await SaveManager.Instance.Load(targetSlot);
         if (data == null)
         {
             data = new SaveData();
-            SaveManager.Instance.Save(targetSlot, data);
+            await SaveManager.Instance.Save(targetSlot, data);
         }
 
         // 게임 시작 직전에 "나 지금 이 슬롯으로 게임한다"고 시스템에 각인

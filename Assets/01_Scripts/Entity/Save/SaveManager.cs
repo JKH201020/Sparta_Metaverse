@@ -1,10 +1,13 @@
 using System.IO;
 using UnityEngine;
 using Newtonsoft.Json;
+using System.Threading.Tasks;
 
 public class SaveManager : Singleton<SaveManager>
 {
     public int CurrentSlot { get; private set; } = -1;
+
+    private const string SaveString = "SystemData.json";
 
     protected override void Awake()
     {
@@ -15,7 +18,7 @@ public class SaveManager : Singleton<SaveManager>
 
     private string GetSystemPath()
     {
-        return Path.Combine(Application.dataPath, "SystemData.json");
+        return Path.Combine(Application.dataPath, SaveString);
     }
 
     /// <summary>
@@ -74,12 +77,14 @@ public class SaveManager : Singleton<SaveManager>
     /// </summary>
     /// <param name="slot">저장할 슬롯</param>
     /// <param name="data">저장시킬 데이터</param>
-    public void Save(int slot, SaveData data)
+    public async Task Save(int slot, SaveData data)
     {
         // Formatting.Indented를 쓰면 메모장으로 열었을 때 예쁘게 줄바꿈이 됨
         string json = JsonConvert.SerializeObject(data, Formatting.Indented);
 
-        File.WriteAllText(GetPath(slot), json);
+        await System.IO.File.WriteAllTextAsync(GetPath(slot), json);
+
+        Debug.Log("비동기 저장");
     }
 
     /// <summary>
@@ -87,12 +92,13 @@ public class SaveManager : Singleton<SaveManager>
     /// </summary>
     /// <param name="slot">불러올 슬롯</param>
     /// <returns></returns>
-    public SaveData Load(int slot)
+    public async Task <SaveData> Load(int slot)
     {
         string path = GetPath(slot);
-        if (File.Exists(path))
+        if (System.IO.File.Exists(path))
         {
-            string json = File.ReadAllText(path);
+            string json = await System.IO.File.ReadAllTextAsync(path);
+            Debug.Log("비동기 로드");
             return JsonConvert.DeserializeObject<SaveData>(json);
         }
 

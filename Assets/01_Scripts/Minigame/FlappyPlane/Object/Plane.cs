@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -11,6 +12,8 @@ public class Plane : MonoBehaviour
     public bool isDead = false; // 플레이어가 죽었는지 확인하는 변수
     public bool isStarted = false; // 게임이 시작되었는지 확인
     private bool _isFlap = false; // 점프(플랩) 여부 확인하는 변수
+
+    public event Action gameOverEvent; // 게임 오버시 실행 시킬 메서드 이벤트
 
     private void Reset()
     {
@@ -31,6 +34,7 @@ public class Plane : MonoBehaviour
         // 죽음 애니메이션 실행
         _animator.SetInteger(AnimParams.IsDie, 1);
         isDead = true; // 죽음 상태로 변경
+        gameOverEvent?.Invoke();
     }
 
     private void Jump() // 점프 로직
