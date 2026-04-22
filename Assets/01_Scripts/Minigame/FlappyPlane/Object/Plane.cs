@@ -75,13 +75,14 @@ public class Plane : MonoBehaviour
     }
 
     /// <summary>
-    /// 비행기 제자리 정지
+    /// 비행기 초기화
     /// </summary>
-    public void Stop()
+    public void ResetPlane()
     {
         isStarted = false;
         _rigidbody.velocity = Vector3.zero;
         _rigidbody.simulated = false; // 물리 엔진 OFF (중력 무시, 충돌 무시, 공중에 완벽히 고정됨)
         transform.rotation = Quaternion.identity; // 비행기 각도 원상복구
+        _animator.SetInteger(AnimParams.IsDie, 0);
     }
 }

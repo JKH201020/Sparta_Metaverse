@@ -49,7 +49,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _highPosY: 1
   _lowPosY: -1
-  _holeSizeMin: 2.5
+  _holeSizeMin: 3
   _holeSizeMax: 5
   _widthPadding: 4
   _topObject: {fileID: 5200579256400117422}

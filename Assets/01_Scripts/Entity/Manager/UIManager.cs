@@ -59,6 +59,19 @@ public class UIManager : Singleton<UIManager>
 
     }
 
+    private void Start()
+    {
+        _homeUI.SetActive(true);
+        _gameUI.SetActive(false);
+        _endUI.SetActive(false);
+        _topDownUI.SetActive(false);
+        _gameOverUI.SetActive(false);
+        _dialogueUI.SetActive(false);
+        _loadSlotUI.SetActive(false);
+        _loadingPanel.SetActive(false);
+        _fadePanel.SetActive(false);
+    }
+
     #region 패널 온오프
 
     /// <summary>

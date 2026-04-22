@@ -40,7 +40,7 @@ public class FlappyBirdGameManager : MonoBehaviour
         UIManager.Instance.OnEnableFlappyBirdUI();
         _followCamera.SetTarget(_playerPos.transform);
         await LoadData(); // 데이터 다 읽을 때까지 기다림
-        _player.Stop();
+        _player.ResetPlane();
     }
 
     private void OnEnable()
@@ -84,7 +84,7 @@ public class FlappyBirdGameManager : MonoBehaviour
 
         // 플레이어, 장애물 위치 초기화
         _playerPos.transform.position = Vector2.zero;
-        _player.Stop();
+        _player.ResetPlane();
         _bgLooper.ResetObstacles();
 
         GameManager.Instance.ChangeState(GameState.Playing);
