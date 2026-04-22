@@ -80,9 +80,9 @@ public class Plane : MonoBehaviour
     public void ResetPlane()
     {
         isStarted = false;
-        _rigidbody.velocity = Vector3.zero;
+        transform.ResetTransformation();
+        _rigidbody.velocity = Vector3.zero; // 현재 이동 속도와 방향을 0
         _rigidbody.simulated = false; // 물리 엔진 OFF (중력 무시, 충돌 무시, 공중에 완벽히 고정됨)
-        transform.rotation = Quaternion.identity; // 비행기 각도 원상복구
         _animator.SetInteger(AnimParams.IsDie, 0);
     }
 }

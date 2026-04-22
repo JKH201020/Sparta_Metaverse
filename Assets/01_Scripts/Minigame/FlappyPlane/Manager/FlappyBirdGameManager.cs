@@ -83,7 +83,7 @@ public class FlappyBirdGameManager : MonoBehaviour
         _player.isDead = false; // 생존 중
 
         // 플레이어, 장애물 위치 초기화
-        _playerPos.transform.position = Vector2.zero;
+        _playerPos.transform.ResetTransformation();
         _player.ResetPlane();
         _bgLooper.ResetObstacles();
 
