@@ -23,7 +23,7 @@ public class MeleeWeapon : MonoBehaviour
         {
             _playerHealth = collision.GetComponent<HealthSystem>();
 
-            if (_enemyStats != null) _playerHealth.TakeDamage(_enemyStats.damage);
+            if (_enemyStats != null && _playerHealth.CurrentHealth != 0) _playerHealth.TakeDamage(_enemyStats.damage);
         }
     }
 

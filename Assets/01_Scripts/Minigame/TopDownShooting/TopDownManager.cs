@@ -12,6 +12,7 @@ public class TopDownManager : MonoBehaviour
     [SerializeField] private EnemySpawner _enemySpawner;
 
     public event Action<int, int> OnScoreChanged; // 점수UI 변경 이벤트
+    public event Action OnRestart;
 
     private void Reset()
     {
@@ -91,15 +92,9 @@ public class TopDownManager : MonoBehaviour
     /// <summary>
     /// 플레이어가 죽은 후 게임 재시작
     /// </summary>
-    public async void Restart()
+    public void Restart()
     {
-        int mySlot = SaveManager.Instance.CurrentSlot;
-        SaveData data = await SaveManager.Instance.Load(mySlot);
-
-        // 점수 초기화
-        CurrentScore = 0;
-        HighScore = data.tdScore;
-        OnScoreChanged?.Invoke(CurrentScore, HighScore);
+        ResetScore();
 
         // 리셋
         if (BulletManager.Instance != null) BulletManager.Instance.ClearAllBullets(); // 남은 화살 초기화
@@ -112,5 +107,17 @@ public class TopDownManager : MonoBehaviour
 
         UIManager.Instance.OffGameOverUI();
         GameManager.Instance.ChangeState(GameState.Playing);
+
+        OnRestart?.Invoke();
+    }
+
+    private async void ResetScore() // 점수 초기화
+    {
+        int mySlot = SaveManager.Instance.CurrentSlot;
+        SaveData data = await SaveManager.Instance.Load(mySlot);
+
+        CurrentScore = 0;
+        HighScore = data.tdScore;
+        OnScoreChanged?.Invoke(CurrentScore, HighScore);
     }
 }

@@ -6,22 +6,23 @@ public class HealthSystem : MonoBehaviour
     [SerializeField] private EnemyStats _enemyStats;
     [SerializeField] private PlayerStats _playerStats;
 
-    private float _currentHealth;
-    private float _MaxHealth;
+    public float CurrentHealth { get; private set; }
+    public float MaxHealth { get; private set; }
 
     public event Action OnDeath;
+    public event Action<float> OnTakeDamage;
 
     private void OnEnable()
     {
         if (CompareTag(Tag.Enemy) && _enemyStats != null)
         {
-            _MaxHealth = _enemyStats.hp;
-            _currentHealth = _enemyStats.hp;
+            MaxHealth = _enemyStats.hp;
+            CurrentHealth = _enemyStats.hp;
         }
         else if (CompareTag(Tag.Player) && _playerStats != null)
         {
-            _MaxHealth = _playerStats.hp;
-            _currentHealth = _playerStats.hp;
+            MaxHealth = _playerStats.hp;
+            CurrentHealth = _playerStats.hp;
         }
     }
 
@@ -31,9 +32,10 @@ public class HealthSystem : MonoBehaviour
     /// <param name="damage">받을 대미지</param>
     public void TakeDamage(float damage)
     {
-        _currentHealth -= damage;
+        CurrentHealth -= damage;
+        CurrentHealth = Mathf.Clamp(CurrentHealth, 0, MaxHealth);
 
-        if (_currentHealth <= 0) Die();
+        OnTakeDamage?.Invoke(CurrentHealth);
     }
 
     /// <summary>
@@ -41,12 +43,15 @@ public class HealthSystem : MonoBehaviour
     /// </summary>
     public void ResetHp()
     {
-        _currentHealth = _MaxHealth;
+        CurrentHealth = MaxHealth;
     }
 
-    private void Die() // 죽음
+    /// <summary>
+    /// 죽음
+    /// </summary>
+    public void Die()
     {
-        _currentHealth = 0;
+        CurrentHealth = 0;
         OnDeath?.Invoke();
     }
 }
