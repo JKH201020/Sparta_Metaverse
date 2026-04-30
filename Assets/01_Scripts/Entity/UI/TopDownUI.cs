@@ -1,4 +1,3 @@
-using DG.Tweening;
 using System.Collections;
 using TMPro;
 using UnityEngine;
@@ -70,6 +69,8 @@ public class TopDownUI : MonoBehaviour
 
             _healthSystem.OnTakeDamage += UpdateHealthUI;
         }
+
+        if (TopDownManager.Instance != null) UIManager.Instance.OnDamageUI(true);
     }
 
     private void OnDisable()
@@ -81,6 +82,7 @@ public class TopDownUI : MonoBehaviour
         }
 
         if (_healthSystem != null) _healthSystem.OnTakeDamage -= UpdateHealthUI;
+        if (TopDownManager.Instance != null) UIManager.Instance.OnDamageUI(false);
     }
 
     #region 버튼 이벤트
@@ -156,7 +158,7 @@ public class TopDownUI : MonoBehaviour
     {
         StopAllCoroutines();
 
-        if(_healthSystem != null)
+        if (_healthSystem != null)
         {
             _hpBar.maxValue = _healthSystem.MaxHealth;
             _hpBar.value = _healthSystem.MaxHealth;

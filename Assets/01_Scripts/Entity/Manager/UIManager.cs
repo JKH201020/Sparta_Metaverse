@@ -27,6 +27,8 @@ public class UIManager : Singleton<UIManager>
     [SerializeField] private GameObject _gameUI;
     [SerializeField] private GameObject _endUI;
 
+    [Header("대미지UI"), SerializeField] private GameObject _damageTextContainer;
+
     private const string LoadingPanelPathString = "Canvas/LoadingPanel";
     private const string FadePanelPathString = "Canvas/FadePanel";
     private const string DialogueUIString = "Canvas/DialogueUI";
@@ -37,6 +39,7 @@ public class UIManager : Singleton<UIManager>
     private const string GameUIString = "Canvas/FlappyPlaneUI/GameUI";
     private const string EndUIString = "Canvas/FlappyPlaneUI/EndUI";
     private const string FlappyPlaneUIString = "Canvas/FlappyPlaneUI";
+    private const string DamageTextContainer = "Canvas/DamageTextContainer";
 
     private void Reset()
     {
@@ -52,6 +55,7 @@ public class UIManager : Singleton<UIManager>
         _gameUI = transform.Find(GameUIString).gameObject;
         _endUI = transform.Find(EndUIString).gameObject;
         _flappyPlaneUI = transform.Find(FlappyPlaneUIString).gameObject;
+        _damageTextContainer = transform.Find(DamageTextContainer).gameObject;
     }
 
     protected override void Awake()
@@ -70,6 +74,7 @@ public class UIManager : Singleton<UIManager>
         _loadSlotUI.SetActive(false);
         _loadingPanel.SetActive(false);
         _fadePanel.SetActive(false);
+        _damageTextContainer.SetActive(false);
     }
 
     #region 패널 온오프
@@ -251,6 +256,19 @@ public class UIManager : Singleton<UIManager>
     public void OffEndUI()
     {
         _endUI.SetActive(false);
+    }
+
+    #endregion
+
+    #region 대미지 UI 컨테이너 온오프
+
+/// <summary>
+/// 대미지 UI 컨테이너 온오프
+/// </summary>
+/// <param name="enable">활성화 여부</param>
+    public void OnDamageUI(bool enable)
+    {
+        _damageTextContainer.SetActive(enable);
     }
 
     #endregion

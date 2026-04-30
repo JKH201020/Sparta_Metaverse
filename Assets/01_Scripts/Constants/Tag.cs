@@ -8,4 +8,5 @@ public static class Tag
     public const string MainCamera = "MainCamera";
     public const string BackGround = "BackGround";
     public const string Obstacle = "Obstacle";
+    public const string UI = "UI";
 }

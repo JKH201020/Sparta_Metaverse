@@ -24,7 +24,7 @@ public class EnemyController : MonoBehaviour
 
     [Header("스탯")]
     [SerializeField] private EnemyStats _stats; // 적 스탯
-    [SerializeField] private HealthSystem _healthSystem; // 
+    [SerializeField] private HealthSystem _healthSystem;
 
     private float _speed; // 적 이동속도
     private float _sqrDistance;

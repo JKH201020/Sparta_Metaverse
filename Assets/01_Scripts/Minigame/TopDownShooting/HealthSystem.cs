@@ -34,8 +34,17 @@ public class HealthSystem : MonoBehaviour
     {
         CurrentHealth -= damage;
         CurrentHealth = Mathf.Clamp(CurrentHealth, 0, MaxHealth);
+        if (CurrentHealth > 0) ShowDamageUI(damage);
 
         OnTakeDamage?.Invoke(CurrentHealth);
+    }
+
+    private void ShowDamageUI(float damage)
+    {
+        Vector3 spawnPos = transform.position + Vector3.up * 2.0f;
+
+        DamageTextUI dt = DamageTextPool.Instance.Get(spawnPos);
+        dt.SetDamage(damage);
     }
 
     /// <summary>
