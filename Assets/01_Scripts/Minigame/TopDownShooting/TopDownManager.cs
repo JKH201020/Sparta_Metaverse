@@ -27,6 +27,7 @@ public class TopDownManager : MonoBehaviour
         CurrentScore = 0;
 
         UIManager.Instance.OnTopDownGameUI();
+        if (TopDownManager.Instance != null) UIManager.Instance.OnDamageUI(true);
     }
 
     private async void Start()

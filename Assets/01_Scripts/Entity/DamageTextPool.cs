@@ -4,7 +4,7 @@ using UnityEngine;
 public class DamageTextPool : Singleton<DamageTextPool>
 {
     [Header("설정")]
-    [SerializeField] private GameObject _damagePrefab;
+    [SerializeField] private GameObject _damagePrefab; // 프리팹 직접 연결해야 함
     [SerializeField] private RectTransform _container;
     [SerializeField] private int _initialPoolSize = 20;
 
@@ -18,7 +18,6 @@ public class DamageTextPool : Singleton<DamageTextPool>
     protected override void Awake()
     {
         for (int i = 0; i < _initialPoolSize; i++) CreateNewInstance();
-        if (_damagePrefab == null) _damagePrefab = GameObject.FindWithTag(Tag.UI).gameObject;
     }
 
     private void CreateNewInstance() // 대미지 UI 생성
@@ -42,7 +41,13 @@ public class DamageTextPool : Singleton<DamageTextPool>
 
         Vector2 screenPos = Camera.main.WorldToScreenPoint(worldPosition);
 
-        dt.transform.position = screenPos;
+        RectTransform rect = dt.GetComponent<RectTransform>();
+        rect.position = screenPos;
+
+        Vector3 pos = rect.localPosition;
+        pos.z = 0;
+        rect.localPosition = pos;
+
         dt.gameObject.SetActive(true);
         return dt;
     }

@@ -69,8 +69,6 @@ public class TopDownUI : MonoBehaviour
 
             _healthSystem.OnTakeDamage += UpdateHealthUI;
         }
-
-        if (TopDownManager.Instance != null) UIManager.Instance.OnDamageUI(true);
     }
 
     private void OnDisable()

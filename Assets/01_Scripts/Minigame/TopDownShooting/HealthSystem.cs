@@ -32,11 +32,15 @@ public class HealthSystem : MonoBehaviour
     /// <param name="damage">받을 대미지</param>
     public void TakeDamage(float damage)
     {
+        if (CurrentHealth <= 0) return;
+
         CurrentHealth -= damage;
         CurrentHealth = Mathf.Clamp(CurrentHealth, 0, MaxHealth);
-        if (CurrentHealth > 0) ShowDamageUI(damage);
+        ShowDamageUI(damage);
 
         OnTakeDamage?.Invoke(CurrentHealth);
+
+        if (CurrentHealth <= 0) Die();
     }
 
     private void ShowDamageUI(float damage)
