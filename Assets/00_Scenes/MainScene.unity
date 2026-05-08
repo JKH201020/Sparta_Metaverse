@@ -1484,6 +1484,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 211396526}
+  Speed: 5
+  minBounds: {x: -2, y: -2}
+  maxBounds: {x: 2, y: 2}
 --- !u!1 &590386964
 GameObject:
   m_ObjectHideFlags: 0
